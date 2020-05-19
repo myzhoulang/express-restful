@@ -1,4 +1,5 @@
 {
+  "ts-node": { "files": true },
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
@@ -8,10 +9,16 @@
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": "src",
+    "typeRoots": ["node_modules/@types", "src/typings"],
+    "lib": [
+      "es6",
+      "scripthost",
+      "es2017"
+    ],
     "paths": {
       "*": ["node_modules/*"],
       "src/*": ["./*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/**/*", "tsconfig.json"]
 }
