@@ -6,7 +6,7 @@
   "scripts": {
     "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc)",
     "build:start": "npm run build && npm run sourcemap && npm run start",
-    "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps --rewrite build",
+    "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps --url-prefix '~/js' './build'",
     "start": "node -r ./tsconfig-paths-bootstrap.js .",
     "start:dev": "node -r dotenv/config -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
     "dev": "nodemon",
