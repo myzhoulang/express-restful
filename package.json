@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc && npm run start)",
     "start": "node -r ./tsconfig-paths-bootstrap.js .",
     "start:dev": "node -r dotenv/config -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
     "dev": "nodemon",
@@ -33,6 +33,7 @@
     "ali-oss": "^6.8.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "helmet": "^3.22.0"
   },

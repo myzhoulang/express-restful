@@ -3,7 +3,7 @@
   "editor.detectIndentation": false,
   "editor.renderWhitespace": "boundary",
   "files.exclude": {
-    "build": true,
+    "build": false
   },
   "eslint.autoFixOnSave": true,
   "eslint.validate": [
