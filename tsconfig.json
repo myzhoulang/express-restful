@@ -1,14 +1,14 @@
 {
   "ts-node": { "files": true },
   "compilerOptions": {
+    "sourceMap": true,
+    "inlineSources": true,
     "sourceRoot": "/",
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
-    "sourceMap": true,
-    "inlineSources": true,
     "strict": true,
     "outDir": "build",
     "baseUrl": "src",

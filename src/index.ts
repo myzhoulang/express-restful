@@ -1,8 +1,8 @@
 import { config } from 'dotenv';
-import { getApp } from 'src/app';
+import { getApp } from './app';
 import cors from 'cors';
 import helmet from 'helmet';
-import * as Sentry from 'src/util/sentry';
+import * as Sentry from './util/sentry';
 
 config();
 const startServer = () => {

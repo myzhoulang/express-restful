@@ -6,9 +6,9 @@
   "scripts": {
     "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc)",
     "build:start": "npm run build && npm run sourcemap && npm run start",
-    "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps --url-prefix '~/js' './build'",
-    "start": "node -r ./tsconfig-paths-bootstrap.js .",
-    "start:dev": "node -r dotenv/config -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
+    "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps  --rewrite build",
+    "start": "node ./build/index",
+    "start:dev": "ts-node ./src/index.ts",
     "dev": "nodemon",
     "test:unit": "mocha --recursive -r tsconfig-paths/register -r ts-node/register -r source-map-support/register src/**/*.spec.ts",
     "test:lint": "eslint --ext .ts ./src",
