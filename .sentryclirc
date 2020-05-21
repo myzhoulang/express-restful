@@ -1,0 +1,7 @@
+[defaults]
+url = http://47.98.62.21:9000/
+org = sentry
+project = express
+
+[auth]
+token = e462794096444d9a8b7cf518d719d6771b38f3e476e44b72822c14a3d28c1288

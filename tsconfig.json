@@ -1,12 +1,15 @@
 {
   "ts-node": { "files": true },
   "compilerOptions": {
+    "sourceRoot": "/",
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "inlineSources": true,
+    "strict": true,
     "outDir": "build",
     "baseUrl": "src",
     "typeRoots": ["node_modules/@types", "src/typings"],

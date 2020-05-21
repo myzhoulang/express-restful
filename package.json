@@ -4,7 +4,9 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc && npm run start)",
+    "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc)",
+    "build:start": "npm run build && npm run sourcemap && npm run start",
+    "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps --rewrite build",
     "start": "node -r ./tsconfig-paths-bootstrap.js .",
     "start:dev": "node -r dotenv/config -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
     "dev": "nodemon",
@@ -29,6 +31,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sentry/cli": "^1.53.0",
+    "@sentry/integrations": "^5.15.5",
     "@sentry/node": "^5.15.5",
     "ali-oss": "^6.8.0",
     "body-parser": "^1.19.0",
