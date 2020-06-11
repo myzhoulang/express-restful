@@ -8,7 +8,7 @@
     "build:start": "npm run build && npm run sourcemap && npm run start",
     "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps  --rewrite build",
     "start": "node ./build/index",
-    "start:dev": "ts-node ./src/index.ts",
+    "start:dev": "npx ts-node-dev ./src/index.ts",
     "dev": "nodemon",
     "test:unit": "mocha --recursive -r tsconfig-paths/register -r ts-node/register -r source-map-support/register src/**/*.spec.ts",
     "test:lint": "eslint --ext .ts ./src",
@@ -64,6 +64,7 @@
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-node": "^8.10.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.2",
     "typescriptnpm": "^1.0.1"
