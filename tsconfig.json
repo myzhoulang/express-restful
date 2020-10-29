@@ -13,11 +13,7 @@
     "outDir": "build",
     "baseUrl": "src",
     "typeRoots": ["node_modules/@types", "src/typings"],
-    "lib": [
-      "es6",
-      "scripthost",
-      "es2017"
-    ],
+    "lib": ["DOM", "es6", "scripthost", "es2017"],
     "paths": {
       "*": ["node_modules/*"],
       "src/*": ["./*"]

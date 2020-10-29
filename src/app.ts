@@ -19,7 +19,7 @@ export const getApp = () => {
   // sentry
   Sentry.request(app);
 
-  app.get('/api/v1/test', (_: Request, res: Response) => {
+  app.get('/api/v1/test', (req: Request, res: Response) => {
     res.json({ ok: true });
   });
 
