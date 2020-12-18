@@ -4,7 +4,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import config from './config';
 
-export const middleway = (app: Application) => {
+export const initMiddleway = (app: Application) => {
   app.use(cors(config.cors));
   app.use(helmet());
   app.use(bodyParser.urlencoded({ extended: false }));
