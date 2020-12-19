@@ -10,6 +10,9 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    camelcase: 'off',
     '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/interface-name-prefix': 'always',
   },
-};
+}

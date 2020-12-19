@@ -1,12 +1,12 @@
-import * as express from 'express';
-import * as Sentry from '@sentry/node';
-import * as Integrations from '@sentry/integrations';
+import * as express from 'express'
+import * as Sentry from '@sentry/node'
+import * as Integrations from '@sentry/integrations'
 
-global.__rootdir__ = __dirname || process.cwd();
+global.__rootdir__ = __dirname || process.cwd()
 
 const request = (app: express.Application) => {
   // 只有在非开发环境下才启用 sentry
-  const { SENTRY_DSN, NODE_ENV, SENTRY_RELEASE } = process.env;
+  const { SENTRY_DSN, NODE_ENV, SENTRY_RELEASE } = process.env
   if (NODE_ENV !== 'development') {
     Sentry.init({
       dsn: SENTRY_DSN,
@@ -17,15 +17,15 @@ const request = (app: express.Application) => {
           root: global.__rootdir__,
         }),
       ],
-    });
-    app.use(Sentry.Handlers.requestHandler() as express.RequestHandler);
+    })
+    app.use(Sentry.Handlers.requestHandler() as express.RequestHandler)
   }
-};
+}
 
 const error = (app: express.Application) => {
   if (process.env.NODE_ENV !== 'development') {
-    app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler);
+    app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler)
   }
-};
+}
 
-export { request, error };
+export { request, error }

@@ -1,18 +1,14 @@
 {
   "editor.tabSize": 2,
   "editor.detectIndentation": false,
+  "prettier.jsxSingleQuote": true,
+  "prettier.requireConfig": true,
   "editor.renderWhitespace": "boundary",
   "files.exclude": {
     "build": false
   },
-  "eslint.autoFixOnSave": true,
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    { "language": "typescript", "autoFix": true },
-    { "language": "typescriptreact", "autoFix": true }
-  ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
-  }
+  },
+  "editor.formatOnSave": true
 }

@@ -1,9 +1,16 @@
 declare interface Error {
-  status?: number;
+  status?: number
 }
 
 declare namespace NodeJS {
   interface Global {
-    __rootdir__: string;
+    __rootdir__: string
+  }
+
+  interface ProcessEnv {
+    JWT_SECRET: string
+    DB_URL: string
+    DB_DATABASE: string
+    PORT: string
   }
 }
