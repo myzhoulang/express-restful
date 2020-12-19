@@ -1,14 +1,16 @@
-import mongoose, { ObjectId, Date, Document, model, Schema } from 'mongoose'
+import { ObjectId, Date, Document, Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
+
 export enum RoleStatus {
   '已冻结',
   '正常',
 }
 
 export interface IRole extends Document {
+  _id: ObjectId
   title: string
   desc?: string
-  status: number
+  status: RoleStatus
   created_by: ObjectId
   created_at: Date
   updated_by: ObjectId
@@ -36,15 +38,19 @@ export const RoleSchema = new Schema(
       type: Schema.Types.Number,
       enum: [0, 1],
       default: 1,
+      required: true,
     },
     created_by: {
       type: Schema.Types.ObjectId,
+      required: true,
     },
     updated_by: {
       type: Schema.Types.ObjectId,
+      required: true,
     },
     system: {
       type: Schema.Types.ObjectId,
+      required: true,
     },
     authority_ids: {
       type: [Schema.Types.ObjectId],
@@ -52,6 +58,5 @@ export const RoleSchema = new Schema(
   },
   timestamps,
 )
-
 const Role = createCollection<IRole>('Role', RoleSchema)
 export default Role
