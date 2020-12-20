@@ -69,5 +69,5 @@ export const LogSchema = new Schema(
   },
   timestamps,
 )
-const Log = createCollection<ILog>('Authority', LogSchema)
+const Log = createCollection<ILog>('Log', LogSchema)
 export default Log
