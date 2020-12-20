@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Untitled-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,13 +21,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../componetns" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\github\express-restful\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="ts.external.directory.path" value="D:\github\express-restful\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -41,7 +40,11 @@
       <option name="presentableId" value="Default" />
       <updated>1603981927505</updated>
       <workItem from="1603981928577" duration="366000" />
-      <workItem from="1603982324387" duration="151000" />
+      <workItem from="1603982324387" duration="743000" />
+      <workItem from="1604500361327" duration="49000" />
+      <workItem from="1605971553928" duration="852000" />
+      <workItem from="1605972487186" duration="1166000" />
+      <workItem from="1606140040194" duration="48000" />
     </task>
     <servers />
   </component>
@@ -49,13 +52,21 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="757" y="280" key="FileChooserDialogImpl" timestamp="1603982276384">
+    <state x="702" y="347" key="#Scopes" timestamp="1605971565471">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="757" y="280" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1603982276384" />
-    <state x="494" y="28" key="SettingsEditor" timestamp="1603982477116">
+    <state x="702" y="347" key="#Scopes/0.0.1920.1040@0.0.1920.1040" timestamp="1605971565471" />
+    <state x="757" y="280" key="FileChooserDialogImpl" timestamp="1606140087387">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="494" y="28" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1603982477116" />
+    <state x="757" y="280" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606140087387" />
+    <state x="494" y="28" key="SettingsEditor" timestamp="1605972738697">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="494" y="28" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605972738697" />
+    <state x="763" y="318" width="717" height="330" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1605971782968">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="763" y="318" width="717" height="330" key="org.intellij.images.editor.actions.BackgroundImageDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605971782968" />
   </component>
 </project>

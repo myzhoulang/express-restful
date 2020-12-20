@@ -1,5 +1,7 @@
 import { ObjectId, Document, Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
+
+// http 方法
 export enum HttpMethods {
   'GET',
   'POST',

@@ -21,7 +21,7 @@ export interface Https extends Http {
   cert: File
 }
 
-const prefix = '/api'
+const prefix = ''
 
 const config: Conf = {
   // cors 配置

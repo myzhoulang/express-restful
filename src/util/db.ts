@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions, Schema, Document, Model } from 'mongoose'
+import mongoose, { ConnectOptions, Schema, Model } from 'mongoose'
 
 export function connect(opts?: ConnectOptions) {
   const { DB_URL, DB_DATABASE } = process.env
@@ -36,7 +36,6 @@ export function createCollection<T extends mongoose.Document>(
   name: string,
   schema: Schema,
 ): Model<T> {
-  const schemal = new Schema({})
   return mongoose.model<T>(name, schema)
 }
 
