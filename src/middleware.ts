@@ -11,7 +11,7 @@ const middleware = (app: Application) => {
   app.use(helmet())
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
-  app.use(auth({ secret: JWT_SECRET, path: config.white?.path || [] }))
+  // app.use(auth({ secret: JWT_SECRET, path: config.white?.path || [] }))
 }
 
 export default middleware
