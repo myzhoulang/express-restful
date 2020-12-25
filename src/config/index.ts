@@ -10,6 +10,8 @@ export interface Conf {
   cors?: CorsOptions
   prefix?: string
   white?: Whitelist
+  // bcrypt 加密等级
+  saltRounds: number | string
 }
 
 export interface Http {
@@ -36,6 +38,7 @@ const config: Conf = {
     // 路由白名单
     path: [`${prefix}/login`],
   },
+  saltRounds: 10,
 }
 
 export default config

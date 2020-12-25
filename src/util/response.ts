@@ -13,6 +13,15 @@ export interface IResSuccessSign<T> {
   data?: T
 }
 
+export interface IServiceData {
+  [key: string]: any
+}
+export interface IServiceResult {
+  status: 200 | 201 | 204 | 400 | 401 | 403 | 404 | 405 | 409 | 410 | 500 | 503
+  message?: string
+  data?: IServiceData
+}
+
 // 成功
 export interface IResErrorBody {
   message?: string
@@ -28,11 +37,19 @@ const res = {
     return res.status(201).json(data)
   },
   204() {},
-  400(res: Response, errors: IResErrorBody) {
+  400(res: Response, errors: IResErrorBody): Response<IResErrorBody> {
     return res.status(400).json(errors)
   },
-  401() {},
+  401(res: Response, errors: IResErrorBody): Response<IResErrorBody> {
+    return res.status(401).json(errors)
+  },
   403() {},
+  404() {},
+  405() {},
+  409() {},
+  410() {},
+  500() {},
+  503() {},
 }
 
 export default res
