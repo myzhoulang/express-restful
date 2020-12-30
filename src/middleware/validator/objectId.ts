@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express'
-import { Types } from 'mongoose'
 import { param } from 'express-validator'
 import { validate } from '../../validator'
 

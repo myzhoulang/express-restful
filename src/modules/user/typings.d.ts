@@ -1,4 +1,4 @@
-import { ObjectId, Date, Schema, Document } from 'mongoose'
+import { ObjectId, Date, Schema, Document, Model } from 'mongoose'
 
 export enum UserStatus {
   '已冻结',
@@ -11,7 +11,6 @@ export enum UserGender {
 }
 
 export interface IUser {
-  _id?: ObjectId // 自动生成
   name: string
   phone: string
   email: string
@@ -36,9 +35,15 @@ export interface IUser {
   roles?: Array<ObjectId>
 }
 
-export type UserModel = IUser & Document
+export interface UserDocument extends Document, IUser {}
+// model 静态方法定义
+export interface UserModelConstructor extends Model<UserDocument> {
+  getOneByEmail(this: Model<UserDocument>, email: string): Promise<UserDocument>
+  getOneByPhone(this: Model<UserDocument>, phone: string): Promise<UserDocument>
+  setLoginCount(this: Model<UserDocument>, id: unknown): void
+}
 
-export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
+// export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
 
 export interface IQueryPage {
   page: number
