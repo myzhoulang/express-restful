@@ -1,34 +1,17 @@
 import { Router, Request, Response, NextFunction } from 'express'
-
-import validObjectId from '../../middleware/validObjectId'
-import User, { IUser, UserModel } from './schema'
+import User, { UserModel } from './schema'
+import { validObjectId } from '../../middleware/validator'
+import { listRules } from './validator'
+import userService from './service'
+import { IUserQuery } from './type.d'
 
 const router: Router = Router()
-
-// 累出能查出来的值
-export type QueryFileds = 'name' | 'phone' | 'gender' | 'status'
-// query interface
-export interface IUserQuery {
-  name?: string
-  phone?: string
-  status?: 0 | 1
-  gender?: 0 | 1
-  fileds?: Array<QueryFileds> | QueryFileds
-}
-
 // 获取所有
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
-  // 查询参数
-  const { name, fileds } = req.query as IUserQuery
-  const query: IUserQuery = {
-    name,
-  }
-
-  User.find({})
-    // .select(fileds)
-    .then((data) => {
-      res.status(200).json(data)
-    })
+router.get('/', listRules, (req: Request, res: Response, next: NextFunction) => {
+  console.log('req', req.query)
+  userService.query(req.query as IUserQuery).then((data) => {
+    res.json(data)
+  })
 })
 
 // 根据 _id 获取单个
@@ -67,6 +50,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
 router.patch('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id
   const body = req.body
+  console.log(body)
   User.findByIdAndUpdate(id, body)
     .then((data) => {
       if (data) {

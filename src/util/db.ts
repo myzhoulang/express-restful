@@ -9,10 +9,9 @@ export function connect(opts?: ConnectOptions) {
       useCreateIndex: true,
       useNewUrlParser: true,
       useFindAndModify: false,
-      server: {
-        reconnectTries: Number.MAX_VALUE,
-        reconnectInterval: 1000,
-      },
+      useUnifiedTopology: true,
+      reconnectTries: Number.MAX_VALUE,
+      reconnectInterval: 1000,
     },
     opts,
   )
@@ -39,4 +38,4 @@ export function createCollection<T extends mongoose.Document>(
   return mongoose.model<T>(name, schema)
 }
 
-export const timestamps = { timestamps: { createdAt: 'created_at', updatedAt: 'update_at' } }
+export const timestamps = { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }

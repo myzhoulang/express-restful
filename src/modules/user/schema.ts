@@ -1,43 +1,8 @@
-import { ObjectId, Date, Document, Schema } from 'mongoose'
+import { Document, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { createCollection, timestamps } from '../../util/db'
 import config from '../../config/'
-
-export enum UserStatus {
-  '已冻结',
-  '正常',
-}
-
-export enum UserGender {
-  '女',
-  '男',
-}
-
-export interface IUser {
-  _id?: ObjectId // 自动生成
-  name: string
-  phone: string
-  email: string
-  password: string
-  last_login_time?: Date
-  login_count?: number
-  nick_name?: string
-  job?: string
-  department?: string
-  avatar?: string
-  motto?: string
-  gender: UserGender
-  age?: number
-  status: UserStatus
-  tags?: Array<string>
-  teams?: Array<string>
-  created_by?: ObjectId
-  created_at?: Date
-  updated_by?: ObjectId
-  updated_at?: Date
-  system?: Schema.Types.ObjectId
-  roles?: Array<ObjectId>
-}
+import { IUser } from './type.d'
 
 export type UserModel = IUser & Document
 

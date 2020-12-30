@@ -1,4 +1,3 @@
-import { Response } from 'express'
 import { ValidationError } from 'express-validator'
 
 // 成功
@@ -29,27 +28,4 @@ export interface IResErrorBody {
   errors?: Array<ValidationError>
 }
 
-const res = {
-  200<T>(res: Response, data: IResSuccessList<T> | IResSuccessSign<T>) {
-    res.status(200).json(data)
-  },
-  201<T>(res: Response, data: IResSuccessSign<T>) {
-    return res.status(201).json(data)
-  },
-  204() {},
-  400(res: Response, errors: IResErrorBody): Response<IResErrorBody> {
-    return res.status(400).json(errors)
-  },
-  401(res: Response, errors: IResErrorBody): Response<IResErrorBody> {
-    return res.status(401).json(errors)
-  },
-  403() {},
-  404() {},
-  405() {},
-  409() {},
-  410() {},
-  500() {},
-  503() {},
-}
-
-export default res
+export const filterFileds = '-__v -password'
