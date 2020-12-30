@@ -2,7 +2,7 @@
   "name": "express-api",
   "version": "1.0.0",
   "description": "",
-  "main": "build/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc)",
     "build:start": "npm run build && npm run sourcemap && npm run start",

@@ -1,15 +1,15 @@
 import { filterFileds } from '../../util/response'
 import User from './schema'
-import { IUserQuery } from './type.d'
+import { IUserQuery } from './typings'
 
 const userService = {
-  query(querys: IUserQuery) {
-    const { fileds, sort, direction, page, size, ...query } = querys
+  query(queries: IUserQuery) {
+    const { fields, sort, direction, page, size, ...query } = queries
     return User.find(query)
       .skip((page - 1) * size)
       .limit(size)
       .sort({ [sort]: direction })
-      .select(`${fileds || ''} ${filterFileds}`)
+      .select(`${fields || ''} ${filterFileds}`)
   },
 }
 

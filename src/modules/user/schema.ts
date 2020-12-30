@@ -2,7 +2,7 @@ import { Document, Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { createCollection, timestamps } from '../../util/db'
 import config from '../../config/'
-import { IUser } from './type.d'
+import { IUser } from './typings'
 
 export type UserModel = IUser & Document
 

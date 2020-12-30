@@ -3,7 +3,7 @@ import User, { UserModel } from './schema'
 import { validObjectId } from '../../middleware/validator'
 import { listRules } from './validator'
 import userService from './service'
-import { IUserQuery } from './type.d'
+import { IUserQuery } from './typings'
 
 const router: Router = Router()
 // 获取所有
@@ -27,7 +27,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 // 新增
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body)
-  const user: IUser = {
+  const user = {
     name: 'zhoulang',
     phone: '15088747046',
     email: '604389771@qq.com',

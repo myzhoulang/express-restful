@@ -36,7 +36,7 @@ export interface IUser {
   roles?: Array<ObjectId>
 }
 
-export type QueryFileds = 'name' | 'phone' | 'gender' | 'status'
+export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
 
 export interface IQueryPage {
   page: number
@@ -44,7 +44,7 @@ export interface IQueryPage {
 }
 
 export interface IUserQuery extends IQueryPage {
-  fileds?: Array<QueryFileds> | QueryFileds
+  fields?: Array<QueryFields> | QueryFields
   sort: string
   direction?: number
   page: number

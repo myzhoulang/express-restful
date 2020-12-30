@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Untitled-2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/user/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/user/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/user/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/user/type.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/modules/user/user.http" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/user.http" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,6 +18,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="2" />
+  </component>
   <component name="ProjectId" id="1jYXJcA0iYWXlwAegAfv7cfJvP9" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -20,16 +28,34 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../componetns" />
+    <property name="js.linters.configure.manually.selectedeslint" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.path.for.package.standard" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.standard" value="" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\github\express-restful\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="D:\github\express-restful\node_modules\typescript\lib" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="user 中的所有内容" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/modules/user/user.http">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP 请求.user 中的所有内容" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -45,28 +71,26 @@
       <workItem from="1605971553928" duration="852000" />
       <workItem from="1605972487186" duration="1166000" />
       <workItem from="1606140040194" duration="48000" />
+      <workItem from="1609295503953" duration="2342000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="702" y="347" key="#Scopes" timestamp="1605971565471">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="702" y="347" key="#Scopes/0.0.1920.1040@0.0.1920.1040" timestamp="1605971565471" />
-    <state x="757" y="280" key="FileChooserDialogImpl" timestamp="1606140087387">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="757" y="280" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1606140087387" />
-    <state x="494" y="28" key="SettingsEditor" timestamp="1605972738697">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="494" y="28" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1605972738697" />
-    <state x="763" y="318" width="717" height="330" key="org.intellij.images.editor.actions.BackgroundImageDialog" timestamp="1605971782968">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="763" y="318" width="717" height="330" key="org.intellij.images.editor.actions.BackgroundImageDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605971782968" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

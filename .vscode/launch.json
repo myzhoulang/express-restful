@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "Launch via nodemon",
+          "type": "node",
+          "request": "launch",
+          "program": "${workspaceRoot}/node_modules/ts-node-dev/bin/ts-node-dev",
+          "args": [
+            "${workspaceRoot}/src/index.ts"
+          ],
+          "restart":true,
+          "cwd": "${workspaceRoot}",
+          "protocol": "inspector"
+      }
+  ]
+}
