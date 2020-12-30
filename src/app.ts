@@ -22,8 +22,12 @@ export const getApp = (): Application => {
 
   // 错误处理
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(error)
-    const { message, errors, status = 500 } = error
+    const { message, errors, status = 500, name } = error
+    if (name === 'UnauthorizedError') {
+      return res.status(401).json({
+        message: '账号未登录或已失效',
+      })
+    }
     res.status(status).json({
       message: message,
       errors: errors,
