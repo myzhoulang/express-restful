@@ -1,4 +1,4 @@
-import { ObjectId, Date, Schema } from 'mongoose'
+import { ObjectId, Date, Schema, Document } from 'mongoose'
 
 export enum UserStatus {
   '已冻结',
@@ -35,6 +35,8 @@ export interface IUser {
   system?: Schema.Types.ObjectId
   roles?: Array<ObjectId>
 }
+
+export type UserModel = IUser & Document
 
 export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
 

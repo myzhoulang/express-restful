@@ -1,10 +1,8 @@
-import { Document, Schema } from 'mongoose'
+import { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { createCollection, timestamps } from '../../util/db'
 import config from '../../config/'
-import { IUser } from './typings'
-
-export type UserModel = IUser & Document
+import { UserModel } from './typings'
 
 export const UserSchema = new Schema(
   {
