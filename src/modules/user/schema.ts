@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 import { createCollection, timestamps } from '../../util/db'
 import config from '../../config/'
 import { UserDocument, UserModelConstructor } from './typings'
+
 const { Types } = Schema
 
 export const userSchema = new Schema(
@@ -35,6 +36,7 @@ export const userSchema = new Schema(
     },
     last_login_time: {
       type: Types.Date,
+      default: null,
     },
     login_count: {
       type: Types.Number,
@@ -117,12 +119,12 @@ userSchema.statics.getOneByPhone = function (phone: string) {
   return this.findOne({ phone })
 }
 
-userSchema.statics.setLoginCount = async function (id: unknown) {
-  const a = await this.findByIdAndUpdate(id, {
+userSchema.statics.setLoginCountAndAt = async function (id: unknown) {
+  await this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
   })
-} as UserModelConstructor['setLoginCount']
+} as UserModelConstructor['setLoginCountAndAt']
 
 const User = createCollection<UserDocument>('User', userSchema) as UserModelConstructor
 

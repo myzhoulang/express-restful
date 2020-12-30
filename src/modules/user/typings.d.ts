@@ -1,4 +1,4 @@
-import { ObjectId, Date, Schema, Document, Model } from 'mongoose'
+import { ObjectId, Schema, Document, Model } from 'mongoose'
 
 export enum UserStatus {
   '已冻结',
@@ -40,7 +40,7 @@ export interface UserDocument extends Document, IUser {}
 export interface UserModelConstructor extends Model<UserDocument> {
   getOneByEmail(this: Model<UserDocument>, email: string): Promise<UserDocument>
   getOneByPhone(this: Model<UserDocument>, phone: string): Promise<UserDocument>
-  setLoginCount(this: Model<UserDocument>, id: unknown): void
+  setLoginCountAndAt(this: Model<UserDocument>, id: unknown): void
 }
 
 // export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
@@ -51,7 +51,7 @@ export interface IQueryPage {
 }
 
 export interface IUserQuery extends IQueryPage {
-  fields?: Array<QueryFields> | QueryFields
+  fields?: string
   sort: string
   direction?: number
   page: number

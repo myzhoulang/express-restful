@@ -32,6 +32,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 // 新增
 router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: NextFunction) => {
   const user = req.body
+
   userService
     .create(user)
     .then((data) => {
@@ -48,6 +49,7 @@ router.patch(
   validObjectId,
   validatorUpdateBody,
   (req: Request, res: Response, next: NextFunction) => {
+    console.log(req)
     const id = req.params.id
     const body = req.body
     userService

@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../user/schema'
 import { UserDocument } from '../user/typings'
-import { use } from 'chai'
+
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   const { name, password } = req.body
   const user: UserDocument | null = await User.findOne({ name })
@@ -31,8 +31,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       expiresIn: '100h',
     },
   )
-  console.log(user)
-  // 更新登陆信息
-  User.setLoginCount(user._id)
+  // 更新最后登录时间以及对登录次数 +1
+  User.setLoginCountAndAt(user._id)
   res.json({ data: { token } })
 }

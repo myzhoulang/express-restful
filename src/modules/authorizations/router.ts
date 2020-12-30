@@ -1,10 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import { validatorLogin } from './validator'
-import response from '../../util/response'
-import User from '../user/schema'
 import { auth } from './service'
 
 const router: Router = Router()
@@ -22,5 +18,7 @@ router.post(
   },
   auth,
 )
+
+// 登出
 
 export { router as authorizationsRoter }
