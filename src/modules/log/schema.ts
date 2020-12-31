@@ -1,73 +1,67 @@
-import { ObjectId, Document, Schema } from 'mongoose'
+import { ObjectId, Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
-
-// http 方法
-export enum HttpMethods {
-  'GET',
-  'POST',
-  'PUT',
-  'PATCH',
-  'DELETE',
-  'OPTIONS',
-}
-
-export interface ILog extends Document {
-  _id: ObjectId
-  action: string
-  module: string
-  user_id: ObjectId
-  user_name: string
-  request_url: string
-  request_id: string
-  request_method: HttpMethods
-  request_times: Number
-  system: string
-}
-
+import { LogDocument, LogModelConstructor } from './typings'
 export const LogSchema = new Schema(
   {
-    action: {
-      type: Schema.Types.String,
-      required: true,
-    },
-    module: {
-      type: Schema.Types.String,
-      required: true,
-    },
     user_id: {
       type: Schema.Types.ObjectId,
-      required: true,
     },
     user_name: {
       type: Schema.Types.String,
-      required: true,
     },
     request_url: {
       type: Schema.Types.String,
-      required: true,
     },
     request_ip: {
       type: Schema.Types.String,
-      required: true,
     },
     request_method: {
       type: Schema.Types.String,
       enum: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
       required: true,
+      default: 'GET',
     },
-    request_params: {
+    request_body: {
       type: Schema.Types.String,
     },
     request_times: {
       type: Schema.Types.Number,
-      required: true,
+    },
+    request_status: {
+      // TODO:使用类型
+      type: Schema.Types.Number,
     },
     system: {
       type: Schema.Types.ObjectId,
-      required: true,
     },
   },
   timestamps,
 )
-const Log = createCollection<ILog>('Log', LogSchema)
+
+LogSchema.statics.getByAction = function (action: string) {
+  return this.find({ action })
+} as LogModelConstructor['getByAction']
+
+LogSchema.statics.getByRequestIp = function (ip: string) {
+  return this.find({ request_id: ip })
+} as LogModelConstructor['getByRequestIp']
+
+LogSchema.statics.getByAction = function (id: ObjectId) {
+  return this.find({ user_id: id })
+} as LogModelConstructor['getByUserId']
+
+LogSchema.statics.getByTime = function (time: number) {
+  const sTime = String(time)
+  let oper
+  if (sTime.startsWith('-')) {
+    oper = { $lt: time }
+  } else if (sTime.startsWith('+')) {
+    oper = { $gt: time }
+  } else {
+    oper = time
+  }
+  return this.find({ time: oper })
+} as LogModelConstructor['getByTime']
+
+const Log = createCollection<LogDocument>('Log', LogSchema) as LogModelConstructor
 export default Log

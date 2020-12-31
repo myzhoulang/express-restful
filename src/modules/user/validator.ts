@@ -1,3 +1,7 @@
+/**
+ * TODO: 对下面的校验规则需要整理
+ */
+
 import { Request, Response, NextFunction } from 'express'
 import { query, body } from 'express-validator'
 import { validate, listBaseRules } from '../../validator'

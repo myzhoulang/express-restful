@@ -1,23 +1,6 @@
-import { ObjectId, Date, Document, Schema } from 'mongoose'
+import { Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
-
-export enum RoleStatus {
-  '已冻结',
-  '正常',
-}
-
-export interface IRole extends Document {
-  _id: ObjectId
-  title: string
-  desc?: string
-  status: RoleStatus
-  created_by: ObjectId
-  created_at: Date
-  updated_by: ObjectId
-  updated_at: Date
-  system: string
-  authority_ids: Array<ObjectId>
-}
+import { RoleDocument, RoleModelConstructor } from './typings'
 
 export const RoleSchema = new Schema(
   {
@@ -42,15 +25,21 @@ export const RoleSchema = new Schema(
     },
     created_by: {
       type: Schema.Types.ObjectId,
-      required: true,
+      // required: true,
+    },
+    created_by_name: {
+      type: Schema.Types.String,
     },
     updated_by: {
       type: Schema.Types.ObjectId,
-      required: true,
+      // required: true,
+    },
+    updated_by_name: {
+      type: Schema.Types.String,
     },
     system: {
       type: Schema.Types.ObjectId,
-      required: true,
+      // required: true,
     },
     authority_ids: {
       type: [Schema.Types.ObjectId],
@@ -58,5 +47,10 @@ export const RoleSchema = new Schema(
   },
   timestamps,
 )
-const Role = createCollection<IRole>('Role', RoleSchema)
+
+RoleSchema.statics.getOneByName = function (name: string) {
+  return this.findOne({ name })
+} as RoleModelConstructor['getOneByName']
+
+const Role = createCollection<RoleDocument>('Role', RoleSchema) as RoleModelConstructor
 export default Role

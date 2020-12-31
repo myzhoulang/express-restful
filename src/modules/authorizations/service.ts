@@ -26,12 +26,13 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
       id: String((user as UserDocument)._id),
       name: (user as UserDocument).name,
     },
-    JWT_SECRET,
+    JWT_SECRET as string,
     {
       expiresIn: '100h',
     },
   )
   // 更新最后登录时间以及对登录次数 +1
   User.setLoginCountAndAt(user._id)
-  res.json({ data: { token } })
+  req.setData(200, { token })
+  next()
 }

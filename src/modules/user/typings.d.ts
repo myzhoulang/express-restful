@@ -1,11 +1,11 @@
 import { ObjectId, Schema, Document, Model } from 'mongoose'
 
-export enum UserStatus {
+export enum status {
   '已冻结',
   '正常',
 }
 
-export enum UserGender {
+export enum gender {
   '女',
   '男',
 }
@@ -22,14 +22,16 @@ export interface IUser {
   department?: string
   avatar?: string
   motto?: string
-  gender: UserGender
+  gender: gender
   age?: number
-  status: UserStatus
+  status: status
   tags?: Array<string>
   teams?: Array<string>
   created_by?: ObjectId
+  created_by_name?: string
   created_at?: Date
   updated_by?: ObjectId
+  updated_by_name?: string
   updated_at?: Date
   system?: Schema.Types.ObjectId
   roles?: Array<ObjectId>

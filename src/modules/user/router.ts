@@ -11,7 +11,8 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
   userService
     .query(req.query as IUserQuery)
     .then(([users, total]) => {
-      res.json({ users, total })
+      req.setData(200, { users, total })
+      next()
     })
     .catch(next)
 })
@@ -24,19 +25,26 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   userService
     .getById(id, fields)
     .then((user: UserDocument | null) => {
-      res.status(200).json({ user })
+      req.setData(200, { user })
+      next()
     })
     .catch(next)
 })
 
 // 新增
 router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: NextFunction) => {
-  const user = req.body
+  // 抽取出 中间件
+  const user = req.user as IJWTPlayLoad
+  const body = req.body as UserDocument
+  body.created_by_name = user.name
+  body.created_by = user.id
+  body.updated_by_name = user.name
 
   userService
-    .create(user)
-    .then((data) => {
-      res.status(201).json(data)
+    .create(body)
+    .then((user) => {
+      req.setData(201, { user })
+      next()
     })
     .catch((err) => {
       next(err)
@@ -49,14 +57,20 @@ router.patch(
   validObjectId,
   validatorUpdateBody,
   (req: Request, res: Response, next: NextFunction) => {
-    console.log(req)
     const id = req.params.id
-    const body = req.body
+
+    // 抽取出 中间件
+    const user = req.user as IJWTPlayLoad
+    const body = req.body as UserDocument
+    body.updated_by_name = user.name
+    body.updated_by = user.id
+
     userService
       .update(id, body)
-      .then((data) => {
-        if (data) {
-          res.status(200).json(data)
+      .then((user) => {
+        if (user) {
+          req.setData(200, { user })
+          next()
         } else {
           next(new Error('更新的用户不存在'))
         }
@@ -75,11 +89,11 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 删除失败返回 null
   userService.deleteById(id).then((result) => {
     if (result) {
-      res.status(204).json()
+      req.setData(204)
     } else {
       next(new Error('删除的用户不存在'))
     }
   })
 })
 
-export { router as userRoter }
+export { router as userRouter }

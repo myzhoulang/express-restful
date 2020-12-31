@@ -6,21 +6,22 @@ export const filterFileds = '-__v -password'
 const userService = {
   async query(queries: IUserQuery): Promise<[Array<UserDocument>, number]> {
     const { fields, sort, direction, page, size, ...query } = queries
+    const maxSize = Math.min(size, 20)
     return await Promise.all([
       User.find(query)
-        .skip((page - 1) * size)
-        .limit(size)
+        .skip((page - 1) * maxSize)
+        .limit(maxSize)
         .sort({ [sort]: direction })
         .select(`${fields || ''} ${filterFileds}`),
       User.find(query).count(),
     ])
   },
 
-  async getByEmail(email: string) {
+  async getByEmail(email: string): Promise<UserDocument> {
     return User.getOneByEmail(email)
   },
 
-  async getByPhone(phone: string) {
+  async getByPhone(phone: string): Promise<UserDocument> {
     return User.getOneByPhone(phone)
   },
 
@@ -28,7 +29,7 @@ const userService = {
     return await User.findById(id).select(`${fields || ''} ${filterFileds}`)
   },
 
-  async create(body: UserDocument) {
+  async create(body: UserDocument): Promise<UserDocument | Error> {
     const user = await this.getByPhone(body.phone)
     if (!user) {
       return await User.create(body)
@@ -36,7 +37,7 @@ const userService = {
     return Promise.reject({ status: 409, message: `email ${body.phone} 已被添加` })
   },
 
-  async update(id: unknown, body: UserDocument) {
+  async update(id: unknown, body: UserDocument): Promise<UserDocument | null> {
     return await User.findByIdAndUpdate(id, body)
   },
 

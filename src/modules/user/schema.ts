@@ -94,8 +94,14 @@ export const userSchema = new Schema(
     created_by: {
       type: Types.ObjectId,
     },
+    created_by_name: {
+      type: Types.String,
+    },
     updated_by: {
       type: Types.ObjectId,
+    },
+    updated_by_name: {
+      type: Types.String,
     },
     system: {
       type: Types.ObjectId,
@@ -111,16 +117,17 @@ export const userSchema = new Schema(
   timestamps,
 )
 
-userSchema.statics.getOneByEmail = function (email: string) {
-  return this.findOne({ email })
-}
+// 在userSchema上定义静态方法
+userSchema.statics.getOneByEmail = async function (email: string) {
+  return await this.findOne({ email })
+} as UserModelConstructor['getOneByEmail']
 
-userSchema.statics.getOneByPhone = function (phone: string) {
-  return this.findOne({ phone })
-}
+userSchema.statics.getOneByPhone = async function (phone: string) {
+  return await this.findOne({ phone })
+} as UserModelConstructor['getOneByPhone']
 
 userSchema.statics.setLoginCountAndAt = async function (id: unknown) {
-  await this.findByIdAndUpdate(id, {
+  return await this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
   })

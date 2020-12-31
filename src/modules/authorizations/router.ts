@@ -2,12 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validationResult } from 'express-validator'
 import { validatorLogin } from './validator'
 import { auth } from './service'
+import log from '../../middleware/log'
 
 const router: Router = Router()
 
 // 登录
 router.post(
   '/login',
+  log,
   validatorLogin(),
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
