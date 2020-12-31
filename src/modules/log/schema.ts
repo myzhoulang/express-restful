@@ -28,7 +28,6 @@ export const LogSchema = new Schema(
       type: Schema.Types.Number,
     },
     request_status: {
-      // TODO:使用类型
       type: Schema.Types.Number,
     },
     system: {

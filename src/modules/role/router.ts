@@ -2,14 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import service from './service'
-import { IRoleQuery, RoleDocument } from './typings'
+import { RoleDocument } from './typings'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(req.query as IRoleQuery)
+    .query(req.query as IListQueryFields)
     .then(([roles, total]) => {
       req.setData(200, { roles, total })
       next()

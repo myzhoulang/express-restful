@@ -5,6 +5,7 @@ import * as DB from './util/db'
 import * as router from './router'
 import { Error } from './util/types'
 import service from './modules/log/service'
+import filter from './util/filter'
 
 export const getApp = (): Application => {
   const app: Application = express()
@@ -46,10 +47,16 @@ export const getApp = (): Application => {
   })
 
   app.use((req: Request) => {
-    req.log.request_times = Date.now() - req.log.request_start_at
-    req.log.request_status = req?.data?.status
-
-    service.create(req.log)
+    try {
+      req.log.request_times = Date.now() - req.log.request_start_at
+      req.log.request_status = req?.data?.status
+      // 过滤掉敏感信息
+      // 敏感字段在 config 文件夹下的配置文件中配置
+      req.log.request_body = filter.body(req.body)
+      service.create(req.log)
+    } catch (e) {
+      console.log('服务器出错')
+    }
   })
 
   return app

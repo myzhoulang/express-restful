@@ -1,8 +1,8 @@
-import { check } from 'express-validator'
+import { body } from 'express-validator'
 const validatorLogin = () => {
   return [
-    check('name').trim().not().isEmpty().escape(),
-    check('password').trim().not().isEmpty().withMessage('密码不能为空'),
+    body('name').trim().not().isEmpty().escape(),
+    body('password').trim().notEmpty().withMessage('密码不能为空'),
   ]
 }
 

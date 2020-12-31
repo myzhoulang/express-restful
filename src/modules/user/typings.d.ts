@@ -44,19 +44,3 @@ export interface UserModelConstructor extends Model<UserDocument> {
   getOneByPhone(this: Model<UserDocument>, phone: string): Promise<UserDocument>
   setLoginCountAndAt(this: Model<UserDocument>, id: unknown): void
 }
-
-// export type QueryFields = 'name' | 'phone' | 'gender' | 'status'
-
-export interface IQueryPage {
-  page: number
-  size: number
-}
-
-export interface IUserQuery extends IQueryPage {
-  fields?: string
-  sort: string
-  direction?: number
-  page: number
-  size: number
-  [key: string]: any
-}

@@ -2,14 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams } from './validator'
 import service from './service'
-import { ILogQuery, LogDocument } from './typings'
+import { LogDocument } from './typings'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(req.query as ILogQuery)
+    .query(req.query as IListQueryFields)
     .then(([logs, total]) => {
       req.setData(200, { logs, total })
       next()

@@ -4,19 +4,6 @@ export enum status {
   '已冻结',
   '正常',
 }
-export interface IRolepage {
-  page: number
-  size: number
-}
-
-export interface IRoleQuery extends IRolepage {
-  fields?: string
-  sort: string
-  direction?: number
-  page: number
-  size: number
-  [key: string]: any
-}
 
 export interface IRole {
   title: string

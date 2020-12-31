@@ -2,14 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import userService from './service'
-import { IUserQuery, UserDocument } from './typings'
+import { UserDocument } from './typings'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   userService
-    .query(req.query as IUserQuery)
+    .query(req.query as IListQueryFields)
     .then(([users, total]) => {
       req.setData(200, { users, total })
       next()

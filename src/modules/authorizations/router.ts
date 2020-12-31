@@ -12,6 +12,7 @@ router.post(
   log,
   validatorLogin(),
   async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       next({ status: 400, errors: errors.array() })

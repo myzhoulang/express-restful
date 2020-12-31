@@ -1,13 +1,4 @@
 import { ObjectId, Document, Model, Query } from 'mongoose'
-// http 方法
-export enum HttpMethods {
-  'GET',
-  'POST',
-  'PUT',
-  'PATCH',
-  'DELETE',
-  'OPTIONS',
-}
 
 export interface ILog {
   user_id?: ObjectId
@@ -17,7 +8,7 @@ export interface ILog {
   request_method: HttpMethods
   request_body: string
   request_times: number
-  request_status: number
+  request_status: HttpStatusCode
   system?: string
 }
 
@@ -28,18 +19,4 @@ export interface LogModelConstructor extends Model<LogDocument> {
   getByRequestIp(this: Model<LogDocument>, ip: string): Query<LogDocument[], LogDocument>
   getByUserId(this: Model<LogDocument>, id: ObjectId): Query<LogDocument[], LogDocument>
   getByTime(this: Model<LogDocument>, time: number): Query<LogDocument[], LogDocument>
-}
-
-export interface ILogPage {
-  page: number
-  size: number
-}
-
-export interface ILogQuery extends ILogPage {
-  fields?: string
-  sort: string
-  direction?: number
-  page: number
-  size: number
-  [key: string]: any
 }

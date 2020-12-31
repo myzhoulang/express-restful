@@ -1,10 +1,10 @@
 import User from './schema'
-import { IUserQuery, UserDocument } from './typings'
+import { UserDocument } from './typings'
 
 export const filterFileds = '-__v -password'
 
 const userService = {
-  async query(queries: IUserQuery): Promise<[Array<UserDocument>, number]> {
+  async query(queries: IListQueryFields): Promise<[Array<UserDocument>, number]> {
     const { fields, sort, direction, page, size, ...query } = queries
     const maxSize = Math.min(size, 20)
     return await Promise.all([

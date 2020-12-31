@@ -1,10 +1,10 @@
 import Role from './schema'
-import { IRoleQuery, RoleDocument } from './typings'
+import { RoleDocument } from './typings'
 
 export const filterFileds = '-__v'
 
 const roleService = {
-  async query(queries: IRoleQuery): Promise<[Array<RoleDocument>, number]> {
+  async query(queries: IListQueryFields): Promise<[Array<RoleDocument>, number]> {
     const { fields, sort, direction, page, size, ...query } = queries
     const maxSize = Math.min(size)
     return await Promise.all([
