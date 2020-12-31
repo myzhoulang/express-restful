@@ -1,26 +1,6 @@
-import { ObjectId, Date, Document, Schema } from 'mongoose'
+import { Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
-export enum AuthorityStatus {
-  '已冻结',
-  '正常',
-}
-
-export interface IAuthority extends Document {
-  _id: ObjectId
-  title: string
-  desc?: string
-  code: string
-  parent_id: ObjectId
-  status: number
-  created_by: ObjectId
-  created_at: Date
-  updated_by: ObjectId
-  updated_at: Date
-  icon?: string
-  type: number
-  url?: string
-  system: string
-}
+import { AuthorityDocument, AuthorityModelConstructor } from './typings'
 
 export const AuthoritySchema = new Schema(
   {
@@ -44,8 +24,7 @@ export const AuthoritySchema = new Schema(
     },
     parent_id: {
       type: Schema.Types.ObjectId,
-      required: true,
-      default: 0,
+      default: null,
     },
     status: {
       type: Schema.Types.Number,
@@ -74,10 +53,22 @@ export const AuthoritySchema = new Schema(
     },
     system: {
       type: Schema.Types.ObjectId,
-      required: true,
     },
   },
   timestamps,
 )
-const Authority = createCollection<IAuthority>('Authority', AuthoritySchema)
+
+AuthoritySchema.statics.getOneByTitle = function (title: string) {
+  return this.findOne({ title })
+} as AuthorityModelConstructor['getOneByTitle']
+
+AuthoritySchema.statics.getByCode = function (code: string) {
+  return this.findOne({ code })
+} as AuthorityModelConstructor['getByCode']
+
+const Authority = createCollection<AuthorityDocument>(
+  'Authority',
+  AuthoritySchema,
+) as AuthorityModelConstructor
+
 export default Authority

@@ -33,7 +33,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 
 // 新增
 router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: NextFunction) => {
-  // 抽取出 中间件
+  // TODO:抽取出 中间件
   const user = req.user as IJWTPlayLoad
   const body = req.body as UserDocument
   body.created_by_name = user.name
@@ -96,4 +96,4 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   })
 })
 
-export { router as userRouter }
+export { router as user }

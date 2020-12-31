@@ -30,7 +30,7 @@ const roleService = {
     if (!role) {
       return await Role.create(body)
     }
-    return Promise.reject({ status: 409, message: `email ${body.title} 已被添加` })
+    return Promise.reject({ status: 409, message: `角色名称 ${body.title} 已被添加` })
   },
 
   async update(id: unknown, body: RoleDocument): Promise<RoleDocument | null> {

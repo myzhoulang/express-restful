@@ -26,8 +26,9 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
     .getById(id, fields)
     .then((log: LogDocument | null) => {
       req.setData(200, { log })
+      next()
     })
     .catch(next)
 })
 
-export { router as logRouter }
+export { router as log }

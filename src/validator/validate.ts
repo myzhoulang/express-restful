@@ -7,7 +7,6 @@ const validate = (validations: Array<ContextRunner>) => {
     await Promise.all(validations.map((validation) => validation.run(req)))
 
     const errors = validationResult(req).array({ onlyFirstError: true })
-    console.log('e', errors)
     if (errors.length <= 0) {
       return next()
     }

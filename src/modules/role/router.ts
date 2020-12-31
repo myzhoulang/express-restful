@@ -95,4 +95,4 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   })
 })
 
-export { router as roleRouter }
+export { router as role }

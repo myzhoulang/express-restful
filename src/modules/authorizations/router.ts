@@ -12,7 +12,6 @@ router.post(
   log,
   validatorLogin(),
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.body)
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
       next({ status: 400, errors: errors.array() })
@@ -21,7 +20,5 @@ router.post(
   },
   auth,
 )
-
 // 登出
-
-export { router as authorizationsRoter }
+export { router as authorizations }

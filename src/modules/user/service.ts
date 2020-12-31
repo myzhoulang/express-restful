@@ -34,7 +34,7 @@ const userService = {
     if (!user) {
       return await User.create(body)
     }
-    return Promise.reject({ status: 409, message: `email ${body.phone} 已被添加` })
+    return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
   },
 
   async update(id: unknown, body: UserDocument): Promise<UserDocument | null> {

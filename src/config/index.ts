@@ -2,8 +2,8 @@ import { CorsOptions } from 'cors'
 
 // 白名单配置
 export interface Whitelist {
-  path: Array<string>
-  body: Array<string>
+  path?: Array<string>
+  body?: Array<string>
 }
 
 // 程序配置项
