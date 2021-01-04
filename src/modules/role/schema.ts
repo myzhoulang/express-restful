@@ -1,6 +1,7 @@
-import { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
 import { RoleDocument, RoleModelConstructor } from './typings'
+import Authority from '../authority/schema'
 
 export const RoleSchema = new Schema(
   {
@@ -51,6 +52,46 @@ export const RoleSchema = new Schema(
 RoleSchema.statics.getOneByName = function (name: string) {
   return this.findOne({ name })
 } as RoleModelConstructor['getOneByName']
+
+// 根据角色 ID 获取权限标识符
+RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
+  const mongoIds = ids.map((item) => mongoose.Types.ObjectId(item))
+  return this.aggregate([
+    {
+      $lookup: {
+        //关联
+        from: 'authorities', //关联的表名
+        localField: 'authority_ids', //本身的外键
+        foreignField: '_id', //需要关联表的外键
+        as: 'authority',
+      },
+    },
+    {
+      $match: {
+        //筛选条件
+        _id: {
+          $in: mongoIds,
+        },
+      },
+    },
+    {
+      $group: {
+        //组包
+        _id: '$_id',
+        authority: {
+          $first: '$authority',
+        },
+      },
+    },
+    {
+      $project: {
+        authority: {
+          __v: -1,
+        },
+      },
+    },
+  ])
+} as RoleModelConstructor['getAuthorityByRoleIds']
 
 const Role = createCollection<RoleDocument>('Role', RoleSchema) as RoleModelConstructor
 export default Role

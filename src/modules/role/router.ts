@@ -6,6 +6,17 @@ import { RoleDocument } from './typings'
 
 const router: Router = Router()
 
+// test
+// router.get('/authorids', async (req, res, next) => {
+//   const docs = await service.getAuthoriesForRoles([
+//     '5fed5535cb86bf1a19f22495',
+//     '5ff2c8a688197460b3141a19',
+//   ])
+//   req.setData(200, docs)
+//   console.log(JSON.stringify(docs))
+//   next()
+// })
+
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service

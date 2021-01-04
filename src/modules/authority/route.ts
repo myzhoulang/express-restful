@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import service from './service'
-import { AuthorityDocument } from './typings'
+import { AuthorityDocument, IAuthority } from './typings'
 
 const router: Router = Router()
 
@@ -24,7 +24,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const fields = query.fields as string
   service
     .getById(id, fields)
-    .then((authority: AuthorityDocument | null) => {
+    .then((authority: IAuthority | null) => {
       req.setData(200, { authority })
       next()
     })

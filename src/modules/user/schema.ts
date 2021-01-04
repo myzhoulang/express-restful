@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { createCollection, timestamps } from '../../util/db'
 import config from '../../config/'

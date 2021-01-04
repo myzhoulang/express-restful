@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import userService from './service'
-import { UserDocument } from './typings'
+import { IUser, UserDocument } from './typings'
 
 const router: Router = Router()
 
@@ -24,7 +24,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const fields = query.fields as string
   userService
     .getById(id, fields)
-    .then((user: UserDocument | null) => {
+    .then((user: IUser | null) => {
       req.setData(200, { user })
       next()
     })

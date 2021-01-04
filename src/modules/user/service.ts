@@ -1,5 +1,5 @@
 import User from './schema'
-import { UserDocument } from './typings'
+import { IUser, UserDocument } from './typings'
 
 export const filterFileds = '-__v -password'
 
@@ -25,8 +25,10 @@ const userService = {
     return User.getOneByPhone(phone)
   },
 
-  async getById(id: unknown, fields?: string): Promise<UserDocument | null> {
-    return await User.findById(id).select(`${fields || ''} ${filterFileds}`)
+  async getById(id: unknown, fields?: string): Promise<IUser | null> {
+    return await User.findById(id)
+      .select(`${fields || ''} ${filterFileds}`)
+      .lean()
   },
 
   async create(body: UserDocument): Promise<UserDocument | Error> {

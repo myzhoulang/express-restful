@@ -35,6 +35,7 @@ export interface IUser {
   updated_at?: Date
   system?: Schema.Types.ObjectId
   roles?: Array<ObjectId>
+  auths?: Array<string>
 }
 
 export interface UserDocument extends Document, IUser {}

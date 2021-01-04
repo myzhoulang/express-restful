@@ -48,6 +48,7 @@ export const getApp = (): Application => {
 
   app.use((req: Request) => {
     try {
+      console.log(req.log)
       req.log.request_times = Date.now() - req.log.request_start_at
       req.log.request_status = req?.data?.status
       // 过滤掉敏感信息

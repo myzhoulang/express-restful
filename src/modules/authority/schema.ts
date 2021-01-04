@@ -1,6 +1,7 @@
-import { Schema } from 'mongoose'
+import mongoose, { Schema, ObjectId } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
 import { AuthorityDocument, AuthorityModelConstructor } from './typings'
+import Role from '../role/schema'
 
 export const AuthoritySchema = new Schema(
   {
@@ -62,9 +63,9 @@ AuthoritySchema.statics.getOneByTitle = function (title: string) {
   return this.findOne({ title })
 } as AuthorityModelConstructor['getOneByTitle']
 
-AuthoritySchema.statics.getByCode = function (code: string) {
+AuthoritySchema.statics.getOneByCode = function (code: string) {
   return this.findOne({ code })
-} as AuthorityModelConstructor['getByCode']
+} as AuthorityModelConstructor['getOneByCode']
 
 const Authority = createCollection<AuthorityDocument>(
   'Authority',
