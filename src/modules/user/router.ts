@@ -25,7 +25,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   userService
     .getById(id, fields)
     .then((user: IUser | null) => {
-      req.setData(200, { user })
+      req.setData(200, user)
       next()
     })
     .catch(next)
@@ -43,7 +43,7 @@ router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: 
   userService
     .create(body)
     .then((user) => {
-      req.setData(201, { user })
+      req.setData(201, user)
       next()
     })
     .catch((err) => {
@@ -69,7 +69,7 @@ router.patch(
       .update(id, body)
       .then((user) => {
         if (user) {
-          req.setData(200, { user })
+          req.setData(200, user)
           next()
         } else {
           next(new Error('更新的用户不存在'))

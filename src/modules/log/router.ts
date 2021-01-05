@@ -25,7 +25,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   service
     .getById(id, fields)
     .then((log: LogDocument | null) => {
-      req.setData(200, { log })
+      req.setData(200, log)
       next()
     })
     .catch(next)

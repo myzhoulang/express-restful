@@ -56,6 +56,7 @@ RoleSchema.statics.getOneByName = function (name: string) {
 // 根据角色 ID 获取权限标识符
 RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
   const mongoIds = ids.map((item) => mongoose.Types.ObjectId(item))
+  console.log(mongoIds)
   return this.aggregate([
     {
       $lookup: {
@@ -74,19 +75,35 @@ RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
         },
       },
     },
+
     {
       $group: {
-        //组包
-        _id: '$_id',
-        authority: {
-          $first: '$authority',
+        _id: null,
+        auths_code: {
+          $addToSet: '$authority.code',
+        },
+        auth_titles: {
+          $addToSet: '$authority.title',
         },
       },
     },
+
     {
       $project: {
-        authority: {
-          __v: -1,
+        _id: 0,
+        codes: {
+          $reduce: {
+            input: '$auths_code',
+            initialValue: [],
+            in: { $concatArrays: ['$$value', '$$this'] },
+          },
+        },
+        titles: {
+          $reduce: {
+            input: '$auth_titles',
+            initialValue: [],
+            in: { $concatArrays: ['$$value', '$$this'] },
+          },
         },
       },
     },
