@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
+import { creater, updater } from '../../middleware/operator'
 import service from './service'
 import { RoleDocument } from './typings'
 
@@ -32,38 +33,37 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 })
 
 // 新增
-router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: NextFunction) => {
-  // 抽取出 中间件
-  const user = req.user as IJWTPlayLoad
-  const body = req.body as RoleDocument
-  body.created_by_name = user.name
-  body.updated_by_name = user.name
-  body.created_by = user.id
-
-  service
-    .create(body)
-    .then((role) => {
-      req.setData(201, role)
-      next()
-    })
-    .catch((err) => {
-      next(err)
-    })
-})
+router.post(
+  '/',
+  validatorAddOrRepacleBody,
+  (req: Request, res: Response, next: NextFunction) => {
+    creater<RoleDocument>(req, res, next)
+    updater<RoleDocument>(req, res, next)
+  },
+  (req: Request, res: Response, next: NextFunction) => {
+    // 抽取出 中间件
+    const body = req.body as RoleDocument
+    service
+      .create(body)
+      .then((role) => {
+        req.setData(201, role)
+        next()
+      })
+      .catch((err) => {
+        next(err)
+      })
+  },
+)
 
 // update
 router.patch(
   '/:id',
-  validObjectId,
-  validatorUpdateBody,
+  [validObjectId, validatorUpdateBody],
+  (req: Request, res: Response, next: NextFunction) => updater<RoleDocument>(req, res, next),
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     // 抽取出 中间件
-    const user = req.user as IJWTPlayLoad
     const body = req.body as RoleDocument
-    body.updated_by_name = user.name
-    body.updated_by = user.id
-
     service
       .update(id, body)
       .then((role) => {

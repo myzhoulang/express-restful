@@ -37,6 +37,9 @@ export const LogSchema = new Schema(
   timestamps,
 )
 
+// FIXME: 查询结果条数处理
+// 查询出的数据可能包含 N 条
+// 如何处理？
 LogSchema.statics.getByAction = function (action: string) {
   return this.find({ action })
 } as LogModelConstructor['getByAction']

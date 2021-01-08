@@ -1,5 +1,4 @@
 import Role from './schema'
-import Authority from '../authority/schema'
 import { RoleDocument } from './typings'
 import { ObjectId } from 'mongoose'
 
@@ -26,10 +25,6 @@ const roleService = {
   async getOneByName(name: string, fields?: string): Promise<RoleDocument> {
     return await Role.getOneByName(name).select(`${fields || ''} ${filterFileds}`)
   },
-
-  // async getAuthorityById(id: string) {
-  //   return await Role.getAuthorityById(id)
-  // },
 
   async getAuthoriesForRoles(roles: ObjectId | Array<ObjectId>) {
     return await Role.getAuthorityByRoleIds(roles)

@@ -6,7 +6,7 @@ interface IObj {
 
 function body(body: IObj) {
   if (body) {
-    config?.white?.body.forEach((field: string) => {
+    config.black.body.forEach((field: string) => {
       delete body[field]
     })
   }

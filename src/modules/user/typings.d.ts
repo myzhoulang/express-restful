@@ -27,12 +27,12 @@ export interface IUser {
   status: status
   tags?: Array<string>
   teams?: Array<string>
-  created_by?: ObjectId
-  created_by_name?: string
-  created_at?: Date
-  updated_by?: ObjectId
-  updated_by_name?: string
-  updated_at?: Date
+  created_by: ObjectId
+  created_by_name: string
+  created_at: Date
+  updated_by: ObjectId
+  updated_by_name: string
+  updated_at: Date
   system?: Schema.Types.ObjectId
   roles?: Array<ObjectId>
   auths?: Array<string>

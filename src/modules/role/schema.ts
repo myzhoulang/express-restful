@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import { createCollection, timestamps } from '../../util/db'
 import { RoleDocument, RoleModelConstructor } from './typings'
-import Authority from '../authority/schema'
 
 export const RoleSchema = new Schema(
   {
@@ -56,7 +55,6 @@ RoleSchema.statics.getOneByName = function (name: string) {
 // 根据角色 ID 获取权限标识符
 RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
   const mongoIds = ids.map((item) => mongoose.Types.ObjectId(item))
-  console.log(mongoIds)
   return this.aggregate([
     {
       $lookup: {

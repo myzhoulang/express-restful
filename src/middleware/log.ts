@@ -10,6 +10,5 @@ export default function log(req: Request, res: Response, next: NextFunction) {
     request_methods: req.method,
     request_start_at: Date.now(),
   }
-
   next()
 }

@@ -2,6 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import service from './service'
+import { creater, updater } from '../../middleware/operator'
 import { AuthorityDocument, IAuthority } from './typings'
 
 const router: Router = Router()
@@ -32,39 +33,36 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 })
 
 // 新增
-router.post('/', validatorAddOrRepacleBody, (req: Request, res: Response, next: NextFunction) => {
-  // 抽取出 中间件
-  const user = req.user as IJWTPlayLoad
-  const body = req.body as AuthorityDocument
-  body.created_by_name = user.name
-  body.updated_by_name = user.name
-  body.updated_by = user.id
-  body.created_by = user.id
-
-  service
-    .create(body)
-    .then((authority) => {
-      req.setData(201, authority)
-      next()
-    })
-    .catch((err) => {
-      next(err)
-    })
-})
+router.post(
+  '/',
+  validatorAddOrRepacleBody,
+  (req: Request, res: Response, next: NextFunction) => {
+    creater<AuthorityDocument>(req, res, next)
+    updater<AuthorityDocument>(req, res, next)
+  },
+  (req: Request, res: Response, next: NextFunction) => {
+    // 抽取出 中间件
+    const body = req.body as AuthorityDocument
+    service
+      .create(body)
+      .then((authority) => {
+        req.setData(201, authority)
+        next()
+      })
+      .catch((err) => {
+        next(err)
+      })
+  },
+)
 
 // update
 router.patch(
   '/:id',
-  validObjectId,
-  validatorUpdateBody,
+  [validObjectId, validatorUpdateBody],
+  (req: Request, res: Response, next: NextFunction) => updater<AuthorityDocument>(req, res, next),
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
-    // 抽取出 中间件
-    const user = req.user as IJWTPlayLoad
     const body = req.body as AuthorityDocument
-    body.updated_by_name = user.name
-    body.updated_by = user.id
-
     service
       .update(id, body)
       .then((authority) => {
