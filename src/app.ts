@@ -1,4 +1,4 @@
-import express, { Application, Request, Response, NextFunction, request, response } from 'express'
+import express, { Application, Request, Response, NextFunction } from 'express'
 import middleware from './middleware'
 import * as Sentry from './util/sentry'
 import * as DB from './util/db'
@@ -24,6 +24,7 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(req.data)
     const { status = 200, data } = req.data
     res.status(status).json(data)
     next()
@@ -48,7 +49,6 @@ export const getApp = (): Application => {
 
   app.use((req: Request) => {
     try {
-      console.log(req.log)
       req.log.request_times = Date.now() - req.log.request_start_at
       req.log.request_status = req?.data?.status
       // 过滤掉敏感信息

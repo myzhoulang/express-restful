@@ -2,13 +2,14 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import service from './service'
-import { creater, updater } from '../../middleware/operator'
+import { operator } from '../../middleware/operator'
 import { AuthorityDocument, IAuthority } from './typings'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.query)
   service
     .query(req.query as IListQueryFields)
     .then(([authories, total]) => {
@@ -36,10 +37,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 router.post(
   '/',
   validatorAddOrRepacleBody,
-  (req: Request, res: Response, next: NextFunction) => {
-    creater<AuthorityDocument>(req, res, next)
-    updater<AuthorityDocument>(req, res, next)
-  },
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as AuthorityDocument
@@ -58,8 +56,9 @@ router.post(
 // update
 router.patch(
   '/:id',
-  [validObjectId, validatorUpdateBody],
-  (req: Request, res: Response, next: NextFunction) => updater<AuthorityDocument>(req, res, next),
+  validObjectId,
+  validatorUpdateBody,
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as AuthorityDocument

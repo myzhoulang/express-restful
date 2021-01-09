@@ -1,5 +1,4 @@
 import { ObjectId, Document, Model, Query } from 'mongoose'
-import { AuthorityDocument } from '../authority/typings'
 
 export enum status {
   '已冻结',
@@ -23,7 +22,7 @@ export interface IRole {
 export interface RoleDocument extends Document, IRole {}
 
 export interface RoleModelConstructor extends Model<RoleDocument> {
-  getOneByName(this: Model<RoleDocument>, name: string): Query<RoleDocument, RoleDocument>
+  getOneByTitle(this: Model<RoleDocument>, name: string): Query<RoleDocument, RoleDocument>
   getAuthorityByRoleIds(this: Model<RoleDocument>, id: unknown): any
   getRolesByIds(
     this: Model<RoleDocument>,

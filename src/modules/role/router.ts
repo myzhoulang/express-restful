@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
-import { creater, updater } from '../../middleware/operator'
+import { operator } from '../../middleware/operator'
 import service from './service'
 import { RoleDocument } from './typings'
 
@@ -20,6 +20,7 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 
 // 根据 _id 获取单个
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
+  console.log('id')
   const { params, query } = req
   const id = params.id
   const fields = query.fields as string
@@ -36,10 +37,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 router.post(
   '/',
   validatorAddOrRepacleBody,
-  (req: Request, res: Response, next: NextFunction) => {
-    creater<RoleDocument>(req, res, next)
-    updater<RoleDocument>(req, res, next)
-  },
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as RoleDocument
@@ -59,7 +57,7 @@ router.post(
 router.patch(
   '/:id',
   [validObjectId, validatorUpdateBody],
-  (req: Request, res: Response, next: NextFunction) => updater<RoleDocument>(req, res, next),
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     // 抽取出 中间件
@@ -69,6 +67,7 @@ router.patch(
       .then((role) => {
         if (role) {
           req.setData(200, role)
+          next()
         } else {
           next(new Error('更新的用户不存在'))
         }

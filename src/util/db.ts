@@ -1,5 +1,4 @@
 import mongoose, { ConnectOptions, Schema, Model } from 'mongoose'
-
 export function connect(opts?: ConnectOptions) {
   const { DB_URL, DB_DATABASE } = process.env
   const mongodbUrl = `${DB_URL}/${DB_DATABASE}`

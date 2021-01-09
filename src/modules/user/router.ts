@@ -1,14 +1,18 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
-import { creater, updater } from '../../middleware/operator'
+import { operator } from '../../middleware/operator'
 import userService from './service'
 import { IUser, UserDocument } from './typings'
+import service from '../../util/crud'
+import User from './schema'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
+  // service.query<IUser>(User, req.query)
+
   userService
     .query(req.query as IListQueryFields)
     .then(([users, total]) => {
@@ -36,10 +40,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 router.post(
   '/',
   validatorAddOrRepacleBody,
-  (req: Request, res: Response, next: NextFunction) => {
-    creater<UserDocument>(req, res, next)
-    updater<UserDocument>(req, res, next)
-  },
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     const body = req.body as UserDocument
     userService
@@ -58,7 +59,7 @@ router.post(
 router.patch(
   '/:id',
   [validObjectId, validatorUpdateBody],
-  (req: Request, res: Response, next: NextFunction) => updater<UserDocument>(req, res, next),
+  operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as UserDocument
@@ -84,13 +85,19 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  userService.deleteById(id).then((result) => {
-    if (result) {
-      req.setData(204)
-    } else {
-      next(new Error('删除的用户不存在'))
-    }
-  })
+  userService
+    .deleteById(id)
+    .then((result) => {
+      if (result) {
+        req.setData(204)
+        next
+      } else {
+        next(new Error('删除的用户不存在'))
+      }
+    })
+    .catch((err) => {
+      next(err)
+    })
 })
 
 export { router as user }

@@ -48,9 +48,9 @@ export const RoleSchema = new Schema(
   timestamps,
 )
 
-RoleSchema.statics.getOneByName = function (name: string) {
-  return this.findOne({ name })
-} as RoleModelConstructor['getOneByName']
+RoleSchema.statics.getOneByTitle = function (title: string) {
+  return this.findOne({ title })
+} as RoleModelConstructor['getOneByTitle']
 
 // 根据角色 ID 获取权限标识符
 RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {

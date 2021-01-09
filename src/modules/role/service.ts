@@ -4,47 +4,75 @@ import { ObjectId } from 'mongoose'
 
 export const filterFileds = '-__v'
 
-const roleService = {
+const service = {
   async query(queries: IListQueryFields): Promise<[Array<RoleDocument>, number]> {
-    const { fields, sort, direction, page, size, ...query } = queries
-    const maxSize = Math.min(size)
-    return await Promise.all([
-      Role.find(query)
-        .skip((page - 1) * maxSize)
-        .limit(maxSize)
-        .sort({ [sort]: direction })
-        .select(`${fields || ''} ${filterFileds}`),
-      Role.find(query).count(),
-    ])
+    try {
+      const { fields, sort, direction, page, size, ...query } = queries
+      const maxSize = Math.min(size)
+      return await Promise.all([
+        Role.find(query)
+          .skip((page - 1) * maxSize)
+          .limit(maxSize)
+          .sort({ [sort]: direction })
+          .select(`${fields || ''} ${filterFileds}`),
+        Role.find(query).count(),
+      ])
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 
   async getById(id: unknown, fields?: string): Promise<RoleDocument | null> {
-    return await Role.findById(id).select(`${fields || ''} ${filterFileds}`)
+    try {
+      return await Role.findById(id).select(`${fields || ''} ${filterFileds}`)
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 
-  async getOneByName(name: string, fields?: string): Promise<RoleDocument> {
-    return await Role.getOneByName(name).select(`${fields || ''} ${filterFileds}`)
+  async getOneByTitle(title: string, fields?: string): Promise<RoleDocument> {
+    try {
+      return await Role.getOneByTitle(title).select(`${fields || ''} ${filterFileds}`)
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 
   async getAuthoriesForRoles(roles: ObjectId | Array<ObjectId>) {
-    return await Role.getAuthorityByRoleIds(roles)
+    try {
+      return await Role.getAuthorityByRoleIds(roles)
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 
   async create(body: RoleDocument): Promise<RoleDocument | Error> {
-    const role = await this.getOneByName(body.title)
-    if (!role) {
-      return await Role.create(body)
+    try {
+      const role = await this.getOneByTitle(body.title)
+      if (!role) {
+        return await Role.create(body)
+      }
+      return Promise.reject({ status: 409, message: `角色名称 ${body.title} 已被添加` })
+    } catch (error) {
+      throw 'Server Error'
     }
-    return Promise.reject({ status: 409, message: `角色名称 ${body.title} 已被添加` })
   },
 
   async update(id: unknown, body: RoleDocument): Promise<RoleDocument | null> {
-    return await Role.findByIdAndUpdate(id, body)
+    try {
+      return await Role.findByIdAndUpdate(id, body, { new: true })
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 
   async deleteById(id: unknown): Promise<RoleDocument | null> {
-    return await Role.findByIdAndDelete(id)
+    try {
+      return await Role.findByIdAndDelete(id)
+    } catch (error) {
+      throw 'Server Error'
+    }
   },
 }
 
-export default roleService
+export default service
