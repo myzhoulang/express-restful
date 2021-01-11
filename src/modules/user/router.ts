@@ -11,15 +11,21 @@ const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
-  // service.query<IUser>(User, req.query)
-
-  userService
-    .query(req.query as IListQueryFields)
+  console.log(123)
+  service
+    .query<UserDocument>(User, req.query)
     .then(([users, total]) => {
       req.setData(200, { users, total })
       next()
     })
     .catch(next)
+  // userService
+  //   .query(req.query as IListQueryFields)
+  //   .then(([users, total]) => {
+  //     req.setData(200, { users, total })
+  //     next()
+  //   })
+  //   .catch(next)
 })
 
 // 根据 _id 获取单个
@@ -27,9 +33,9 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const { params, query } = req
   const id = params.id
   const fields = query.fields as string
-  userService
-    .getById(id, fields)
-    .then((user: IUser | null) => {
+  service
+    .getOneById(User, id, fields)
+    .then((user: UserDocument | null) => {
       req.setData(200, user)
       next()
     })
@@ -85,9 +91,9 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  userService
-    .deleteById(id)
-    .then((result) => {
+  service
+    .deleteOneById(User, id)
+    .then((result: UserDocument | null) => {
       if (result) {
         req.setData(204)
         next

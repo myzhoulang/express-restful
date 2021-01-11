@@ -71,14 +71,6 @@ const service = {
       throw 'Server Error'
     }
   },
-
-  async deleteById(id: unknown): Promise<IAuthority | null> {
-    try {
-      return await Authority.findByIdAndDelete(id)
-    } catch (error) {
-      throw 'Server Error'
-    }
-  },
 }
 
 export default service

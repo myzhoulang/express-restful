@@ -1,4 +1,4 @@
-import mongoose, { ConnectOptions, Schema, Model } from 'mongoose'
+import mongoose, { ConnectOptions, Schema, Model, Document } from 'mongoose'
 export function connect(opts?: ConnectOptions) {
   const { DB_URL, DB_DATABASE } = process.env
   const mongodbUrl = `${DB_URL}/${DB_DATABASE}`
@@ -28,13 +28,6 @@ export function connect(opts?: ConnectOptions) {
     console.log('Caught interrupt signal')
     process.exit()
   })
-}
-
-export function createCollection<T extends mongoose.Document>(
-  name: string,
-  schema: Schema,
-): Model<T> {
-  return mongoose.model<T>(name, schema)
 }
 
 export const timestamps = { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }

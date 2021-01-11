@@ -1,8 +1,8 @@
 import { ObjectId, Document, Model, Query } from 'mongoose'
 
 export enum status {
-  '已冻结',
-  '正常',
+  '已冻结' = 0,
+  '正常' = 1,
 }
 
 export interface IRole {
@@ -21,7 +21,7 @@ export interface IRole {
 
 export interface RoleDocument extends Document, IRole {}
 
-export interface RoleModelConstructor extends Model<RoleDocument> {
+export interface RoleModel extends Model<RoleDocument> {
   getOneByTitle(this: Model<RoleDocument>, name: string): Query<RoleDocument, RoleDocument>
   getAuthorityByRoleIds(this: Model<RoleDocument>, id: unknown): any
   getRolesByIds(

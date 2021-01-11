@@ -14,7 +14,7 @@ export interface ILog {
 
 export interface LogDocument extends ILog, Document {}
 
-export interface LogModelConstructor extends Model<LogDocument> {
+export interface LogModel extends Model<LogDocument> {
   getByAction(this: Model<LogDocument>, action: string): Query<LogDocument[], LogDocument>
   getByRequestIp(this: Model<LogDocument>, ip: string): Query<LogDocument[], LogDocument>
   getByUserId(this: Model<LogDocument>, id: ObjectId): Query<LogDocument[], LogDocument>

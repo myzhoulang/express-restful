@@ -30,7 +30,7 @@ export interface IAuthority {
 
 export interface AuthorityDocument extends Document, IAuthority {}
 
-export interface AuthorityModelConstructor extends Model<AuthorityDocument> {
+export interface AuthorityModel extends Model<AuthorityDocument> {
   getOneByTitle(
     this: Model<AuthorityDocument>,
     title: string,

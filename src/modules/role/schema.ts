@@ -1,6 +1,6 @@
-import mongoose, { Schema } from 'mongoose'
-import { createCollection, timestamps } from '../../util/db'
-import { RoleDocument, RoleModelConstructor } from './typings'
+import mongoose, { Schema, Model, model } from 'mongoose'
+import { timestamps } from '../../util/db'
+import { RoleDocument, RoleModel } from './typings'
 
 export const RoleSchema = new Schema(
   {
@@ -48,9 +48,9 @@ export const RoleSchema = new Schema(
   timestamps,
 )
 
-RoleSchema.statics.getOneByTitle = function (title: string) {
+RoleSchema.statics.getOneByTitle = function (this: Model<RoleDocument>, title: string) {
   return this.findOne({ title })
-} as RoleModelConstructor['getOneByTitle']
+}
 
 // 根据角色 ID 获取权限标识符
 RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
@@ -106,7 +106,6 @@ RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
       },
     },
   ])
-} as RoleModelConstructor['getAuthorityByRoleIds']
+}
 
-const Role = createCollection<RoleDocument>('Role', RoleSchema) as RoleModelConstructor
-export default Role
+export default model<RoleDocument, RoleModel>('Role', RoleSchema)

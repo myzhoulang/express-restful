@@ -1,6 +1,6 @@
-import { ObjectId, Schema } from 'mongoose'
-import { createCollection, timestamps } from '../../util/db'
-import { LogDocument, LogModelConstructor } from './typings'
+import { ObjectId, Schema, Model, model } from 'mongoose'
+import { timestamps } from '../../util/db'
+import { LogDocument, LogModel } from './typings'
 export const LogSchema = new Schema(
   {
     user_id: {
@@ -40,19 +40,19 @@ export const LogSchema = new Schema(
 // FIXME: 查询结果条数处理
 // 查询出的数据可能包含 N 条
 // 如何处理？
-LogSchema.statics.getByAction = function (action: string) {
+LogSchema.statics.getByAction = function (this: Model<LogDocument>, action: string) {
   return this.find({ action })
-} as LogModelConstructor['getByAction']
+}
 
-LogSchema.statics.getByRequestIp = function (ip: string) {
+LogSchema.statics.getByRequestIp = function (this: Model<LogDocument>, ip: string) {
   return this.find({ request_id: ip })
-} as LogModelConstructor['getByRequestIp']
+}
 
-LogSchema.statics.getByAction = function (id: ObjectId) {
+LogSchema.statics.getByAction = function (this: Model<LogDocument>, id: ObjectId) {
   return this.find({ user_id: id })
-} as LogModelConstructor['getByUserId']
+}
 
-LogSchema.statics.getByTime = function (time: number) {
+LogSchema.statics.getByTime = function (this: Model<LogDocument>, time: number) {
   const sTime = String(time)
   let oper
   if (sTime.startsWith('-')) {
@@ -63,7 +63,6 @@ LogSchema.statics.getByTime = function (time: number) {
     oper = time
   }
   return this.find({ time: oper })
-} as LogModelConstructor['getByTime']
+}
 
-const Log = createCollection<LogDocument>('Log', LogSchema) as LogModelConstructor
-export default Log
+export default model<LogDocument, LogModel>('Log', LogSchema)

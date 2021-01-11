@@ -2,15 +2,17 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
-import service from './service'
+import roleService from './service'
+import service from '../../util/crud'
 import { RoleDocument } from './typings'
+import Role from './schema'
 
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(req.query as IListQueryFields)
+    .query(Role, req.query)
     .then(([roles, total]) => {
       req.setData(200, { roles, total })
       next()
@@ -20,12 +22,11 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 
 // 根据 _id 获取单个
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
-  console.log('id')
   const { params, query } = req
   const id = params.id
   const fields = query.fields as string
   service
-    .getById(id, fields)
+    .getOneById(Role, id, fields)
     .then((role: RoleDocument | null) => {
       req.setData(200, role)
       next()
@@ -41,7 +42,7 @@ router.post(
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as RoleDocument
-    service
+    roleService
       .create(body)
       .then((role) => {
         req.setData(201, role)
@@ -62,7 +63,7 @@ router.patch(
     const id = req.params.id
     // 抽取出 中间件
     const body = req.body as RoleDocument
-    service
+    roleService
       .update(id, body)
       .then((role) => {
         if (role) {
@@ -84,7 +85,7 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  service.deleteById(id).then((result) => {
+  service.deleteOneById(Role, id).then((result: RoleDocument | null) => {
     if (result) {
       req.setData(204)
       next()

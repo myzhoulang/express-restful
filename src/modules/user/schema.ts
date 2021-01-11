@@ -1,8 +1,8 @@
-import { Schema } from 'mongoose'
+import { Schema, Model, model } from 'mongoose'
 import bcrypt from 'bcrypt'
-import { createCollection, timestamps } from '../../util/db'
+import { timestamps } from '../../util/db'
 import config from '../../config/'
-import { UserDocument, UserModelConstructor } from './typings'
+import { UserDocument, UserModel } from './typings'
 
 const { Types } = Schema
 
@@ -118,21 +118,19 @@ export const userSchema = new Schema(
 )
 
 // 在userSchema上定义静态方法
-userSchema.statics.getOneByEmail = async function (email: string) {
+userSchema.statics.getOneByEmail = async function (this: Model<UserDocument>, email: string) {
   return await this.findOne({ email })
-} as UserModelConstructor['getOneByEmail']
+}
 
 userSchema.statics.getOneByPhone = async function (phone: string) {
   return await this.findOne({ phone })
-} as UserModelConstructor['getOneByPhone']
+}
 
 userSchema.statics.setLoginCountAndAt = async function (id: unknown) {
   return await this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
   })
-} as UserModelConstructor['setLoginCountAndAt']
+}
 
-const User = createCollection<UserDocument>('User', userSchema) as UserModelConstructor
-
-export default User
+export default model<UserDocument, UserModel>('User', userSchema)

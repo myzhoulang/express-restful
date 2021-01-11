@@ -4,23 +4,6 @@ import { IUser, UserDocument } from './typings'
 export const filterFileds = '-__v -password'
 
 const userService = {
-  async query(queries: IListQueryFields): Promise<[Array<UserDocument>, number]> {
-    try {
-      const { fields, sort, direction, page, size, ...query } = queries
-      const maxSize = Math.min(size, 20)
-      return await Promise.all([
-        User.find(query)
-          .skip((page - 1) * maxSize)
-          .limit(maxSize)
-          .sort({ [sort]: direction })
-          .select(`${fields || ''} ${filterFileds}`),
-        User.find(query).count(),
-      ])
-    } catch (error) {
-      throw 'Server Error'
-    }
-  },
-
   async getByEmail(email: string): Promise<UserDocument> {
     try {
       return await User.getOneByEmail(email)

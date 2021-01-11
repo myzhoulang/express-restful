@@ -65,14 +65,6 @@ const service = {
       throw 'Server Error'
     }
   },
-
-  async deleteById(id: unknown): Promise<RoleDocument | null> {
-    try {
-      return await Role.findByIdAndDelete(id)
-    } catch (error) {
-      throw 'Server Error'
-    }
-  },
 }
 
 export default service

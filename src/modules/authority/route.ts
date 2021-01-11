@@ -1,9 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
-import service from './service'
+import authorityService from './service'
 import { operator } from '../../middleware/operator'
 import { AuthorityDocument, IAuthority } from './typings'
+import service from '../../util/crud'
+import Authority from './schema'
 
 const router: Router = Router()
 
@@ -11,7 +13,7 @@ const router: Router = Router()
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   console.log(req.query)
   service
-    .query(req.query as IListQueryFields)
+    .query(Authority, req.query)
     .then(([authories, total]) => {
       req.setData(200, { authories, total })
       next()
@@ -25,7 +27,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const id = params.id
   const fields = query.fields as string
   service
-    .getById(id, fields)
+    .getOneById(Authority, id, fields)
     .then((authority: IAuthority | null) => {
       req.setData(200, authority)
       next()
@@ -41,7 +43,7 @@ router.post(
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as AuthorityDocument
-    service
+    authorityService
       .create(body)
       .then((authority) => {
         req.setData(201, authority)
@@ -62,7 +64,7 @@ router.patch(
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as AuthorityDocument
-    service
+    authorityService
       .update(id, body)
       .then((authority) => {
         if (authority) {
@@ -84,7 +86,7 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  service.deleteById(id).then((result) => {
+  service.deleteOneById(Authority, id).then((result: AuthorityDocument | null) => {
     if (result) {
       req.setData(204)
       next()

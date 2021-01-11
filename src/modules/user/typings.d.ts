@@ -1,13 +1,14 @@
+import { User } from '@sentry/node'
 import { ObjectId, Schema, Document, Model } from 'mongoose'
 
-export enum status {
-  '已冻结',
-  '正常',
+export enum Status {
+  '已冻结' = 0,
+  '正常' = 1,
 }
 
-export enum gender {
-  '女',
-  '男',
+export enum Gender {
+  '女' = 0,
+  '男' = 1,
 }
 
 export interface IUser {
@@ -22,9 +23,9 @@ export interface IUser {
   department?: string
   avatar?: string
   motto?: string
-  gender: gender
+  gender: Gender
   age?: number
-  status: status
+  status: Status
   tags?: Array<string>
   teams?: Array<string>
   created_by: ObjectId
@@ -40,8 +41,8 @@ export interface IUser {
 
 export interface UserDocument extends Document, IUser {}
 // model 静态方法定义
-export interface UserModelConstructor extends Model<UserDocument> {
-  getOneByEmail(this: Model<UserDocument>, email: string): Promise<UserDocument>
-  getOneByPhone(this: Model<UserDocument>, phone: string): Promise<UserDocument>
-  setLoginCountAndAt(this: Model<UserDocument>, id: unknown): void
+export interface UserModel extends Model<UserDocument> {
+  getOneByEmail(email: string): Promise<UserDocument>
+  getOneByPhone(phone: string): Promise<UserDocument>
+  setLoginCountAndAt(id: unknown): void
 }
