@@ -42,15 +42,21 @@ router.post(
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as RoleDocument
+    const title = body.title
     roleService
-      .create(body)
+      .getOneByTitle(title)
+      .then((role) => {
+        if (!role) {
+          return service.create(Role, body)
+        } else {
+          return Promise.reject({ status: 409, message: `角色名称 ${body.title} 已存在` })
+        }
+      })
       .then((role) => {
         req.setData(201, role)
         next()
       })
-      .catch((err) => {
-        next(err)
-      })
+      .catch(next)
   },
 )
 
@@ -63,8 +69,8 @@ router.patch(
     const id = req.params.id
     // 抽取出 中间件
     const body = req.body as RoleDocument
-    roleService
-      .update(id, body)
+    service
+      .updateOneById(Role, id, body)
       .then((role) => {
         if (role) {
           req.setData(200, role)
@@ -85,14 +91,17 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  service.deleteOneById(Role, id).then((result: RoleDocument | null) => {
-    if (result) {
-      req.setData(204)
-      next()
-    } else {
-      next(new Error('删除的用户不存在'))
-    }
-  })
+  service
+    .deleteOneById(Role, id)
+    .then((result: RoleDocument | null) => {
+      if (result) {
+        req.setData(204)
+        next()
+      } else {
+        next(new Error('删除的用户不存在'))
+      }
+    })
+    .catch(next)
 })
 
 export { router as role }

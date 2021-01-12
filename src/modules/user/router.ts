@@ -50,14 +50,19 @@ router.post(
   (req: Request, res: Response, next: NextFunction) => {
     const body = req.body as UserDocument
     userService
-      .create(body)
+      .getByPhone(body.phone)
+      .then((user) => {
+        if (!user) {
+          return service.create(User, body)
+        } else {
+          return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
+        }
+      })
       .then((user) => {
         req.setData(201, user)
         next()
       })
-      .catch((err) => {
-        next(err)
-      })
+      .catch(next)
   },
 )
 
@@ -69,8 +74,8 @@ router.patch(
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as UserDocument
-    userService
-      .update(id, body)
+    service
+      .updateOneById(User, id, body)
       .then((user) => {
         if (user) {
           req.setData(200, user)
@@ -101,9 +106,7 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
         next(new Error('删除的用户不存在'))
       }
     })
-    .catch((err) => {
-      next(err)
-    })
+    .catch(next)
 })
 
 export { router as user }

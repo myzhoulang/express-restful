@@ -1,4 +1,4 @@
-import { Document, Model, ObjectId } from 'mongoose'
+import { Document, Model, UpdateQuery, DocumentDefinition } from 'mongoose'
 
 const service = {
   // 查询列表
@@ -40,6 +40,31 @@ const service = {
   async deleteOneById<T extends Document>(model: Model<T>, id: string): Promise<T | null> {
     try {
       return await model.findByIdAndDelete(id)
+    } catch (error) {
+      throw 'Server Error'
+    }
+  },
+
+  // 根据 ID 更新用户
+  async updateOneById<T extends Document>(
+    model: Model<T>,
+    id: string,
+    body: UpdateQuery<T>,
+  ): Promise<T | null> {
+    try {
+      return await model.findByIdAndUpdate(id, body, { new: true })
+    } catch (error) {
+      throw 'Server Error'
+    }
+  },
+
+  // 创建
+  async create<T extends Document>(
+    model: Model<T>,
+    body: DocumentDefinition<T>,
+  ): Promise<T | Error> {
+    try {
+      return await model.create(body)
     } catch (error) {
       throw 'Server Error'
     }

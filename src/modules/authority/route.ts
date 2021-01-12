@@ -43,15 +43,21 @@ router.post(
   (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as AuthorityDocument
+    const { code } = body
     authorityService
-      .create(body)
+      .getByCode(code)
+      .then((authority) => {
+        if (!authority) {
+          return service.create(Authority, body)
+        } else {
+          return Promise.reject({ status: 409, message: `权限标识符 ${body.code} 已被添加` })
+        }
+      })
       .then((authority) => {
         req.setData(201, authority)
         next()
       })
-      .catch((err) => {
-        next(err)
-      })
+      .catch(next)
   },
 )
 
@@ -64,8 +70,8 @@ router.patch(
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as AuthorityDocument
-    authorityService
-      .update(id, body)
+    service
+      .updateOneById(Authority, id, body)
       .then((authority) => {
         if (authority) {
           req.setData(200, authority)
@@ -86,14 +92,17 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 参数 result:
   // 成功删除返回删除的 docs
   // 删除失败返回 null
-  service.deleteOneById(Authority, id).then((result: AuthorityDocument | null) => {
-    if (result) {
-      req.setData(204)
-      next()
-    } else {
-      next(new Error('删除的用户不存在'))
-    }
-  })
+  service
+    .deleteOneById(Authority, id)
+    .then((result: AuthorityDocument | null) => {
+      if (result) {
+        req.setData(204)
+        next()
+      } else {
+        next(new Error('删除的用户不存在'))
+      }
+    })
+    .catch(next)
 })
 
 export { router as authority }

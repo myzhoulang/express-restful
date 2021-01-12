@@ -1,8 +1,9 @@
 import jwt from 'express-jwt'
-import { Whitelist } from '../config'
+import { List } from '../config'
 
-interface AuthOptions extends Whitelist {
+interface AuthOptions {
   secret: string
+  path: Array<string>
 }
 
 export default function auth(config: AuthOptions) {

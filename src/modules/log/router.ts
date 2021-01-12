@@ -1,7 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams } from './validator'
-import logService from './service'
 import service from '../../util/crud'
 import { LogDocument } from './typings'
 import Log from './schema'

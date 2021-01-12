@@ -4,7 +4,8 @@ import * as Sentry from './util/sentry'
 import * as DB from './util/db'
 import * as router from './router'
 import { Error } from './util/types'
-import service from './modules/log/service'
+import service from './util/crud'
+import Log from './modules/log/schema'
 import filter from './util/filter'
 
 export const getApp = (): Application => {
@@ -54,7 +55,7 @@ export const getApp = (): Application => {
       // 过滤掉敏感信息
       // 敏感字段在 config 文件夹下的配置文件中配置
       req.log.request_body = filter.body(req.body)
-      service.create(req.log)
+      service.create(Log, req.log)
     } catch (e) {
       console.log('服务器出错')
     }
