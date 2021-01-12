@@ -6,6 +6,7 @@ import auth from './middleware/auth'
 import setSuccessData from './middleware/setData'
 import config from './config'
 import log from './middleware/log'
+import permissions from './middleware/permissions'
 
 const middleware = (app: Application) => {
   const { JWT_SECRET } = process.env
@@ -16,6 +17,7 @@ const middleware = (app: Application) => {
   app.use(setSuccessData)
   app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
   app.use(log)
+  app.use(permissions)
 }
 
 export default middleware

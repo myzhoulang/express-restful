@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, model } from 'mongoose'
+import mongoose, { Schema, Model, model, Aggregate } from 'mongoose'
 import { timestamps } from '../../util/db'
 import { RoleDocument, RoleModel } from './typings'
 
@@ -53,7 +53,10 @@ RoleSchema.statics.getOneByTitle = function (this: Model<RoleDocument>, title: s
 }
 
 // 根据角色 ID 获取权限标识符
-RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
+RoleSchema.statics.getAuthorityByRoleIds = function (
+  this: Model<RoleDocument>,
+  ids: Array<string>,
+) {
   const mongoIds = ids.map((item) => mongoose.Types.ObjectId(item))
   return this.aggregate([
     {
@@ -105,7 +108,10 @@ RoleSchema.statics.getAuthorityByRoleIds = function (ids: Array<string>) {
         },
       },
     },
-  ])
+  ]).then((data) => {
+    console.log(data)
+    return data
+  })
 }
 
 export default model<RoleDocument, RoleModel>('Role', RoleSchema)

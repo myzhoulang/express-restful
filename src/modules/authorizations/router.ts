@@ -3,7 +3,8 @@ import { validationResult } from 'express-validator'
 import { validatorLogin } from './validator'
 import { auth } from './service'
 import log from '../../middleware/log'
-import userService from '../user/service'
+import service from '../../util/crud'
+import User from '../user/schema'
 import roleService from '../role/service'
 
 const router: Router = Router()
@@ -31,13 +32,12 @@ router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
       status: 401,
     })
   }
-  const current = await userService.getById(user?.id)
+  const current = await service.getOneById(User, user.id).then((data) => data?.toJSON())
   if (current && Array.isArray(current.roles)) {
-    const [auths] = await roleService.getAuthoriesForRoles(current.roles)
-    console.log(auths)
+    const [auth] = await roleService.getAuthoriesForRoles(current.roles)
     const data = {
       ...current,
-      auths,
+      auth,
     }
     req.setData(200, data)
   }

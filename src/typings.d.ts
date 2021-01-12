@@ -17,6 +17,10 @@ declare global {
     id: Schema.Types.ObjectId
     exp: number
     iat: number
+    auth: {
+      codes: Array<string>
+      titles: Array<string>
+    }
   }
   namespace Express {
     interface Request {

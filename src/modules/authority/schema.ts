@@ -1,6 +1,6 @@
 import { Schema, Model, model } from 'mongoose'
 import { timestamps } from '../../util/db'
-import { AuthorityDocument, AuthorityModel } from './typings'
+import { AuthorityDocument, AuthorityModel, IPathAndMethod } from './typings'
 
 export const AuthoritySchema = new Schema(
   {
@@ -48,8 +48,12 @@ export const AuthoritySchema = new Schema(
       enum: [1, 2, 3],
       default: 3,
     },
-    url: {
+    path: {
       type: Schema.Types.String,
+    },
+    method: {
+      type: Schema.Types.String,
+      enum: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     },
     system: {
       type: Schema.Types.ObjectId,
@@ -64,6 +68,14 @@ AuthoritySchema.statics.getOneByTitle = function (this: Model<AuthorityDocument>
 
 AuthoritySchema.statics.getOneByCode = function (this: Model<AuthorityDocument>, code: string) {
   return this.findOne({ code })
+}
+
+AuthoritySchema.statics.getOneByPathAndMethod = function (
+  this: Model<AuthorityDocument>,
+  query: IPathAndMethod,
+  fields?: string,
+) {
+  return this.findOne(query).select(fields)
 }
 
 export default model<AuthorityDocument, AuthorityModel>('Authority', AuthoritySchema)

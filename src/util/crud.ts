@@ -34,11 +34,12 @@ const service = {
   // 根据 ID 查询单个
   async getOneById<T extends Document>(
     model: Model<T>,
-    id: string,
-    fields: string,
+    id: unknown,
+    fields?: string,
   ): Promise<T | null> {
     try {
-      return await model.findById(id).select(`${fields || ''}`)
+      const mergeFields = `${fields || ' '} -__v -password`
+      return await model.findById(id, mergeFields)
     } catch (error) {
       return Promise.reject({ status: 500, message: '服务器错误' })
     }

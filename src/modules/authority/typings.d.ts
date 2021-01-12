@@ -10,6 +10,8 @@ export enum type {
   '按钮' = 3,
 }
 
+export type Methods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+
 export interface IAuthority {
   title: string
   desc?: string
@@ -24,12 +26,17 @@ export interface IAuthority {
   updated_at: Date
   icon?: string
   type: number
-  url?: string
+  path?: string
+  method?: Methods
   system: string
 }
 
 export interface AuthorityDocument extends Document, IAuthority {}
 
+export interface IPathAndMethod {
+  path: string
+  method: Methods
+}
 export interface AuthorityModel extends Model<AuthorityDocument> {
   getOneByTitle(
     this: Model<AuthorityDocument>,
@@ -39,5 +46,11 @@ export interface AuthorityModel extends Model<AuthorityDocument> {
   getOneByCode(
     this: Model<AuthorityDocument>,
     code: string,
+  ): Query<AuthorityDocument, AuthorityDocument>
+
+  getOneByPathAndMethod(
+    this: Model<AuthorityDocument>,
+    query: IPathAndMethod,
+    fields?: string,
   ): Query<AuthorityDocument, AuthorityDocument>
 }

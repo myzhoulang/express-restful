@@ -1,4 +1,4 @@
-import { ObjectId, Document, Model, Query } from 'mongoose'
+import { ObjectId, Document, Model, Query, Aggregate } from 'mongoose'
 
 export enum status {
   '已冻结' = 0,
