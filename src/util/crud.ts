@@ -1,20 +1,28 @@
-import { Document, Model, UpdateQuery, DocumentDefinition } from 'mongoose'
+import { Document, Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose'
+
+interface FilterQueryList {
+  page?: number
+  size?: number
+  fields?: string
+  sort?: string
+  direction?: 'DESC' | ' ASC'
+}
 
 const service = {
   // 查询列表
   async query<T extends Document>(
     model: Model<T>,
-    queries: any,
+    queries: FilterQueryList,
   ): Promise<[Array<Document<T>>, number]> {
     try {
-      const { fields, sort, direction, page, size, ...query } = queries
+      const { fields, sort, direction, page = 1, size = 20, ...query } = queries
       const maxSize = Math.min(size, 20)
       return await Promise.all([
         model
           .find(query)
           .skip((page - 1) * maxSize)
           .limit(maxSize)
-          .sort({ [sort]: direction })
+          .sort({ [sort || 'updated_at']: direction || 'DESC' })
           .select(`${fields || ' -__v -password'}`),
         model.find(query).count(),
       ])

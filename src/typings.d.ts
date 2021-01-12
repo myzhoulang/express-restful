@@ -43,19 +43,4 @@ declare global {
     | 422
     | 500
     | 503
-
-  export interface IListPage {
-    page: number
-    size: number
-  }
-
-  // TODO: 处理成泛型接口
-  export interface IListQueryFields extends IListPage {
-    fields?: string
-    sort: string
-    direction?: number
-    page: number
-    size: number
-    [key: string]: any
-  }
 }

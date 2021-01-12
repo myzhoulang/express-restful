@@ -1,6 +1,4 @@
 import jwt from 'express-jwt'
-import { List } from '../config'
-
 interface AuthOptions {
   secret: string
   path: Array<string>
