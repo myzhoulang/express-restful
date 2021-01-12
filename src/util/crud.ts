@@ -27,7 +27,7 @@ const service = {
         model.find(query).count(),
       ])
     } catch (error) {
-      throw 'Server Error'
+      return Promise.reject({ status: 500, message: '服务器错误' })
     }
   },
 
@@ -38,9 +38,9 @@ const service = {
     fields: string,
   ): Promise<T | null> {
     try {
-      return await model.findById(id).select(`${fields || ''} '-__v -password'`)
+      return await model.findById(id).select(`${fields || ''}`)
     } catch (error) {
-      throw 'Server Error'
+      return Promise.reject({ status: 500, message: '服务器错误' })
     }
   },
 
@@ -49,7 +49,7 @@ const service = {
     try {
       return await model.findByIdAndDelete(id)
     } catch (error) {
-      throw 'Server Error'
+      return Promise.reject({ status: 500, message: '服务器错误' })
     }
   },
 
@@ -62,7 +62,7 @@ const service = {
     try {
       return await model.findByIdAndUpdate(id, body, { new: true })
     } catch (error) {
-      throw 'Server Error'
+      return Promise.reject({ status: 500, message: '服务器错误' })
     }
   },
 
@@ -74,7 +74,7 @@ const service = {
     try {
       return await model.create(body)
     } catch (error) {
-      throw 'Server Error'
+      return Promise.reject({ status: 500, message: '服务器错误' })
     }
   },
 }

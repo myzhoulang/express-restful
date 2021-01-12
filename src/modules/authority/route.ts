@@ -11,7 +11,6 @@ const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.query)
   service
     .query(Authority, req.query)
     .then(([authories, total]) => {

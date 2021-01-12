@@ -25,7 +25,6 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(req.data)
     const { status = 200, data } = req.data
     res.status(status).json(data)
     next()

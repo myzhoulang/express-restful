@@ -11,7 +11,6 @@ const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
-  console.log(123)
   service
     .query<UserDocument>(User, req.query)
     .then(([users, total]) => {
@@ -19,13 +18,6 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
       next()
     })
     .catch(next)
-  // userService
-  //   .query(req.query as IListQueryFields)
-  //   .then(([users, total]) => {
-  //     req.setData(200, { users, total })
-  //     next()
-  //   })
-  //   .catch(next)
 })
 
 // 根据 _id 获取单个
