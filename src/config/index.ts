@@ -1,3 +1,5 @@
+// api 配置
+// 路由登陆校验白名单： 不需要校验登陆就可以直接访问的路由
 import { CorsOptions } from 'cors'
 
 // 白名单配置

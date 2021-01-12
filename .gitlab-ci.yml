@@ -35,9 +35,9 @@ release:
   tags:
     - website_api
   script:
-    - docker login -u myzhoulang -p 0b476893-0a6f-4a62-8303-59a725a6551f
-    - docker build -t myzhoulang/website_api .
-    - docker push myzhoulang/website_api:latest
+    - docker login -u user -p pass
+    - docker build -t user/website_api .
+    - docker push user/website_api:latest
     - docker ps -a
     - docker images
     - docker info
@@ -62,6 +62,6 @@ deploy project:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan 47.98.62.21 >> ~/.ssh/known_hosts
+    - ssh-keyscan ip >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
-    - ssh root@47.98.62.21 "docker run -d -p 3000:3000 myzhoulang/website_api"
+    - ssh u@ip "docker run -d -p 3000:3000 user/website_api"
