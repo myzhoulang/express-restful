@@ -34,6 +34,7 @@
     "@sentry/cli": "^1.53.0",
     "@sentry/integrations": "^5.15.5",
     "@sentry/node": "^5.15.5",
+    "@types/redis": "^2.8.28",
     "ali-oss": "^6.8.0",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

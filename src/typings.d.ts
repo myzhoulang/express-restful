@@ -10,11 +10,15 @@ declare global {
       DB_URL: string
       DB_DATABASE: string
       PORT: string
+      REDIS_HOST: string
+      REDIS_PORT: number
+      REDIS_DB: number
+      REDIS_PASSWORD: string
     }
   }
   export interface IJWTPlayLoad {
     name: string
-    id: Schema.Types.ObjectId
+    id: string
     exp: number
     iat: number
     auth: {

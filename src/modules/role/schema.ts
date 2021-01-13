@@ -108,10 +108,7 @@ RoleSchema.statics.getAuthorityByRoleIds = function (
         },
       },
     },
-  ]).then((data) => {
-    console.log(data)
-    return data
-  })
+  ])
 }
 
 export default model<RoleDocument, RoleModel>('Role', RoleSchema)

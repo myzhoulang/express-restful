@@ -6,6 +6,7 @@ import log from '../../middleware/log'
 import service from '../../util/crud'
 import User from '../user/schema'
 import roleService from '../role/service'
+import client from '../../util/redis'
 
 const router: Router = Router()
 
@@ -26,23 +27,28 @@ router.post(
 
 // 获取登录用户信息
 router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
-  const user = req.user
-  if (!user || !user.id) {
-    return next({
-      status: 401,
-    })
-  }
-  const current = await service.getOneById(User, user.id).then((data) => data?.toJSON())
-  if (current && Array.isArray(current.roles)) {
-    const [auth] = await roleService.getAuthoriesForRoles(current.roles)
-    const data = {
-      ...current,
-      auth,
+  try {
+    const user = req.user
+    if (!user || !user.id) {
+      return next({
+        status: 401,
+      })
     }
-    req.setData(200, data)
-  }
+    const current = await service.getOneById(User, user.id).then((data) => data?.toJSON())
+    if (current && Array.isArray(current.roles)) {
+      const [auth] = await roleService.getAuthoriesForRoles(current.roles)
+      const user = {
+        ...current,
+        auth,
+      }
+      client.set(String(user._id), JSON.stringify(user)).then((status) => console.log(status))
+      req.setData(200, user)
+    }
 
-  next()
+    next()
+  } catch (e) {
+    next({ status: 500, message: 'Server Error' })
+  }
 })
 // 登出
 export { router as authorizations }
