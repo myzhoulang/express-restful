@@ -36,6 +36,7 @@ export interface AuthorityDocument extends Document, IAuthority {}
 export interface IPathAndMethod {
   path: string
   method: Methods
+  type: number
 }
 export interface AuthorityModel extends Model<AuthorityDocument> {
   getOneByTitle(

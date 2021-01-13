@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, model, Aggregate } from 'mongoose'
+import mongoose, { Schema, Model, model } from 'mongoose'
 import { timestamps } from '../../util/db'
 import { RoleDocument, RoleModel } from './typings'
 

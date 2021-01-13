@@ -15,7 +15,7 @@ export default function permissions(req: Request, res: Response, next: NextFunct
         return JSON.parse(data)
       }
     }),
-    service.getOneByPathAndMethod({ path, method }),
+    service.getOneByPathAndMethod({ path, method, type: 3 }),
   ])
     .then(([user = {}, authority]) => {
       if (authority) {

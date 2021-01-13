@@ -1,14 +1,19 @@
 import { promisify } from 'util'
 import redis from 'redis'
 
-const { REDIS_DB, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } = process.env
+let client: redis.RedisClient
 
-const client = redis.createClient({
-  host: REDIS_HOST,
-  port: REDIS_PORT,
-  db: REDIS_DB,
-  password: REDIS_PASSWORD,
-})
+export function redisInit() {
+  const { REDIS_DB, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } = process.env
+
+  client = redis.createClient({
+    host: REDIS_HOST,
+    port: REDIS_PORT,
+    db: REDIS_DB,
+    password: REDIS_PASSWORD,
+  })
+  return client
+}
 
 export default {
   get(key: string) {

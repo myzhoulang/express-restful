@@ -1,4 +1,4 @@
-import { ObjectId, Document, Model, Query, Aggregate } from 'mongoose'
+import { ObjectId, Document, Model, Query } from 'mongoose'
 
 export enum status {
   '已冻结' = 0,
@@ -21,9 +21,13 @@ export interface IRole {
 
 export interface RoleDocument extends Document, IRole {}
 
+export interface Auths {
+  codes: Array<string>
+  titles: Array<string>
+}
 export interface RoleModel extends Model<RoleDocument> {
   getOneByTitle(this: Model<RoleDocument>, name: string): Query<RoleDocument, RoleDocument>
-  getAuthorityByRoleIds(this: Model<RoleDocument>, id: unknown): any
+  getAuthorityByRoleIds(this: Model<RoleDocument>, id: unknown): Array<Auths>
   getRolesByIds(
     this: Model<RoleDocument>,
     ids: Array<unknown>,

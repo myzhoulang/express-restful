@@ -1,4 +1,8 @@
-import { Schema } from 'mongoose'
+export {}
+
+export interface IObjectAny {
+  [key: string]: any
+}
 declare global {
   namespace NodeJS {
     interface Global {
@@ -29,9 +33,9 @@ declare global {
   namespace Express {
     interface Request {
       user?: IJWTPlayLoad
-      data: any
-      log?: any
-      setData(status: number, data?: any): void
+      data: IObjectAny
+      log: IObjectAny
+      setData(status: number, data?: IObjectAny | null): void
     }
   }
 

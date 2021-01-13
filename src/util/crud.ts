@@ -1,4 +1,4 @@
-import { Document, Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose'
+import { Document, Model, UpdateQuery, DocumentDefinition } from 'mongoose'
 
 interface FilterQueryList {
   page?: number
