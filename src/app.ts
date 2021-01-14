@@ -9,6 +9,7 @@ import service from './util/crud'
 import Log from './modules/log/schema'
 import filter from './util/filter'
 import { LogDocument } from './modules/log/typings'
+import { upload } from './modules/upload/upload'
 
 export const getApp = (): Application => {
   const app: Application = express()
@@ -21,6 +22,8 @@ export const getApp = (): Application => {
 
   // redis
   redisInit()
+
+  upload()
 
   // sentry
   Sentry.request(app)
