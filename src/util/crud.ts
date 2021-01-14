@@ -1,9 +1,9 @@
-import { Document, Model, UpdateQuery, DocumentDefinition } from 'mongoose'
+import { Document, Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose'
 
 interface FilterQueryList {
   page?: number
   size?: number
-  fields?: string
+  project?: string
   sort?: string
   direction?: 'DESC' | ' ASC'
 }
@@ -15,7 +15,7 @@ const service = {
     queries: FilterQueryList,
   ): Promise<[Array<Document<T>>, number]> {
     try {
-      const { fields, sort, direction, page = 1, size = 20, ...query } = queries
+      const { project, sort, direction, page = 1, size = 20, ...query } = queries
       const maxSize = Math.min(size, 20)
       return await Promise.all([
         model
@@ -23,9 +23,22 @@ const service = {
           .skip((page - 1) * maxSize)
           .limit(maxSize)
           .sort({ [sort || 'updated_at']: direction || 'DESC' })
-          .select(`${fields || ' -__v -password'}`),
+          .select(`${project ?? ''} -__v -password`),
         model.find(query).count(),
       ])
+    } catch (error) {
+      return Promise.reject({ status: 500, message: '服务器错误' })
+    }
+  },
+
+  // 查单个
+  async queryOne<T extends Document>(
+    model: Model<T>,
+    query: FilterQuery<T>,
+    project?: string | undefined,
+  ): Promise<T | null> {
+    try {
+      return await model.findOne(query).select(`${project ?? ''} -__v -password`)
     } catch (error) {
       return Promise.reject({ status: 500, message: '服务器错误' })
     }
@@ -35,11 +48,10 @@ const service = {
   async getOneById<T extends Document>(
     model: Model<T>,
     id: unknown,
-    fields?: string,
+    project?: string,
   ): Promise<T | null> {
     try {
-      const mergeFields = `${fields || ' '} -__v -password`
-      return await model.findById(id, mergeFields)
+      return await model.findById(id).select(`${project ?? ''} -__v -password`)
     } catch (error) {
       return Promise.reject({ status: 500, message: '服务器错误' })
     }

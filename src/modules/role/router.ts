@@ -24,9 +24,9 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const { params, query } = req
   const id = params.id
-  const fields = query.fields as string
+  const project = query.project as string
   service
-    .getOneById(Role, id, fields)
+    .getOneById(Role, id, project)
     .then((role: RoleDocument | null) => {
       req.setData(200, role)
       next()

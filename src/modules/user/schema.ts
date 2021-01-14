@@ -1,4 +1,4 @@
-import { Schema, Model, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import bcrypt from 'bcrypt'
 import { timestamps } from '../../util/db'
 import config from '../../config/'
@@ -116,15 +116,6 @@ export const userSchema = new Schema(
   },
   timestamps,
 )
-
-// 在userSchema上定义静态方法
-userSchema.statics.getOneByEmail = async function (this: Model<UserDocument>, email: string) {
-  return await this.findOne({ email })
-}
-
-userSchema.statics.getOneByPhone = async function (phone: string) {
-  return await this.findOne({ phone })
-}
 
 userSchema.statics.setLoginCountAndAt = async function (id: unknown) {
   return await this.findByIdAndUpdate(id, {

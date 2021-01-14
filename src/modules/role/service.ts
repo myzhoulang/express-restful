@@ -1,15 +1,14 @@
+import { ObjectId } from 'mongoose'
+import service from '../../util/crud'
 import Role from './schema'
 import { RoleDocument } from './typings'
-import { ObjectId } from 'mongoose'
 
-export const filterFileds = '-__v'
-
-const service = {
-  async getOneByTitle(title: string, fields?: string): Promise<RoleDocument> {
+export default {
+  async getOneByTitle(title: string, project?: string): Promise<RoleDocument | null> {
     try {
-      return await Role.getOneByTitle(title).select(`${fields || ''} ${filterFileds}`)
+      return await service.queryOne(Role, { title }, project)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 
@@ -17,9 +16,7 @@ const service = {
     try {
       return await Role.getAuthorityByRoleIds(roles)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 }
-
-export default service

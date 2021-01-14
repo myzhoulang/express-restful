@@ -48,10 +48,6 @@ export const RoleSchema = new Schema(
   timestamps,
 )
 
-RoleSchema.statics.getOneByTitle = function (this: Model<RoleDocument>, title: string) {
-  return this.findOne({ title })
-}
-
 // 根据角色 ID 获取权限标识符
 RoleSchema.statics.getAuthorityByRoleIds = function (
   this: Model<RoleDocument>,

@@ -2,8 +2,8 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
+import { UserDocument } from './typings'
 import userService from './service'
-import { IUser, UserDocument } from './typings'
 import service from '../../util/crud'
 import User from './schema'
 
@@ -24,9 +24,9 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const { params, query } = req
   const id = params.id
-  const fields = query.fields as string
+  const project = query.project as string
   service
-    .getOneById(User, id, fields)
+    .getOneById(User, id, project)
     .then((user: UserDocument | null) => {
       req.setData(200, user)
       next()
@@ -85,9 +85,6 @@ router.patch(
 // 删除指定 id 的用户
 router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id
-  // 参数 result:
-  // 成功删除返回删除的 docs
-  // 删除失败返回 null
   service
     .deleteOneById(User, id)
     .then((result: UserDocument | null) => {

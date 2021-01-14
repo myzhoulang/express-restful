@@ -1,6 +1,6 @@
 # express-restful
 
-使用 typescript + express + mongoose 实现 restful api 项目
+> 使用 typescript + express + mongoose 实现 restful api 项目
 
 ## Overview
 
@@ -10,10 +10,12 @@
 
 - [x] 基于`jwt`做登录校验
 - [ ] 每一个接口的权限控制
+- [ ] `SSE`通知
 - [x] 使用`Sentry`监控代码运行错误
 - [ ] 日志收集
 - [ ] 图片上传到 OSS
 - [ ] 使用`Docker`构建打包
+- [ ] 定时任务
 - [ ] 代码提交规范
 
 ## 项目下载和运行
@@ -67,6 +69,8 @@ npm run test:lint:fix
 * [helmet](https://www.npmjs.com/package/helmet)
 * [cors](https://www.npmjs.com/package/cors)
 * [redis](https://www.npmjs.com/package/redis)
+* [express-sse](https://www.npmjs.com/package/express-sse)
+* [agenda](https://www.npmjs.com/package/agenda)
 ## 权限控制
 
 1. 用户请求某一个资源

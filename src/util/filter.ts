@@ -1,10 +1,7 @@
+import { IObjectAny } from 'src/typings'
 import config from '../config/index'
 
-interface IObj {
-  [key: string]: any
-}
-
-function body(body: IObj) {
+function body(body: IObjectAny) {
   if (body) {
     config.black.body.forEach((field: string) => {
       delete body[field]

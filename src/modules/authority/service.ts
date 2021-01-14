@@ -1,33 +1,29 @@
+import service from '../../util/crud'
 import Authority from './schema'
 import { IAuthority, IPathAndMethod } from './typings'
 
-export const filterFileds = '-__v'
-
-const service = {
-  async getOneByTitle(title: string, fields?: string): Promise<IAuthority> {
+export default {
+  async getOneByTitle(title: string, project?: string): Promise<IAuthority | null> {
     try {
-      return await Authority.getOneByTitle(title).select(`${fields || ''} ${filterFileds}`)
+      return await service.queryOne(Authority, { title }, project)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 
-  async getByCode(code: string, fields?: string): Promise<IAuthority> {
+  async getByCode(code: string, project?: string): Promise<IAuthority | null> {
     try {
-      return await Authority.getOneByCode(code).select(`${fields || ''} ${filterFileds}`)
+      return await service.queryOne(Authority, { code }, project)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 
-  async getOneByPathAndMethod(query: IPathAndMethod, fields?: string): Promise<IAuthority> {
+  async getOneByPathAndMethod(query: IPathAndMethod, project?: string): Promise<IAuthority | null> {
     try {
-      return await Authority.getOneByPathAndMethod(query)
+      return await service.queryOne(Authority, query, project)
     } catch (error) {
-      console.log(error)
-      return Promise.reject({ status: 500, message: 'Server Error' })
+      throw new Error(error)
     }
   },
 }
-
-export default service

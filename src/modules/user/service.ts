@@ -1,22 +1,21 @@
 import User from './schema'
 import { UserDocument } from './typings'
+import service from '../../util/crud'
 
-const service = {
-  async getByEmail(email: string): Promise<UserDocument> {
+export default {
+  async getByEmail(email: string, project?: string): Promise<UserDocument | null> {
     try {
-      return await User.getOneByEmail(email)
+      return await service.queryOne(User, { email }, project)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 
-  async getByPhone(phone: string): Promise<UserDocument> {
+  async getByPhone(phone: string, project?: string): Promise<UserDocument | null> {
     try {
-      return await User.getOneByPhone(phone)
+      return await service.queryOne(User, { phone }, project)
     } catch (error) {
-      throw 'Server Error'
+      throw new Error(error)
     }
   },
 }
-
-export default service

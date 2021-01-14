@@ -62,20 +62,12 @@ export const AuthoritySchema = new Schema(
   timestamps,
 )
 
-AuthoritySchema.statics.getOneByTitle = function (this: Model<AuthorityDocument>, title: string) {
-  return this.findOne({ title })
-}
-
-AuthoritySchema.statics.getOneByCode = function (this: Model<AuthorityDocument>, code: string) {
-  return this.findOne({ code })
-}
-
 AuthoritySchema.statics.getOneByPathAndMethod = function (
   this: Model<AuthorityDocument>,
   query: IPathAndMethod,
-  fields?: string,
+  project?: string,
 ) {
-  return this.findOne(query).select(fields)
+  return this.findOne(query).select(project)
 }
 
 export default model<AuthorityDocument, AuthorityModel>('Authority', AuthoritySchema)

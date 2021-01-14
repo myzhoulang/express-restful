@@ -26,7 +26,6 @@ export interface Auths {
   titles: Array<string>
 }
 export interface RoleModel extends Model<RoleDocument> {
-  getOneByTitle(this: Model<RoleDocument>, name: string): Query<RoleDocument, RoleDocument>
   getAuthorityByRoleIds(this: Model<RoleDocument>, id: unknown): Array<Auths>
   getRolesByIds(
     this: Model<RoleDocument>,

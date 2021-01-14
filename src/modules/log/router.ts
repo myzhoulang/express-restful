@@ -22,9 +22,9 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const { params, query } = req
   const id = params.id
-  const fields = query.fields as string
+  const project = query.project as string
   service
-    .getOneById(Log, id, fields)
+    .getOneById(Log, id, project)
     .then((log: LogDocument | null) => {
       req.setData(200, log)
       next()

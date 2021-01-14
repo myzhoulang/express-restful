@@ -52,6 +52,6 @@ export interface AuthorityModel extends Model<AuthorityDocument> {
   getOneByPathAndMethod(
     this: Model<AuthorityDocument>,
     query: IPathAndMethod,
-    fields?: string,
+    project?: string,
   ): Query<AuthorityDocument, AuthorityDocument>
 }

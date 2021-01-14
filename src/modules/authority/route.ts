@@ -24,9 +24,9 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
 router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const { params, query } = req
   const id = params.id
-  const fields = query.fields as string
+  const project = query.project as string
   service
-    .getOneById(Authority, id, fields)
+    .getOneById(Authority, id, project)
     .then((authority: IAuthority | null) => {
       req.setData(200, authority)
       next()
@@ -88,9 +88,6 @@ router.patch(
 // 删除指定 id 的角色
 router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id
-  // 参数 result:
-  // 成功删除返回删除的 docs
-  // 删除失败返回 null
   service
     .deleteOneById(Authority, id)
     .then((result: AuthorityDocument | null) => {

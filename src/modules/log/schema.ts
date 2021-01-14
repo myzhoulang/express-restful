@@ -30,27 +30,15 @@ export const LogSchema = new Schema(
     request_status: {
       type: Schema.Types.Number,
     },
+    error_message: {
+      type: Schema.Types.String,
+    },
     system: {
       type: Schema.Types.ObjectId,
     },
   },
   timestamps,
 )
-
-// FIXME: 查询结果条数处理
-// 查询出的数据可能包含 N 条
-// 如何处理？
-LogSchema.statics.getByAction = function (this: Model<LogDocument>, action: string) {
-  return this.find({ action })
-}
-
-LogSchema.statics.getByRequestIp = function (this: Model<LogDocument>, ip: string) {
-  return this.find({ request_id: ip })
-}
-
-LogSchema.statics.getByAction = function (this: Model<LogDocument>, id: ObjectId) {
-  return this.find({ user_id: id })
-}
 
 LogSchema.statics.getByTime = function (this: Model<LogDocument>, time: number) {
   const sTime = String(time)
