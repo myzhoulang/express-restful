@@ -2,13 +2,18 @@ import upyun from 'upyun'
 
 let client
 export function upload() {
-  const bucket = new upyun.Bucket('sixapp-ant', 'wenniao', 'z0JlxR4XmZVieVZPaGyAduPx5r9kUfJf')
+  const { OSS_BUCKET, OSS_USER, OSS_PASSWORD } = process.env
+  const bucket = new upyun.Bucket(OSS_BUCKET, OSS_USER, OSS_PASSWORD)
   client = new upyun.Client(bucket)
   client.listDir('/auth').then((data) => {
     console.log(data)
   })
 }
 
-export function putFile(localFile) {
-  return client.putFile('/auth/a.png', localFile)
+export function putFile(fileName, localFile) {
+  return client.putFile(fileName, localFile)
+}
+
+export function getFile(fileName) {
+  return client.getFile(fileName)
 }
