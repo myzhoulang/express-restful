@@ -30,7 +30,10 @@ export default {
         return []
       })
       .then(([auth]) => {
-        return auth.codes
+        return auth?.codes || []
+      })
+      .catch((error) => {
+        throw new Error(error)
       })
   },
 }
