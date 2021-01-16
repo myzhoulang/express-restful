@@ -69,7 +69,7 @@ router.patch(
       .updateOneById(id, body)
       .then((user) => {
         if (user) {
-          req.setData(200, user)
+          req.setData(200, user.toJSON({ useProjection: true }))
           next()
         } else {
           next(new Error('更新的用户不存在'))
