@@ -5,11 +5,11 @@ import * as DB from './util/db'
 import * as router from './router'
 import { redisInit } from './util/redis'
 import { Error } from './util/types'
-import service from './util/crud'
-import Log from './modules/log/schema'
 import filter from './util/filter'
 import { LogDocument } from './modules/log/typings'
+import LogService from './modules/log/service'
 
+const logService = new LogService()
 export const getApp = (): Application => {
   const app: Application = express()
 
@@ -32,12 +32,14 @@ export const getApp = (): Application => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     const { status = 200, data } = req.data
     res.status(status).json(data)
+    console.log('success')
     next()
   })
 
   // 错误处理
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, name } = error
+    console.log('error')
     req.log.error_message = message
     if (status) {
       if (name === 'UnauthorizedError' || status === 401) {
@@ -66,7 +68,7 @@ export const getApp = (): Application => {
       // 过滤掉敏感信息
       // 敏感字段在 config 文件夹下的配置文件中配置
       req.log.request_body = filter.body(req.body)
-      service.create(Log, req.log as LogDocument)
+      logService.create(req.log as LogDocument)
     } catch (e) {
       console.log('服务器出错')
     }

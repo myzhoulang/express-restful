@@ -3,13 +3,13 @@ import { validationResult } from 'express-validator'
 import { validatorLogin } from './validator'
 import { auth } from './service'
 import log from '../../middleware/log'
-import service from '../../util/crud'
-import User from '../user/schema'
 import RoleService from '../role/service'
+import UserService from '../user/service'
 import client from '../../util/redis'
 
 const router: Router = Router()
 const roleService = new RoleService()
+const userService = new UserService()
 
 // 登录
 router.post(
@@ -35,9 +35,9 @@ router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
         status: 401,
       })
     }
-    const current = await service.getOneById(User, user.id).then((data) => data?.toJSON())
+    const current = await userService.getOneById(user.id).then((data) => data?.toJSON())
     if (current && Array.isArray(current.roles)) {
-      const [auth] = await roleService.getAuthoriesForRoles(current.roles)
+      const [auth] = await roleService.getAuthorityByRoleIds(current.roles)
       const user = {
         ...current,
         auth,

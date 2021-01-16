@@ -4,6 +4,7 @@ export interface IObjectAny {
   [key: string]: any
 }
 declare global {
+  export namespace upyun {}
   namespace NodeJS {
     interface Global {
       __rootdir__: string
@@ -18,6 +19,9 @@ declare global {
       REDIS_PORT: number
       REDIS_DB: number
       REDIS_PASSWORD: string
+      OSS_BUCKET: string
+      OSS_USER: string
+      OSS_PASSWORD: string
     }
   }
   export interface IJWTPlayLoad {

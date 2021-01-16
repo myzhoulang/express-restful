@@ -15,8 +15,8 @@ const middleware = (app: Application) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
   app.use(setSuccessData)
-  app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
   app.use(log)
+  app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
   app.use(permissions)
 }
 

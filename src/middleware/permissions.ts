@@ -1,32 +1,40 @@
 import { Request, Response, NextFunction } from 'express'
-import service from '../modules/authority/service'
+import AuthorityService from '../modules/authority/service'
 import { Methods } from '../modules/authority/typings'
 import client from '../util/redis'
+import UserService from '../modules/user/service'
 
-export default function permissions(req: Request, res: Response, next: NextFunction) {
+const userService = new UserService()
+const authorityService = new AuthorityService()
+
+function getUserAuthCodes(userId: string) {
+  return client.get(userId).then((data) => {
+    if (data === null) {
+      return userService.getUserAuthCodes(userId)
+    } else {
+      const user = JSON.parse(data)
+      return user.auth.codes
+    }
+  })
+}
+
+export default async function permissions(req: Request, res: Response, next: NextFunction) {
   const path = req.path
   const method: Methods = req.method as Methods
   const user = req.user
-  return Promise.all([
-    client.get(user?.id as string).then((data) => {
-      if (data === null) {
-        return []
-      } else {
-        return JSON.parse(data)
-      }
-    }),
-    service.getOneByPathAndMethod({ path, method, type: 3 }),
-  ])
-    .then(([user = {}, authority]) => {
-      if (authority) {
-        if (user.codes.includes(authority.code)) {
-          next()
-        } else {
-          next({ status: 403 })
-        }
-      } else {
-        next()
-      }
-    })
-    .catch(next)
+  // 首先权限表中查找，当前的 path 是否需要权限
+  const auth = await authorityService.getOneByPathAndMethod({ path, method, type: 3 })
+  console.log(auth)
+  if (auth) {
+    const codes = await getUserAuthCodes(user?.id as string)
+    // 有权限进入
+    if (codes.includes(auth.code)) {
+      next()
+    } else {
+      next({ status: 403 })
+    }
+  } else {
+    // 不需要控制直接进入
+    next()
+  }
 }
