@@ -3,7 +3,6 @@ import { validObjectId } from '../../middleware/validator'
 import { validatorListParams } from './validator'
 import Service from './service'
 import { LogDocument } from './typings'
-import Log from './schema'
 
 const router: Router = Router()
 const service = new Service()

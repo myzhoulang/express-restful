@@ -16,7 +16,7 @@ router.get('/', validatorListParams, (req: Request, res: Response, next: NextFun
       req.setData(200, { authories, total })
       next()
     })
-    .catch(console.log)
+    .catch(next)
 })
 
 // 根据 _id 获取单个
@@ -78,9 +78,7 @@ router.patch(
           next(new Error('更新的用户不存在'))
         }
       })
-      .catch((err) => {
-        next(err)
-      })
+      .catch(next)
   },
 )
 

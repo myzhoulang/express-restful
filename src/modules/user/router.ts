@@ -75,9 +75,7 @@ router.patch(
           next(new Error('更新的用户不存在'))
         }
       })
-      .catch((err) => {
-        next(err)
-      })
+      .catch(next)
   },
 )
 
