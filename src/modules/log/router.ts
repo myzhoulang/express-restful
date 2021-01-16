@@ -1,16 +1,17 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams } from './validator'
-import service from '../../util/crud'
+import Service from './service'
 import { LogDocument } from './typings'
 import Log from './schema'
 
 const router: Router = Router()
+const service = new Service()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(Log, req.query)
+    .query(req.query)
     .then(([logs, total]) => {
       req.setData(200, { logs, total })
       next()
@@ -24,7 +25,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const id = params.id
   const project = query.project as string
   service
-    .getOneById(Log, id, project)
+    .getOneById(id, project)
     .then((log: LogDocument | null) => {
       req.setData(200, log)
       next()

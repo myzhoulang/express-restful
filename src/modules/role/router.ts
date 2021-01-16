@@ -2,17 +2,16 @@ import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
-import roleService from './service'
-import service from '../../util/crud'
+import Service from './service'
 import { RoleDocument } from './typings'
-import Role from './schema'
 
 const router: Router = Router()
+const service = new Service()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(Role, req.query)
+    .query(req.query)
     .then(([roles, total]) => {
       req.setData(200, { roles, total })
       next()
@@ -26,7 +25,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const id = params.id
   const project = query.project as string
   service
-    .getOneById(Role, id, project)
+    .getOneById(id, project)
     .then((role: RoleDocument | null) => {
       req.setData(200, role)
       next()
@@ -43,11 +42,11 @@ router.post(
     // 抽取出 中间件
     const body = req.body as RoleDocument
     const title = body.title
-    roleService
+    service
       .getOneByTitle(title)
       .then((role) => {
         if (!role) {
-          return service.create(Role, body)
+          return service.create(body)
         } else {
           return Promise.reject({ status: 409, message: `角色名称 ${body.title} 已存在` })
         }
@@ -70,7 +69,7 @@ router.patch(
     // 抽取出 中间件
     const body = req.body as RoleDocument
     service
-      .updateOneById(Role, id, body)
+      .updateOneById(id, body)
       .then((role) => {
         if (role) {
           req.setData(200, role)
@@ -92,7 +91,7 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
   // 成功删除返回删除的 docs
   // 删除失败返回 null
   service
-    .deleteOneById(Role, id)
+    .deleteOneById(id)
     .then((result: RoleDocument | null) => {
       if (result) {
         req.setData(204)

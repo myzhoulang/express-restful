@@ -1,23 +1,22 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
-import authorityService from './service'
+import Service from './service'
 import { operator } from '../../middleware/operator'
 import { AuthorityDocument, IAuthority } from './typings'
-import service from '../../util/crud'
-import Authority from './schema'
 
+const service = new Service()
 const router: Router = Router()
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
   service
-    .query(Authority, req.query)
+    .query(req.query)
     .then(([authories, total]) => {
       req.setData(200, { authories, total })
       next()
     })
-    .catch(next)
+    .catch(console.log)
 })
 
 // 根据 _id 获取单个
@@ -26,7 +25,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   const id = params.id
   const project = query.project as string
   service
-    .getOneById(Authority, id, project)
+    .getOneById(id, project)
     .then((authority: IAuthority | null) => {
       req.setData(200, authority)
       next()
@@ -43,11 +42,11 @@ router.post(
     // 抽取出 中间件
     const body = req.body as AuthorityDocument
     const { code } = body
-    authorityService
+    service
       .getByCode(code)
       .then((authority) => {
         if (!authority) {
-          return service.create(Authority, body)
+          return service.create(body)
         } else {
           return Promise.reject({ status: 409, message: `权限标识符 ${body.code} 已被添加` })
         }
@@ -70,7 +69,7 @@ router.patch(
     const id = req.params.id
     const body = req.body as AuthorityDocument
     service
-      .updateOneById(Authority, id, body)
+      .updateOneById(id, body)
       .then((authority) => {
         if (authority) {
           req.setData(200, authority)
@@ -89,7 +88,7 @@ router.patch(
 router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id
   service
-    .deleteOneById(Authority, id)
+    .deleteOneById(id)
     .then((result: AuthorityDocument | null) => {
       if (result) {
         req.setData(204)

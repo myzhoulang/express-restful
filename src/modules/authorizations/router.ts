@@ -5,10 +5,11 @@ import { auth } from './service'
 import log from '../../middleware/log'
 import service from '../../util/crud'
 import User from '../user/schema'
-import roleService from '../role/service'
+import RoleService from '../role/service'
 import client from '../../util/redis'
 
 const router: Router = Router()
+const roleService = new RoleService()
 
 // 登录
 router.post(

@@ -1,16 +1,20 @@
 import { ObjectId } from 'mongoose'
-import service from '../../util/crud'
 import Role from './schema'
 import { RoleDocument } from './typings'
+import BaseService from '../../util/BaseService'
 
-export default {
+export default class extends BaseService<RoleDocument> {
+  constructor() {
+    super(Role)
+  }
+
   async getOneByTitle(title: string, project?: string): Promise<RoleDocument | null> {
     try {
-      return await service.queryOne(Role, { title }, project)
+      return await this.queryOne({ title }, project)
     } catch (error) {
       throw new Error(error)
     }
-  },
+  }
 
   async getAuthoriesForRoles(roles: ObjectId | Array<ObjectId>) {
     try {
@@ -18,5 +22,5 @@ export default {
     } catch (error) {
       throw new Error(error)
     }
-  },
+  }
 }
