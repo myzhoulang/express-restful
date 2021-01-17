@@ -30,6 +30,7 @@ export const userSchema = new Schema(
       type: Types.String,
       required: true,
       trim: true,
+      select: false,
       set(value) {
         return bcrypt.hashSync(value, config.saltRounds)
       },

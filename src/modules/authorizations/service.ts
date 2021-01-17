@@ -7,12 +7,12 @@ import { UserDocument } from '../user/typings'
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, password } = req.body
-    const user: UserDocument | null = await User.findOne({ name })
+    const user: UserDocument | null = await User.findOne({ name }, '_id password')
 
     if (!user) {
       return next({ message: '账号或密码错误', status: 401 })
     }
-
+    console.log(user)
     // compareSync
     // 第一个参数为 客户端传入的参数 明文的密码
     // 第二参数为 数据库存贮的加密后的密码
