@@ -12,6 +12,10 @@ export function redisInit() {
     db: REDIS_DB,
     password: REDIS_PASSWORD,
   })
+
+  client.on('connect', () => {
+    console.log(`redis ok`)
+  })
   return client
 }
 

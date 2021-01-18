@@ -30,7 +30,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
       if (authority) {
         req.setData(200, authority)
       } else {
-        req.setData(404, { message: '没有该权限' })
+        req.setData(404, { message: `没有 ID 为 ${id} 的权限` })
       }
 
       next()
@@ -78,10 +78,10 @@ router.patch(
       .then((authority) => {
         if (authority) {
           req.setData(200, authority)
-          next()
         } else {
-          next(new Error('更新的用户不存在'))
+          req.setData(404, { message: `没有 ID 为 ${id} 的权限` })
         }
+        next()
       })
       .catch(next)
   },
@@ -97,8 +97,9 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
         req.setData(204)
         next()
       } else {
-        next(new Error('删除的用户不存在'))
+        req.setData(404, { message: `没有 ID 为 ${id} 的权限` })
       }
+      next()
     })
     .catch(next)
 })

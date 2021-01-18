@@ -29,7 +29,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
       if (log) {
         req.setData(200, log)
       } else {
-        req.setData(404, { message: '没有该日志' })
+        req.setData(404, { message: `没有 ID 为${id}的日志` })
       }
 
       next()

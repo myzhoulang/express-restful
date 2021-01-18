@@ -30,7 +30,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
       if (role) {
         req.setData(200, role)
       } else {
-        req.setData(404, { message: '没有该角色' })
+        req.setData(404, { message: `没有 ID 为${id}的角色` })
       }
 
       next()
@@ -78,10 +78,10 @@ router.patch(
       .then((role) => {
         if (role) {
           req.setData(200, role)
-          next()
         } else {
-          next(new Error('更新的用户不存在'))
+          req.setData(404, { message: `没有 ID 为${id}的角色` })
         }
+        next()
       })
       .catch(next)
   },
@@ -98,10 +98,10 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
     .then((result: RoleDocument | null) => {
       if (result) {
         req.setData(204)
-        next()
       } else {
-        next(new Error('删除的用户不存在'))
+        req.setData(404, { message: `没有 ID 为${id}的角色` })
       }
+      next()
     })
     .catch(next)
 })

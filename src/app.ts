@@ -32,7 +32,6 @@ export const getApp = (): Application => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     const { status = 200, data } = req.data
     res.status(status).json(data)
-    console.log('success')
     next()
   })
 

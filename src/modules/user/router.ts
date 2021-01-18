@@ -30,9 +30,8 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
       if (user) {
         req.setData(200, user.toJSON({ useProjection: true }))
       } else {
-        req.setData(404, { message: '用户不存在' })
+        req.setData(404, { message: `没有 ID 为${id}的用户` })
       }
-
       next()
     })
     .catch(next)
@@ -75,10 +74,10 @@ router.patch(
       .then((user) => {
         if (user) {
           req.setData(200, user.toJSON({ useProjection: true }))
-          next()
         } else {
-          next(new Error('更新的用户不存在'))
+          req.setData(404, { message: `没有 ID 为${id}的用户` })
         }
+        next()
       })
       .catch(next)
   },
@@ -92,10 +91,10 @@ router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFun
     .then((result: UserDocument | null) => {
       if (result) {
         req.setData(204)
-        next
       } else {
-        next(new Error('删除的用户不存在'))
+        req.setData(404, { message: `没有 ID 为${id}的用户` })
       }
+      next()
     })
     .catch(next)
 })

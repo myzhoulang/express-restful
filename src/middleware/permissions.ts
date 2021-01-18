@@ -19,22 +19,25 @@ function getUserAuthCodes(userId: string) {
 }
 
 export default async function permissions(req: Request, res: Response, next: NextFunction) {
-  const path = req.path
-  const method: Methods = req.method as Methods
-  const user = req.user
-  // 首先权限表中查找，当前的 path 是否需要权限
-  const auth = await authorityService.getOneByPathAndMethod({ path, method, type: 3 })
-  console.log(auth)
-  if (auth) {
-    const codes = await getUserAuthCodes(user?.id as string)
-    // 有权限进入
-    if (codes.includes(auth.code)) {
-      next()
+  try {
+    const path = req.path
+    const method: Methods = req.method as Methods
+    const user = req.user
+    // 首先权限表中查找，当前的 path 是否需要权限
+    const auth = await authorityService.getOneByPathAndMethod({ path, method, type: 3 })
+    if (auth) {
+      const codes = await getUserAuthCodes(user?.id as string)
+      // 有权限进入
+      if (codes.includes(auth.code)) {
+        next()
+      } else {
+        next({ status: 403 })
+      }
     } else {
-      next({ status: 403 })
+      // 不需要控制直接进入
+      next()
     }
-  } else {
-    // 不需要控制直接进入
-    next()
+  } catch (error) {
+    next(error)
   }
 }
