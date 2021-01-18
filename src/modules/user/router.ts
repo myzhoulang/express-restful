@@ -27,7 +27,12 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   service
     .getOneById(id, project)
     .then((user: UserDocument | null) => {
-      req.setData(200, user)
+      if (user) {
+        req.setData(200, user.toJSON({ useProjection: true }))
+      } else {
+        req.setData(404, { message: '用户不存在' })
+      }
+
       next()
     })
     .catch(next)

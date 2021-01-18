@@ -26,7 +26,12 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   service
     .getOneById(id, project)
     .then((log: LogDocument | null) => {
-      req.setData(200, log)
+      if (log) {
+        req.setData(200, log)
+      } else {
+        req.setData(404, { message: '没有该日志' })
+      }
+
       next()
     })
     .catch(next)

@@ -27,7 +27,12 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   service
     .getOneById(id, project)
     .then((role: RoleDocument | null) => {
-      req.setData(200, role)
+      if (role) {
+        req.setData(200, role)
+      } else {
+        req.setData(404, { message: '没有该角色' })
+      }
+
       next()
     })
     .catch(next)

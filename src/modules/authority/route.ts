@@ -27,7 +27,12 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
   service
     .getOneById(id, project)
     .then((authority: IAuthority | null) => {
-      req.setData(200, authority)
+      if (authority) {
+        req.setData(200, authority)
+      } else {
+        req.setData(404, { message: '没有该权限' })
+      }
+
       next()
     })
     .catch(next)
