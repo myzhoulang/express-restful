@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import xss from 'xss'
 import { timestamps } from '../../util/db'
 import { RoleDocument, RoleModel } from './typings'
 
@@ -11,11 +12,17 @@ export const RoleSchema = new Schema(
       required: true,
       unique: true,
       trim: true,
+      set(value: string) {
+        return xss(value)
+      },
     },
     desc: {
       type: Schema.Types.String,
       maxlength: 40,
       trim: true,
+      set(value: string) {
+        return xss(value)
+      },
     },
     status: {
       type: Schema.Types.Number,
@@ -32,7 +39,7 @@ export const RoleSchema = new Schema(
     },
     updated_by: {
       type: Schema.Types.ObjectId,
-      // required: true,
+      required: true,
     },
     updated_by_name: {
       type: Schema.Types.String,

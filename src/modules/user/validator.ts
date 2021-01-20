@@ -21,11 +21,12 @@ export const validatorListParams = (req: Request, res: Response, next: NextFunct
      *    checkFalsy: 默认为 false 将会对 值进行 falsy 校验， 如果属于 falsy 将会报错 反之 不对对值做校验
      *    falsy 包括 "", 0, false, null
      */
-    query('name').optional(),
+    query('name').optional().escape(),
     query('email')
       .optional({ checkFalsy: true, nullable: true })
       .isEmail()
-      .withMessage('非法的email'),
+      .withMessage('非法的email')
+      .escape(),
     query('phone')
       .optional({ checkFalsy: true, nullable: true })
       .isMobilePhone('zh-CN')
@@ -39,7 +40,7 @@ export const validatorListParams = (req: Request, res: Response, next: NextFunct
   ])(req, res, next)
 }
 
-// 新增校验
+// 新增校验 post 或 put
 export const validatorAddOrRepacleBody = (req: Request, res: Response, next: NextFunction) => {
   return validate([
     body('name')
@@ -49,7 +50,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('姓名是一个字符串')
       .isLength({ min: 2, max: 10 })
-      .withMessage('姓名长度在2-10位'),
+      .withMessage('姓名长度在2-10位')
+      .escape(),
     body('phone')
       .trim()
       .notEmpty()
@@ -77,7 +79,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('用户昵称是一个字符串')
       .isLength({ max: 10 })
-      .withMessage('用户昵称在2-10位'),
+      .withMessage('用户昵称在2-10位')
+      .escape(),
     body('job')
       .trim()
       .optional({ checkFalsy: true, nullable: true })
@@ -85,7 +88,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('用户职称是一个字符串')
       .isLength({ max: 10 })
-      .withMessage('用户职称在2-10位'),
+      .withMessage('用户职称在2-10位')
+      .escape(),
     // body('department')
     //   .optional({ checkFalsy: true, nullable: true })
     //   .default('')
@@ -111,7 +115,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('用户座右铭是一个字符串')
       .isLength({ max: 20 })
-      .withMessage('座右铭最多20个字符'),
+      .withMessage('座右铭最多20个字符')
+      .escape(),
     body('gender')
       .optional({ checkFalsy: true, nullable: true })
       .default(1)
@@ -137,13 +142,13 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .withMessage('标签是一个数组'),
     body('desc')
       .trim()
+      .escape()
       .optional({ checkFalsy: true, nullable: true })
       .default('')
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
       .withMessage('描述字段最多40个字符'),
-
     body('team')
       .optional({ checkFalsy: true, nullable: true })
       .default([])
@@ -170,7 +175,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('姓名是一个字符串')
       .isLength({ min: 2, max: 10 })
-      .withMessage('姓名长度在2-10位'),
+      .withMessage('姓名长度在2-10位')
+      .escape(),
     body('phone')
       .trim()
       .optional({ checkFalsy: false, nullable: true })
@@ -195,7 +201,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('用户昵称是一个字符串')
       .isLength({ max: 10 })
-      .withMessage('用户昵称在2-10位'),
+      .withMessage('用户昵称在2-10位')
+      .escape(),
     body('job')
       .trim()
       .optional({ checkFalsy: true, nullable: true })
@@ -203,7 +210,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('用户职称是一个字符串')
       .isLength({ max: 10 })
-      .withMessage('用户职称在2-10位'),
+      .withMessage('用户职称在2-10位')
+      .escape(),
     // body('department')
     //   .optional({ checkFalsy: true, nullable: true })
     //   .default('')
@@ -229,7 +237,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('用户座右铭是一个字符串')
       .isLength({ max: 20 })
-      .withMessage('座右铭最多20个字符'),
+      .withMessage('座右铭最多20个字符')
+      .escape(),
     body('gender')
       .optional({ checkFalsy: true, nullable: true })
       .default(1)
@@ -260,7 +269,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
-      .withMessage('描述字段最多40个字符'),
+      .withMessage('描述字段最多40个字符')
+      .escape(),
 
     /**
      * TODO:

@@ -1,4 +1,5 @@
 import { Schema, Model, model } from 'mongoose'
+import xss from 'xss'
 import { timestamps } from '../../util/db'
 import { AuthorityDocument, AuthorityModel, IPathAndMethod } from './typings'
 
@@ -11,11 +12,17 @@ export const AuthoritySchema = new Schema(
       required: true,
       unique: true,
       trim: true,
+      set(value) {
+        return xss(value)
+      },
     },
     desc: {
       type: Schema.Types.String,
       maxlength: 40,
       trim: true,
+      set(value) {
+        return xss(value)
+      },
     },
     code: {
       type: Schema.Types.String,

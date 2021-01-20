@@ -1,4 +1,5 @@
-import { ObjectId, Schema, Model, model } from 'mongoose'
+import { Schema, Model, model } from 'mongoose'
+import xss from 'xss'
 import { timestamps } from '../../util/db'
 import { LogDocument, LogModel } from './typings'
 export const LogSchema = new Schema(
@@ -8,6 +9,10 @@ export const LogSchema = new Schema(
     },
     user_name: {
       type: Schema.Types.String,
+      default: '',
+      set(value: string) {
+        return xss(value)
+      },
     },
     request_url: {
       type: Schema.Types.String,
@@ -23,6 +28,10 @@ export const LogSchema = new Schema(
     },
     request_body: {
       type: Schema.Types.String,
+      default: '',
+      set(value: string) {
+        return xss(value)
+      },
     },
     request_times: {
       type: Schema.Types.Number,

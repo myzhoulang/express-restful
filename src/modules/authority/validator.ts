@@ -51,7 +51,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('权限名称是一个字符串')
       .isLength({ min: 2, max: 10 })
-      .withMessage('权限名称长度在2-10位'),
+      .withMessage('权限名称长度在2-10位')
+      .escape(),
 
     body('desc')
       .optional()
@@ -60,7 +61,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
-      .withMessage('描述字段最多40个字符'),
+      .withMessage('描述字段最多40个字符')
+      .escape(),
 
     body('code')
       .trim()
@@ -69,7 +71,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .notEmpty()
       .withMessage('权限标识符不能为空')
       .isLength({ min: 2, max: 20 })
-      .withMessage('权限标识符长度在2-20位'),
+      .withMessage('权限标识符长度在2-20位')
+      .escape(),
 
     // TODO:校验当前 ID 是否在数据库中存在
     body('parent_id')
@@ -80,9 +83,9 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
 
     body('status').optional().default(1).isIn([0, 1]).withMessage('资源状态只能是 0 | 1'),
 
-    body('icon').optional().isString(),
+    body('icon').optional().isString().escape(),
     body('type').default(3).toInt().isIn([1, 2, 3]).withMessage('类型是目录/菜单/按钮中的一种'),
-    body('url').optional().isString().withMessage('url 是一个字符串'),
+    body('url').optional().isString().withMessage('url 是一个字符串').escape(),
     // body('system').notEmpty().withMessage('需要选择一个系统').isMongoId().withMessage('非法的值'),
   ])(req, res, next)
 }
@@ -101,7 +104,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .notEmpty()
       .withMessage('名称不能为空')
       .isLength({ min: 2, max: 10 })
-      .withMessage('名称长度在2-10位'),
+      .withMessage('名称长度在2-10位')
+      .escape(),
 
     body('desc')
       .trim()
@@ -110,9 +114,9 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
-      .withMessage('描述字段最多40个字符'),
+      .withMessage('描述字段最多40个字符')
+      .escape(),
     body('status').optional().default(1).isIn([0, 1]).withMessage('用户状态只能是 0 | 1'),
-
     body('authority_ids').optional().default([]).isArray().withMessage('权限资源是一个数组'),
     body('authority_ids.*').isMongoId().withMessage('权限资源中有非法ID'),
   ])(req, res, next)

@@ -72,7 +72,7 @@ export default class BaseService<T extends Document> {
     try {
       return await this.model.create(body)
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 }

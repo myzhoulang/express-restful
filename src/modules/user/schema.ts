@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose'
+import xss from 'xss'
 import bcrypt from 'bcrypt'
 import { timestamps } from '../../util/db'
 import config from '../../config/'
@@ -83,6 +84,9 @@ export const userSchema = new Schema(
       maxlength: 40,
       trim: true,
       default: '',
+      set(value) {
+        return xss(value)
+      },
     },
     tags: {
       type: [Types.String],

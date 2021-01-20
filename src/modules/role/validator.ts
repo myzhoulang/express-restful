@@ -21,8 +21,8 @@ export const validatorListParams = (req: Request, res: Response, next: NextFunct
      *    checkFalsy: 默认为 false 将会对 值进行 falsy 校验， 如果属于 falsy 将会报错 反之 不对对值做校验
      *    falsy 包括 "", 0, false, null
      */
-    query('title').optional(),
-    query('desc').optional(),
+    query('title').optional().escape(),
+    query('desc').optional().escape(),
     query('created_by').optional(),
     query('created_at').optional(),
     query('updated_at').optional(),
@@ -46,7 +46,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('角色名称是一个字符串')
       .isLength({ min: 2, max: 10 })
-      .withMessage('角色名称长度在2-10位'),
+      .withMessage('角色名称长度在2-10位')
+      .escape(),
 
     body('desc')
       .optional({ checkFalsy: true, nullable: true })
@@ -55,7 +56,8 @@ export const validatorAddOrRepacleBody = (req: Request, res: Response, next: Nex
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
-      .withMessage('描述字段最多40个字符'),
+      .withMessage('描述字段最多40个字符')
+      .escape(),
 
     body('status')
       .optional({ checkFalsy: true, nullable: true })
@@ -84,7 +86,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('名称是一个字符串')
       .isLength({ min: 2, max: 10 })
-      .withMessage('名称长度在2-10位'),
+      .withMessage('名称长度在2-10位')
+      .escape(),
 
     body('desc')
       .trim()
@@ -93,7 +96,8 @@ export const validatorUpdateBody = (req: Request, res: Response, next: NextFunct
       .isString()
       .withMessage('描述是一个字符串')
       .isLength({ max: 40 })
-      .withMessage('描述字段最多40个字符'),
+      .withMessage('描述字段最多40个字符')
+      .escape(),
     body('status')
       .optional({ checkFalsy: true, nullable: true })
       .default(1)

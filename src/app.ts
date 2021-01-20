@@ -38,7 +38,7 @@ export const getApp = (): Application => {
   // 错误处理
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, name } = error
-    console.log(message)
+    console.log(error)
     req.log.error_message = message
     if (status) {
       if (name === 'UnauthorizedError' || status === 401) {
