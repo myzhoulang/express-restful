@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import exceljs from 'exceljs'
+import exceljs, { Column } from 'exceljs'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
@@ -37,7 +37,7 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
       width: 10,
       outlineLevel: 0,
       hidden: false,
-
+      values: ['1'],
       style: {
         border: {
           top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
@@ -47,35 +47,35 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
         },
       },
     },
-    {
-      header: 'Name',
-      key: 'name',
-      width: 32,
-      style: {
-        border: {
-          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-        },
-      },
-    },
-    {
-      header: 'D.O.B.',
-      key: 'dob',
-      width: 10,
-      outlineLevel: 1,
-      alignment: { vertical: 'middle', horizontal: 'right' },
-      style: {
-        // font
-        border: {
-          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-        },
-      },
-    },
+    // {
+    //   header: 'Name',
+    //   key: 'name',
+    //   width: 32,
+    //   style: {
+    //     border: {
+    //       top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //     },
+    //   },
+    // },
+    // {
+    //   header: 'D.O.B.',
+    //   key: 'dob',
+    //   width: 10,
+    //   outlineLevel: 1,
+    //   alignment: { vertical: 'middle', horizontal: 'right' },
+    //   style: {
+    //     // font
+    //     border: {
+    //       top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //       right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+    //     },
+    //   },
+    // },
   ]
 
   worksheet.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) })
