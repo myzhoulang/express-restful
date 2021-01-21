@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express'
+import exceljs from 'exceljs'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
@@ -7,6 +8,97 @@ import Service from './service'
 
 const router: Router = Router()
 const service = new Service()
+
+// export
+router.get('/export', (req: Request, res: Response, next: NextFunction) => {
+  const workbook = new exceljs.Workbook()
+  workbook.creator = 'Me'
+  workbook.lastModifiedBy = 'Her'
+  workbook.created = new Date(1985, 8, 30)
+  workbook.modified = new Date()
+  workbook.lastPrinted = new Date(2016, 9, 27)
+  workbook.properties.date1904 = true
+  workbook.views = [
+    {
+      x: 0,
+      y: 0,
+      width: 10000,
+      height: 20000,
+      firstSheet: 0,
+      activeTab: 1,
+      visibility: 'visible',
+    },
+  ]
+  const worksheet = workbook.addWorksheet('My Sheet')
+  worksheet.columns = [
+    {
+      header: 'Id',
+      key: 'id',
+      width: 10,
+      outlineLevel: 0,
+      hidden: false,
+
+      style: {
+        border: {
+          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+        },
+      },
+    },
+    {
+      header: 'Name',
+      key: 'name',
+      width: 32,
+      style: {
+        border: {
+          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+        },
+      },
+    },
+    {
+      header: 'D.O.B.',
+      key: 'dob',
+      width: 10,
+      outlineLevel: 1,
+      alignment: { vertical: 'middle', horizontal: 'right' },
+      style: {
+        // font
+        border: {
+          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+        },
+      },
+    },
+  ]
+
+  worksheet.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) })
+  worksheet.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) })
+
+  const row = worksheet.getRow(1)
+  row.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'FFFFB6C1' },
+    bgColor: { argb: 'FFFFB6C1' },
+  }
+
+  const cell = worksheet.getCell('C1')
+  cell.alignment = { vertical: 'bottom', horizontal: 'right' }
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  res.setHeader('Content-Disposition', 'attachment; filename=' + 'Report.xlsx')
+  workbook.xlsx.write(res).then(function (data) {
+    res.end()
+    console.log('File write done........')
+  })
+})
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
