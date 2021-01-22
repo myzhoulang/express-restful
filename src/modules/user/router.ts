@@ -1,103 +1,132 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import exceljs, { Column } from 'exceljs'
+import { Border } from 'exceljs'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
 import { UserDocument } from './typings'
 import Service from './service'
+import Excel from '../../util/Excel'
 
 const router: Router = Router()
 const service = new Service()
 
 // export
 router.get('/export', (req: Request, res: Response, next: NextFunction) => {
-  const workbook = new exceljs.Workbook()
-  workbook.creator = 'Me'
-  workbook.lastModifiedBy = 'Her'
-  workbook.created = new Date(1985, 8, 30)
-  workbook.modified = new Date()
-  workbook.lastPrinted = new Date(2016, 9, 27)
-  workbook.properties.date1904 = true
-  workbook.views = [
-    {
-      x: 0,
-      y: 0,
-      width: 10000,
-      height: 20000,
-      firstSheet: 0,
-      activeTab: 1,
-      visibility: 'visible',
+  const borderStyle: Border = { style: 'thin', color: { argb: 'FFCCCCCC' } }
+  const border = {
+    top: borderStyle,
+    left: borderStyle,
+    bottom: borderStyle,
+    right: borderStyle,
+  }
+  const excel = new Excel({
+    creator: 'zhoulang',
+    lastModifiedBy: 'zhoulang',
+    created: new Date(),
+    modified: new Date(),
+    lastPrinted: new Date(),
+    properties: {
+      date1904: true,
     },
-  ]
-  const worksheet = workbook.addWorksheet('My Sheet')
-  worksheet.columns = [
+    calcProperties: {
+      fullCalcOnLoad: true,
+    },
+  })
+  const name = '用户信息'
+  const sheet = excel.addSheet(name, {
+    properties: {
+      tabColor: { argb: 'FF1E90FF' },
+      defaultRowHeight: 40,
+    },
+  })
+
+  const sheetHeader = sheet.getRow(1)
+  sheetHeader.height = 20
+  excel.setRowBackgroundColor(sheetHeader, 'FFD9D9D9')
+  const alignment = {
+    vertical: 'middle',
+    horizontal: 'left',
+  }
+
+  excel.setColumns(name, [
     {
-      header: 'Id',
-      key: 'id',
-      width: 10,
-      outlineLevel: 0,
-      hidden: false,
-      values: ['1'],
+      header: '姓名',
+      key: 'name',
+      width: 30,
       style: {
-        border: {
-          top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-          right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
+        border,
+        alignment,
+      },
+    },
+    {
+      header: '手机号码',
+      key: 'phone',
+      width: 30,
+      style: {
+        border,
+        alignment,
+      },
+    },
+    {
+      header: 'Email',
+      key: 'email',
+      width: 30,
+      style: {
+        border,
+        alignment,
+      },
+    },
+    {
+      header: '性别',
+      key: 'gender',
+      width: 30,
+      style: {
+        border,
+        alignment: {
+          horizontal: 'right',
+          vertical: alignment.vertical,
         },
       },
     },
-    // {
-    //   header: 'Name',
-    //   key: 'name',
-    //   width: 32,
-    //   style: {
-    //     border: {
-    //       top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //     },
-    //   },
-    // },
-    // {
-    //   header: 'D.O.B.',
-    //   key: 'dob',
-    //   width: 10,
-    //   outlineLevel: 1,
-    //   alignment: { vertical: 'middle', horizontal: 'right' },
-    //   style: {
-    //     // font
-    //     border: {
-    //       top: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       left: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       bottom: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //       right: { style: 'thin', color: { argb: 'FFCCCCCC' } },
-    //     },
-    //   },
-    // },
-  ]
-
-  worksheet.addRow({ id: 1, name: 'John Doe', dob: new Date(1970, 1, 1) })
-  worksheet.addRow({ id: 2, name: 'Jane Doe', dob: new Date(1965, 1, 7) })
-
-  const row = worksheet.getRow(1)
-  row.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'FFFFB6C1' },
-    bgColor: { argb: 'FFFFB6C1' },
-  }
-
-  const cell = worksheet.getCell('C1')
-  cell.alignment = { vertical: 'bottom', horizontal: 'right' }
-
-  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-  res.setHeader('Content-Disposition', 'attachment; filename=' + 'Report.xlsx')
-  workbook.xlsx.write(res).then(function (data) {
-    res.end()
-    console.log('File write done........')
-  })
+    {
+      header: '创建时间',
+      key: 'created_at',
+      width: 30,
+      style: {
+        border,
+        alignment: {
+          horizontal: 'right',
+          vertical: alignment.vertical,
+        },
+      },
+    },
+    {
+      header: '创建人',
+      key: 'created_by_name',
+      width: 30,
+      style: {
+        border,
+        alignment,
+      },
+    },
+  ])
+  service
+    .query(req.query)
+    .then(([list]) => {
+      excel.addDatas(
+        name,
+        list.map((user) => {
+          const item = user.toJSON()
+          const { gender, ...props } = item
+          return {
+            gender: gender === 1 ? '男' : '女',
+            ...props,
+          }
+        }),
+      )
+      excel.writeFile(res, 'excel')
+    })
+    .catch(next)
 })
 
 // 获取所有

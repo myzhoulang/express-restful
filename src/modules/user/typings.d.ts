@@ -38,7 +38,8 @@ export interface IUser {
   auths?: Array<string>
 }
 
-export interface UserDocument extends Document, IUser {}
+// export interface UserDocument extends Document, IUser {}
+export type UserDocument = Document & IUser
 // model 静态方法定义
 export interface UserModel extends Model<UserDocument> {
   setLoginCountAndAt(id: unknown): void

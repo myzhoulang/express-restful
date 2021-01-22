@@ -13,7 +13,7 @@ export default class BaseService<T extends Document> {
   constructor(model: Model<T>) {
     this.model = model
   }
-  async query(queries: FilterQueryList): Promise<[Array<Document<T>>, number]> {
+  async query(queries: FilterQueryList): Promise<[Array<T>, number]> {
     try {
       const { project, sort, direction, page = 1, size = 20, ...query } = queries
       const maxSize = Math.min(size, 20)
@@ -27,7 +27,7 @@ export default class BaseService<T extends Document> {
         this.model.find(query).count(),
       ])
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 
@@ -36,7 +36,7 @@ export default class BaseService<T extends Document> {
     try {
       return await this.model.findOne(query).select(`${project ?? ''} -__v -password`)
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 
@@ -45,7 +45,7 @@ export default class BaseService<T extends Document> {
     try {
       return await this.model.findById(id).select(`${project ?? ''} -__v -password`)
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 
@@ -54,7 +54,7 @@ export default class BaseService<T extends Document> {
     try {
       return await this.model.findByIdAndDelete(id)
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 
@@ -63,7 +63,7 @@ export default class BaseService<T extends Document> {
     try {
       return await this.model.findByIdAndUpdate(id, body, { new: true })
     } catch (error) {
-      return Promise.reject({ status: 500, message: '服务器错误' })
+      return Promise.reject(error)
     }
   }
 

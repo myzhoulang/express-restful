@@ -5,7 +5,8 @@ import exceljs, {
   WorkbookProperties,
   AddWorksheetOptions,
   Worksheet,
-  Column,
+  Row,
+  Color,
 } from 'exceljs'
 
 interface IWorkbookMetaData {
@@ -44,13 +45,24 @@ export default class Excel {
     return sheet
   }
 
+  setRowBackgroundColor(row: Row, color: string) {
+    row.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: `${color}` },
+      bgColor: { argb: `${color}` },
+    }
+  }
+
   addSheet(name: string, options?: Partial<AddWorksheetOptions>): Worksheet {
     const sheet = this.workbook.addWorksheet(name, options)
+    sheet.views = [{}]
     this.sheets.push(sheet)
     return sheet
   }
 
-  setColumns(name: string, columns: Array<Column>): Worksheet | null {
+  // TODO: columns Typescript type
+  setColumns(name: string, columns: Array<any>): Worksheet | null {
     const sheet = this.findSheetByName(name)
     if (sheet) {
       sheet.columns = columns
