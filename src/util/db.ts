@@ -1,3 +1,4 @@
+import * as http from 'http'
 import mongoose, { ConnectOptions } from 'mongoose'
 export function connect(opts?: ConnectOptions) {
   const { DB_URL, DB_DATABASE } = process.env
@@ -27,6 +28,14 @@ export function connect(opts?: ConnectOptions) {
   process.on('SIGINT', () => {
     console.log('Caught interrupt signal')
     process.exit()
+  })
+}
+
+export function gracefulShutdown(app: http.Server) {
+  mongoose.connection.close(false, () => {
+    app.close(() => {
+      process.exit()
+    })
   })
 }
 
