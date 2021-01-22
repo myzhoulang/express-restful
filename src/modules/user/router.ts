@@ -1,5 +1,4 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import { Border } from 'exceljs'
 import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
@@ -12,102 +11,45 @@ const service = new Service()
 
 // export
 router.get('/export', (req: Request, res: Response, next: NextFunction) => {
-  const borderStyle: Border = { style: 'thin', color: { argb: 'FFCCCCCC' } }
-  const border = {
-    top: borderStyle,
-    left: borderStyle,
-    bottom: borderStyle,
-    right: borderStyle,
-  }
-  const excel = new Excel({
-    creator: 'zhoulang',
-    lastModifiedBy: 'zhoulang',
-    created: new Date(),
-    modified: new Date(),
-    lastPrinted: new Date(),
-    properties: {
-      date1904: true,
-    },
-    calcProperties: {
-      fullCalcOnLoad: true,
-    },
-  })
+  const excel = new Excel()
   const name = '用户信息'
-  const sheet = excel.addSheet(name, {
-    properties: {
-      tabColor: { argb: 'FF1E90FF' },
-      defaultRowHeight: 40,
-    },
-  })
+  excel.addSheet(name)
 
-  const sheetHeader = sheet.getRow(1)
-  sheetHeader.height = 20
-  excel.setRowBackgroundColor(sheetHeader, 'FFD9D9D9')
-  const alignment = {
-    vertical: 'middle',
-    horizontal: 'left',
+  const header = excel.getHeader(name, 1)
+  if (header) {
+    excel.setHeaderStyle(header, {
+      height: 20,
+    })
   }
 
   excel.setColumns(name, [
     {
       header: '姓名',
       key: 'name',
-      width: 30,
-      style: {
-        border,
-        alignment,
-      },
     },
     {
       header: '手机号码',
       key: 'phone',
-      width: 30,
-      style: {
-        border,
-        alignment,
-      },
     },
     {
       header: 'Email',
       key: 'email',
-      width: 30,
-      style: {
-        border,
-        alignment,
-      },
     },
     {
       header: '性别',
       key: 'gender',
-      width: 30,
-      style: {
-        border,
-        alignment: {
-          horizontal: 'right',
-          vertical: alignment.vertical,
-        },
-      },
     },
     {
       header: '创建时间',
       key: 'created_at',
-      width: 30,
-      style: {
-        border,
-        alignment: {
-          horizontal: 'right',
-          vertical: alignment.vertical,
-        },
+      alignment: {
+        vertical: 'middle',
+        horizontal: 'right',
       },
     },
     {
       header: '创建人',
       key: 'created_by_name',
-      width: 30,
-      style: {
-        border,
-        alignment,
-      },
     },
   ])
   service
@@ -124,7 +66,10 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
           }
         }),
       )
-      excel.writeFile(res, 'excel')
+      return excel.writeFile(res, 'excel').then(() => {
+        res.end()
+        console.log('export success')
+      })
     })
     .catch(next)
 })
