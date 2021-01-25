@@ -22,6 +22,8 @@ declare global {
       OSS_BUCKET: string
       OSS_USER: string
       OSS_PASSWORD: string
+      EMAIL_USER: string
+      EMAIL_PASS: string
     }
   }
   export interface IJWTPlayLoad {

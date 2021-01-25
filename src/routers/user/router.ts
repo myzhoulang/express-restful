@@ -128,11 +128,6 @@ router.post(
   },
 )
 
-// 验证邮箱
-// router.post('/:id/verify_email', (req: Request, res: Response, next: NextFunction) => {
-
-// })
-
 // update
 router.patch(
   '/:id',

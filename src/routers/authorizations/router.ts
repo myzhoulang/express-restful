@@ -6,6 +6,7 @@ import log from '../../middleware/log'
 import RoleService from '../role/service'
 import UserService from '../user/service'
 import client from '../../util/redis'
+import EMail from '../../modules/email'
 
 const router: Router = Router()
 const roleService = new RoleService()
@@ -51,5 +52,44 @@ router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
     next({ status: 500, message: 'Server Error' })
   }
 })
+
+// 发送邮件给用户验证
+router.get(
+  '/user/email/request_verification',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const user = req.user as IJWTPlayLoad
+      const email = new EMail()
+      const current = await userService.getOneById(user.id).then((data) => data?.toJSON())
+
+      // 可以使用 UUID
+      const emailCode = (Math.random() * 1000000) | 0
+      //
+      client.set(String(current?._id) + '_email_code', String(emailCode)).catch(next)
+      email
+        .send({
+          from: '"Test" <604389771@qq.com>',
+          to: current?.email,
+          subject: '[后台管理] 请验证您的邮箱地址.',
+          html: `<p>系统已将该验证码发送到您的电子邮箱: ${emailCode}</p>`,
+        })
+        .then(() => {
+          req.setData(200, { message: '邮件发送成功' })
+          next()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } catch (e) {
+      next(e)
+    }
+  },
+)
+
+// 在此做校验
+router.get('/user/verifiy_email', async (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.query)
+})
+
 // 登出
 export { router as authorizations }

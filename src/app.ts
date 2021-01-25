@@ -30,6 +30,7 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
+    console.log('success', req.data)
     const { status = 200, data } = req.data
     res.status(status).json(data)
     next()
@@ -40,6 +41,7 @@ export const getApp = (): Application => {
     const { message, errors, status, name } = error
     console.log(error)
     req.log.error_message = message
+
     if (status) {
       if (name === 'UnauthorizedError' || status === 401) {
         req.setData(401)
