@@ -2,6 +2,7 @@ import { Schema, Model, model } from 'mongoose'
 import xss from 'xss'
 import { timestamps } from '../../util/db'
 import { LogDocument, LogModel } from './typings'
+console.log(timestamps)
 export const LogSchema = new Schema(
   {
     user_id: {
@@ -46,7 +47,9 @@ export const LogSchema = new Schema(
       type: Schema.Types.ObjectId,
     },
   },
-  timestamps,
+  {
+    ...timestamps,
+  },
 )
 
 LogSchema.statics.getByTime = function (this: Model<LogDocument>, time: number) {

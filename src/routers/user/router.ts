@@ -50,6 +50,7 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
     {
       header: '创建人',
       key: 'created_by_name',
+      width: 30,
     },
   ])
   service
@@ -126,6 +127,11 @@ router.post(
       .catch(next)
   },
 )
+
+// 验证邮箱
+// router.post('/:id/verify_email', (req: Request, res: Response, next: NextFunction) => {
+
+// })
 
 // update
 router.patch(

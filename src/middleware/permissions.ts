@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
-import AuthorityService from '../modules/authority/service'
-import { Methods } from '../modules/authority/typings'
+import AuthorityService from '../routers/authority/service'
+import { Methods } from '../routers/authority/typings'
 import client from '../util/redis'
-import UserService from '../modules/user/service'
+import UserService from '../routers/user/service'
 
 const userService = new UserService()
 const authorityService = new AuthorityService()

@@ -1,9 +1,9 @@
 import { Application } from 'express'
-import { user } from './modules/user/router'
-import { role } from './modules/role/router'
-import { log } from './modules/log/router'
-import { authority } from './modules/authority/route'
-import { authorizations } from './modules/authorizations/router'
+import { user } from './routers/user/router'
+import { role } from './routers/role/router'
+import { log } from './routers/log/router'
+import { authority } from './routers/authority/route'
+import { authorizations } from './routers/authorizations/router'
 export function initRouter(app: Application) {
   app.use(authorizations)
   app.use('/authorities', authority)

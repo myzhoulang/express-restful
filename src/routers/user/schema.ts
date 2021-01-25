@@ -27,6 +27,10 @@ export const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    email_verified: {
+      type: Types.Boolean,
+      default: false,
+    },
     password: {
       type: Types.String,
       required: true,

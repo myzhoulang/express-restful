@@ -6,8 +6,8 @@ import * as router from './router'
 import { redisInit } from './util/redis'
 import { Error } from './util/types'
 import filter from './util/filter'
-import { LogDocument } from './modules/log/typings'
-import LogService from './modules/log/service'
+import { LogDocument } from './routers/log/typings'
+import LogService from './routers/log/service'
 
 const logService = new LogService()
 export const getApp = (): Application => {
