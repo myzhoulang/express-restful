@@ -12,7 +12,7 @@ export const AuthoritySchema = new Schema(
       required: true,
       unique: true,
       trim: true,
-      set(value) {
+      set(value: string) {
         return xss(value)
       },
     },
@@ -20,7 +20,7 @@ export const AuthoritySchema = new Schema(
       type: Schema.Types.String,
       maxlength: 40,
       trim: true,
-      set(value) {
+      set(value: string) {
         return xss(value)
       },
     },
