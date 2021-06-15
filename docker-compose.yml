@@ -1,0 +1,34 @@
+version: '1.0'
+
+services:
+  database:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ~/data/mongo: /data/mongo
+    networks:
+      - webapp-networks
+
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/data/redis: /data
+
+  api:
+    image: myzhoulang/website_api
+    depends_on:
+      - database
+      - redis
+    ports:
+      - 3000:3000
+    networks:
+      - webapp-network
+
+networks:
+  webapp-network:
+    driver: bridge
