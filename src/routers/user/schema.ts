@@ -36,7 +36,7 @@ export const userSchema = new Schema(
       required: true,
       trim: true,
       select: false,
-      set(value) {
+      set(value: string) {
         return bcrypt.hashSync(value, config.saltRounds)
       },
     },
@@ -88,7 +88,7 @@ export const userSchema = new Schema(
       maxlength: 40,
       trim: true,
       default: '',
-      set(value) {
+      set(value: string) {
         return xss(value)
       },
     },

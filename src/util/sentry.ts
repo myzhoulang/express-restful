@@ -6,6 +6,7 @@ global.__rootdir__ = __dirname || process.cwd()
 
 const request = (app: express.Application) => {
   // 只有在非开发环境下才启用 sentry
+  console.log()
   const { SENTRY_DSN, NODE_ENV, SENTRY_RELEASE } = process.env
   if (NODE_ENV !== 'development') {
     Sentry.init({

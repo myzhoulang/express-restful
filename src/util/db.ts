@@ -18,7 +18,9 @@ export function connect(opts?: ConnectOptions) {
   mongoose
     .connect(mongodbUrl, mongodbOptions)
     .then(() => console.log('mongodb ok'))
-    .catch((e) => console.log(e))
+    .catch((e) => {
+      throw new Error(e)
+    })
 
   process.on('exit', (code) => {
     mongoose.connection.close()
