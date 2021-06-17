@@ -38,6 +38,7 @@ router.get('/user', async (req: Request, res: Response, next: NextFunction) => {
     }
     const current = await userService.getOneById(user.id).then((data) => data?.toJSON())
     if (current && Array.isArray(current.roles)) {
+      // 获取当前用户的的权限
       const [auth] = await roleService.getAuthorityByRoleIds(current.roles)
       const user = {
         ...current,
