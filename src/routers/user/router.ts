@@ -77,6 +77,7 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
 
 // 获取所有
 router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.query)
   service
     .query(req.query)
     .then(([users, total]) => {

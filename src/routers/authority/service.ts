@@ -1,6 +1,8 @@
 import Authority from './schema'
 import { IAuthority, IPathAndMethod, AuthorityDocument } from './typings'
 import BaseService from '../../util/BaseService'
+import { ObjectId } from 'mongoose'
+import { authority } from './route'
 
 export default class extends BaseService<AuthorityDocument> {
   constructor() {

@@ -1,4 +1,4 @@
-import { Document, Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose'
+import { Model, UpdateQuery, DocumentDefinition, FilterQuery } from 'mongoose'
 
 interface FilterQueryList {
   page?: number
@@ -8,7 +8,7 @@ interface FilterQueryList {
   direction?: 'DESC' | ' ASC'
 }
 
-export default class BaseService<T extends Document> {
+export default class BaseService<T> {
   model: Model<T>
   constructor(model: Model<T>) {
     this.model = model
@@ -35,6 +35,18 @@ export default class BaseService<T extends Document> {
   async queryOne(query: FilterQuery<T>, project?: string | undefined): Promise<T | null> {
     try {
       return await this.model.findOne(query).select(`${project ?? ''} -__v -password`)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  // 查单个
+  async findNoExistIds(query: FilterQuery<T>) {
+    try {
+      const docs = await this.model.find(query)
+      console.log(docs)
+
+      return await this.model.find(query)
     } catch (error) {
       return Promise.reject(error)
     }

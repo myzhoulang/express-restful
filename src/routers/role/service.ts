@@ -2,10 +2,19 @@ import mongoose, { ObjectId } from 'mongoose'
 import Role from './schema'
 import { RoleDocument } from './typings'
 import BaseService from '../../util/BaseService'
+import AuthorityService from '../authority/service'
 
 export default class extends BaseService<RoleDocument> {
   constructor() {
     super(Role)
+  }
+
+  async create(body: RoleDocument): Promise<RoleDocument | Error> {
+    try {
+      return await super.create(body)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 
   async getOneByTitle(title: string, project?: string): Promise<RoleDocument | null> {

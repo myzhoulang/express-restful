@@ -3,7 +3,9 @@ import { validObjectId } from '../../middleware/validator'
 import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
 import { operator } from '../../middleware/operator'
 import Service from './service'
+import AuthorityService from '../authority/service'
 import { RoleDocument } from './typings'
+import { ObjectId } from 'mongoose'
 
 const router: Router = Router()
 const service = new Service()
@@ -43,10 +45,27 @@ router.post(
   '/',
   validatorAddOrRepacleBody,
   operator,
-  (req: Request, res: Response, next: NextFunction) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
     const body = req.body as RoleDocument
     const title = body.title
+    const authority_ids = body.authority_ids
+
+    // 判断添加角色时候 传入的 权限ID 是否存在
+    const auth = new AuthorityService()
+    const result = await auth.findNoExistIds({ id: authority_ids })
+    const noExistIds: Array<ObjectId> = []
+    authority_ids.forEach((id: ObjectId) => {
+      const authority = result.find((auth) => auth._id === id)
+      if (!authority) noExistIds.push(id)
+    })
+    if (noExistIds.length > 0) {
+      return next({
+        status: 400,
+        message: `authority_ids字段中的 [ ${noExistIds.join(',')} ]权限不存在`,
+      })
+    }
+
     service
       .getOneByTitle(title)
       .then((role) => {
