@@ -12,11 +12,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     if (!user) {
       return next({ message: '账号或密码错误', status: 401 })
     }
-    console.log(user)
     // compareSync
     // 第一个参数为 客户端传入的参数 明文的密码
     // 第二参数为 数据库存贮的加密后的密码
-    const result: boolean = bcrypt.compareSync(password, (user as UserDocument).password)
+    const result: boolean = bcrypt.compareSync(password, user?.password)
 
     if (!result) {
       return next({ message: '账号或密码错误', status: 401 })

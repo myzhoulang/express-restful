@@ -43,7 +43,7 @@ const config: Conf = {
   // 白名单
   white: {
     // 路由白名单
-    path: [`${prefix}/login`],
+    path: [`${prefix}/login`, `${prefix}/users`],
 
     // 日志记录 body 体过滤名单
     body: [''],

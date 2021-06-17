@@ -13,7 +13,10 @@ declare global {
     interface ProcessEnv {
       JWT_SECRET: string
       DB_URL: string
+      DB_PORT: string
       DB_DATABASE: string
+      DB_USER: string
+      DB_PASSWORD: string
       PORT: string
       REDIS_HOST: string
       REDIS_PORT: number

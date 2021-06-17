@@ -39,14 +39,14 @@ export const getApp = (): Application => {
   // 错误处理
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, name } = error
-    console.log(error)
+    console.error('error =>', error)
     req.log.error_message = message
 
     if (status) {
       if (name === 'UnauthorizedError' || status === 401) {
         req.setData(401)
         res.status(401).json({
-          message: '账号未登录或已失效',
+          message: message ?? '账号未登录或已失效',
         })
       } else {
         res.status(status).json({

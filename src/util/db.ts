@@ -1,20 +1,21 @@
 import * as http from 'http'
 import mongoose, { ConnectOptions } from 'mongoose'
 export function connect(opts?: ConnectOptions) {
-  const { DB_URL, DB_DATABASE } = process.env
-  const mongodbUrl = `${DB_URL}/${DB_DATABASE}`
+  const { DB_URL, DB_DATABASE, DB_USER, DB_PASSWORD, DB_PORT } = process.env
 
-  const mongodbOptions: ConnectOptions = Object.assign(
-    {
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true,
-      reconnectTries: Number.MAX_VALUE,
-      reconnectInterval: 1000,
-    },
-    opts,
-  )
+  const mongodbUrl = `mongodb://${DB_URL}:${DB_PORT}`
+
+  const defaultMongodbOpt: ConnectOptions = {
+    useCreateIndex: true,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    user: DB_USER,
+    pass: DB_PASSWORD,
+    dbName: DB_DATABASE,
+    authSource: 'admin',
+  }
+
+  const mongodbOptions: ConnectOptions = Object.assign(defaultMongodbOpt, opts)
   mongoose
     .connect(mongodbUrl, mongodbOptions)
     .then(() => console.log('mongodb ok'))

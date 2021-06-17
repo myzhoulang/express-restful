@@ -16,14 +16,19 @@ export function redisInit() {
   client.on('connect', () => {
     console.log(`redis ok`)
   })
+  client.on('error', function (err) {
+    console.log(err)
+  })
   return client
 }
 
 export default {
   get(key: string) {
+    console.log('get')
     return promisify(client.get).bind(client)(key)
   },
   set(key: string, value: string) {
+    console.log('set')
     return promisify(client.set).bind(client)(key, value)
   },
 }

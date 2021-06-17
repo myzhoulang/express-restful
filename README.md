@@ -19,6 +19,12 @@
 - [x] 数据导出`Excel`
 - [x] 邮件发送
 
+## 优化
+
+- [ ] TS 类型文件
+- [ ] 数据校验
+- [ ] 配置文件
+
 ## 项目下载和运行
 
 - 拉取项目代码
@@ -61,17 +67,19 @@ npm run test:lint:fix
 ## 环境
 
 ## 使用到的包
-* [express](https://www.npmjs.com/package/express)
-* [Mongoose](https://www.npmjs.com/package/mongoose)
-* [bcrypt](https://www.npmjs.com/package/bcrypt)
-* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-* [express-validator](https://www.npmjs.com/package/express-validator)
-* [express-jwt](https://www.npmjs.com/package/express-jwt)
-* [helmet](https://www.npmjs.com/package/helmet)
-* [cors](https://www.npmjs.com/package/cors)
-* [redis](https://www.npmjs.com/package/redis)
-* [express-sse](https://www.npmjs.com/package/express-sse)
-* [agenda](https://www.npmjs.com/package/agenda)
+
+- [express](https://www.npmjs.com/package/express)
+- [Mongoose](https://www.npmjs.com/package/mongoose)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [express-validator](https://www.npmjs.com/package/express-validator)
+- [express-jwt](https://www.npmjs.com/package/express-jwt)
+- [helmet](https://www.npmjs.com/package/helmet)
+- [cors](https://www.npmjs.com/package/cors)
+- [redis](https://www.npmjs.com/package/redis)
+- [express-sse](https://www.npmjs.com/package/express-sse)
+- [agenda](https://www.npmjs.com/package/agenda)
+
 ## 权限控制
 
 1. 用户请求某一个资源
