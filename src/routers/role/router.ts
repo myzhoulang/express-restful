@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
-import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
+import { patchValidator, postAndPutValidator } from './validator'
 import { operator } from '../../middleware/operator'
 import Service from './service'
 import AuthorityService from '../authority/service'
@@ -11,7 +11,7 @@ const router: Router = Router()
 const service = new Service()
 
 // 获取所有
-router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
   service
     .query(req.query)
     .then(([roles, total]) => {
@@ -43,7 +43,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 // 新增
 router.post(
   '/',
-  validatorAddOrRepacleBody,
+  postAndPutValidator,
   operator,
   async (req: Request, res: Response, next: NextFunction) => {
     // 抽取出 中间件
@@ -86,7 +86,7 @@ router.post(
 // update
 router.patch(
   '/:id',
-  [validObjectId, validatorUpdateBody],
+  [validObjectId, patchValidator],
   operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id

@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
-import { validatorListParams, validatorAddOrRepacleBody, validatorUpdateBody } from './validator'
+import { postAndPutValidator, patchValidator } from './validator'
 import { operator } from '../../middleware/operator'
 import { UserDocument } from './typings'
 import Service from './service'
@@ -76,8 +76,7 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
 })
 
 // 获取所有
-router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.query)
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
   service
     .query(req.query)
     .then(([users, total]) => {
@@ -108,7 +107,7 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 // 新增
 router.post(
   '/',
-  validatorAddOrRepacleBody,
+  postAndPutValidator,
   operator,
   (req: Request, res: Response, next: NextFunction) => {
     const body = req.body as UserDocument
@@ -132,7 +131,7 @@ router.post(
 // update
 router.patch(
   '/:id',
-  [validObjectId, validatorUpdateBody],
+  [validObjectId, patchValidator],
   operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id

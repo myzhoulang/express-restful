@@ -1,6 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
-import { validatorListParams } from './validator'
 import Service from './service'
 import { LogDocument } from './typings'
 
@@ -8,7 +7,7 @@ const router: Router = Router()
 const service = new Service()
 
 // 获取所有
-router.get('/', validatorListParams, (req: Request, res: Response, next: NextFunction) => {
+router.get('/', (req: Request, res: Response, next: NextFunction) => {
   service
     .query(req.query)
     .then(([logs, total]) => {
@@ -31,7 +30,6 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
       } else {
         req.setData(404, { message: `没有 ID 为${id}的日志` })
       }
-
       next()
     })
     .catch(next)

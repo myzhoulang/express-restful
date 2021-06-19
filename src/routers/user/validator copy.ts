@@ -1,18 +1,18 @@
+/**
+ * TODO: 对下面的校验规则需要整理
+ */
+
 import { Request, Response, NextFunction } from 'express'
 import { Schema } from 'express-validator'
-import { checkSchemaValidator, isOptional, optional } from '../../validator'
+import { checkSchemaValidator, isOptional } from '../../validator'
 
 // 校验规则
 export const validRules = (method: HttpMethods = 'POST') => {
-  // 可选或必填
-  // 在请求方法 patch 下是可选
-  // 在请求方法 POST 或 PUT 下必填
-  const optionalOrNotEmpty = isOptional(method)
-
+  const optional = isOptional(method)
   const rules: Schema = {
     name: {
       in: ['body'],
-      ...optionalOrNotEmpty,
+      ...optional,
       isString: {
         errorMessage: '姓名必须是一个字符串',
       },
@@ -25,7 +25,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     phone: {
       in: ['body'],
-      ...optionalOrNotEmpty,
+      ...optional,
       isString: {
         errorMessage: '手机号必须是一个字符串',
       },
@@ -38,7 +38,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     email: {
       in: ['body'],
-      ...optionalOrNotEmpty,
+      ...optional,
       isString: {
         errorMessage: '邮箱必须是一个字符串',
       },
@@ -50,7 +50,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     password: {
       in: ['body'],
-      ...optionalOrNotEmpty,
+      ...optional,
       isString: {
         errorMessage: '账号密码是一个字符串',
       },
@@ -63,7 +63,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     nick_name: {
       in: ['body'],
-      optional: optional,
+      optional: optional.optional,
       isString: {
         errorMessage: '用户昵称是一个字符串',
       },
@@ -76,7 +76,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     job: {
       in: ['body'],
-      optional: optional,
+      optional: optional.optional,
       isString: {
         errorMessage: '用户工作是一个字符串',
       },
@@ -89,15 +89,17 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     avatar: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isString: {
         errorMessage: '用户头像是一个字符串',
       },
+      // .isURL()
+      // .withMessage('用户头像是一个url'),
       trim: true,
     },
     motto: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isString: {
         errorMessage: '用户头像是一个字符串',
       },
@@ -105,7 +107,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     gender: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isIn: {
         options: [0, 1],
         errorMessage: '值只能是 0 和 1 ',
@@ -114,7 +116,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     age: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isInt: {
         options: { min: 1, max: 150 },
         errorMessage: '值区间在 1-200 之间',
@@ -122,18 +124,14 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     status: {
       in: ['body'],
-      optional,
       isIn: {
         options: [1, 2],
         errorMessage: '值只能是 1和2 ',
       },
-      default: {
-        options: 1,
-      },
     },
     tags: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isArray: {
         options: { min: 0, max: 3 },
         errorMessage: '值一个0-3位的数组',
@@ -141,7 +139,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     desc: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isString: {
         errorMessage: '值是一个字符串',
       },
@@ -154,7 +152,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     team: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isArray: {
         options: { min: 0, max: 3 },
         errorMessage: '值一个0-3位的数组',
@@ -168,7 +166,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     roles: {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isArray: {
         options: { min: 0, max: 3 },
         errorMessage: '值一个0-3位的数组',
@@ -176,7 +174,7 @@ export const validRules = (method: HttpMethods = 'POST') => {
     },
     'roles.*': {
       in: ['body'],
-      optional,
+      optional: optional.optional,
       isMongoId: {
         errorMessage: '数组中有非法ID',
       },
@@ -192,7 +190,7 @@ export const postAndPutValidator = (req: Request, res: Response, next: NextFunct
   return checkSchemaValidator(rules)(req, res, next)
 }
 
-// patch校验
+// patch
 export const patchValidator = (req: Request, res: Response, next: NextFunction) => {
   const rules = validRules('PATCH')
   return checkSchemaValidator(rules)(req, res, next)
