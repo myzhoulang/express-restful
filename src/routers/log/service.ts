@@ -1,4 +1,4 @@
-import BaseService from '../../util/BaseService'
+import BaseService from '../../util/service/BaseRestFulService'
 import Log from './schema'
 import { LogDocument } from './typings'
 

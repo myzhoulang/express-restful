@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
-import { patchValidator, postAndPutValidator } from './validator'
+import { validator } from './validator'
 import Service from './service'
 import { operator } from '../../middleware/operator'
 import { AuthorityDocument, IAuthority } from './typings'
@@ -39,36 +39,31 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 })
 
 // 新增
-router.post(
-  '/',
-  postAndPutValidator,
-  operator,
-  (req: Request, res: Response, next: NextFunction) => {
-    // 抽取出 中间件
-    const body = req.body as AuthorityDocument
-    const { code } = body
-    service
-      .getByCode(code)
-      .then((authority) => {
-        if (!authority) {
-          return service.create(body)
-        } else {
-          return Promise.reject({ status: 409, message: `权限标识符 ${body.code} 已被添加` })
-        }
-      })
-      .then((authority) => {
-        req.setData(201, authority)
-        next()
-      })
-      .catch(next)
-  },
-)
+router.post('/', validator, operator, (req: Request, res: Response, next: NextFunction) => {
+  // 抽取出 中间件
+  const body = req.body as AuthorityDocument
+  const { code } = body
+  service
+    .getByCode(code)
+    .then((authority) => {
+      if (!authority) {
+        return service.create(body)
+      } else {
+        return Promise.reject({ status: 409, message: `权限标识符 ${body.code} 已被添加` })
+      }
+    })
+    .then((authority) => {
+      req.setData(201, authority)
+      next()
+    })
+    .catch(next)
+})
 
 // update
 router.patch(
   '/:id',
   validObjectId,
-  patchValidator,
+  validator,
   operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id

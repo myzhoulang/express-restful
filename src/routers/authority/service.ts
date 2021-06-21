@@ -1,34 +1,20 @@
 import Authority from './schema'
 import { IAuthority, IPathAndMethod, AuthorityDocument } from './typings'
-import BaseService from '../../util/BaseService'
-import { ObjectId } from 'mongoose'
-import { authority } from './route'
+import BaseRestFulService from '../../util/service/BaseRestFulService'
 
-export default class extends BaseService<AuthorityDocument> {
+export default class extends BaseRestFulService<AuthorityDocument> {
   constructor() {
     super(Authority)
   }
   async getOneByTitle(title: string, project?: string): Promise<IAuthority | null> {
-    try {
-      return await this.queryOne({ title }, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+    return this.queryOne({ title }, project)
   }
 
   async getByCode(code: string, project?: string): Promise<IAuthority | null> {
-    try {
-      return await this.queryOne({ code }, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+    return this.queryOne({ code }, project)
   }
 
   async getOneByPathAndMethod(query: IPathAndMethod, project?: string): Promise<IAuthority | null> {
-    try {
-      return await this.queryOne(query, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+    return this.queryOne(query, project)
   }
 }

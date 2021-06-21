@@ -1,6 +1,6 @@
 import User from './schema'
 import { UserDocument } from './typings'
-import BaseService from '../../util/BaseService'
+import BaseService from '../../util/service/BaseRestFulService'
 import RoleService from '../role/service'
 
 const roleService = new RoleService()
@@ -11,19 +11,11 @@ export default class extends BaseService<UserDocument> {
   }
 
   async getByEmail(email: string, project?: string): Promise<UserDocument | null> {
-    try {
-      return await this.queryOne({ email }, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+    return this.queryOne({ email }, project)
   }
 
   async getByPhone(phone: string, project?: string): Promise<UserDocument | null> {
-    try {
-      return await this.queryOne({ phone }, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+    return this.queryOne({ phone }, project)
   }
 
   async getUserAuthCodes(userId: string): Promise<Array<string>> {
@@ -36,9 +28,6 @@ export default class extends BaseService<UserDocument> {
       })
       .then(([auth]) => {
         return auth?.codes || []
-      })
-      .catch((error) => {
-        throw new Error(error)
       })
   }
 }

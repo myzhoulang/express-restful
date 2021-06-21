@@ -1,10 +1,12 @@
 import { Router, Request, Response, NextFunction } from 'express'
 import { validObjectId } from '../../middleware/validator'
-import { postAndPutValidator, patchValidator } from './validator'
+import { validator } from './validator'
 import { operator } from '../../middleware/operator'
 import { UserDocument } from './typings'
 import Service from './service'
 import Excel from '../../util/Excel'
+import Email from '../../modules/email'
+import client from '../../util/redis'
 
 const router: Router = Router()
 const service = new Service()
@@ -105,33 +107,39 @@ router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFuncti
 })
 
 // 新增
-router.post(
-  '/',
-  postAndPutValidator,
-  operator,
-  (req: Request, res: Response, next: NextFunction) => {
-    const body = req.body as UserDocument
-    service
-      .getByPhone(body.phone)
-      .then((user) => {
-        if (!user) {
-          return service.create(body)
-        } else {
-          return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
-        }
+router.post('/', validator, operator, (req: Request, res: Response, next: NextFunction) => {
+  const body = req.body as UserDocument
+  service
+    .getByPhone(body.phone)
+    .then((user) => {
+      if (!user) {
+        return service.create(body)
+      } else {
+        return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
+      }
+    })
+    .then((user) => {
+      req.setData(201, user)
+      const email = new Email()
+      // FIXME: 可以使用 UUID
+      const emailCode = (Math.random() * 1000000) | 0
+      client.set(String(user._id) + '_email_code', String(emailCode)).catch(next)
+      email.send({
+        from: '"Test" <604389771@qq.com>',
+        to: user.email,
+        subject: '[后台管理] 请验证您的邮箱地址.',
+        html: `<p>系统已将该验证码发送到您的电子邮箱: ${emailCode}</p>`,
       })
-      .then((user) => {
-        req.setData(201, user)
-        next()
-      })
-      .catch(next)
-  },
-)
+
+      next()
+    })
+    .catch(next)
+})
 
 // update
 router.patch(
   '/:id',
-  [validObjectId, patchValidator],
+  [validObjectId, validator],
   operator,
   (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id

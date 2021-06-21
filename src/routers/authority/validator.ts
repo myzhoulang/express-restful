@@ -100,14 +100,8 @@ export const validRules = (method: HttpMethods = 'POST') => {
   return rules
 }
 
-// 新增校验 post 或 put
-export const postAndPutValidator = (req: Request, res: Response, next: NextFunction) => {
-  const rules = validRules()
-  return checkSchemaValidator(rules)(req, res, next)
-}
-
-// patch校验
-export const patchValidator = (req: Request, res: Response, next: NextFunction) => {
-  const rules = validRules('PATCH')
+// 参数校验
+export const validator = (req: Request, res: Response, next: NextFunction) => {
+  const rules = validRules(req.method as HttpMethods)
   return checkSchemaValidator(rules)(req, res, next)
 }

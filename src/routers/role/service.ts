@@ -1,7 +1,7 @@
 import mongoose, { ObjectId } from 'mongoose'
 import Role from './schema'
 import { RoleDocument } from './typings'
-import BaseService from '../../util/BaseService'
+import BaseService from '../../util/service/BaseRestFulService'
 import AuthorityService from '../authority/service'
 
 export default class extends BaseService<RoleDocument> {
@@ -9,20 +9,12 @@ export default class extends BaseService<RoleDocument> {
     super(Role)
   }
 
-  async create(body: RoleDocument): Promise<RoleDocument | Error> {
-    try {
-      return await super.create(body)
-    } catch (error) {
-      return Promise.reject(error)
-    }
+  create(body: RoleDocument): Promise<RoleDocument> {
+    return super.create(body)
   }
 
-  async getOneByTitle(title: string, project?: string): Promise<RoleDocument | null> {
-    try {
-      return await this.queryOne({ title }, project)
-    } catch (error) {
-      throw new Error(error)
-    }
+  getOneByTitle(title: string, project?: string): Promise<RoleDocument | null> {
+    return this.queryOne({ title }, project)
   }
 
   getAuthorityByRoleIds(ids: Array<ObjectId>) {

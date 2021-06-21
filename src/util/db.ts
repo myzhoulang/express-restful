@@ -42,4 +42,6 @@ export function gracefulShutdown(app: http.Server) {
   })
 }
 
+mongoose.set('toJSON', { useProjection: true })
+
 export const timestamps = { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }

@@ -26,6 +26,7 @@ export const userSchema = new Schema(
       type: Types.String,
       required: true,
       trim: true,
+      unique: true,
     },
     email_verified: {
       type: Types.Boolean,
