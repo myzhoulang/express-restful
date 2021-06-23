@@ -5,8 +5,6 @@ import * as DB from './util/db'
 import * as router from './router'
 import { redisInit } from './util/redis'
 import { Error } from './util/types'
-import filter from './util/filter'
-import { LogDocument } from './routers/log/typings'
 import LogService from './routers/log/service'
 
 const logService = new LogService()
@@ -30,49 +28,39 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log('success', req.data)
-    const { status = 200, data } = req.data
-    res.status(status).json(data)
-    next()
+    const { status, data } = req.data || {}
+    if (status >= 200 && status <= 299) {
+      logService.save(req, { status })
+      res.status(status).json(data)
+    } else {
+      next()
+    }
   })
 
-  // 错误处理
-  app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    const { message, errors, status, name } = error
-    console.error('error =>', error)
-    req.log.error_message = message
+  // 处理404
+  app.use(function (req: Request, res: Response) {
+    const { data } = req.data || {}
+    logService.save(req, { status: 404 })
+    res.status(404).json({ message: data?.message || '请求接口不存在' })
+  })
 
+  // // 错误处理
+  app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    const { message, errors, status, header } = error
     if (status) {
-      if (name === 'UnauthorizedError' || status === 401) {
-        req.setData(401)
-        res.status(401).json({
-          message: message ?? '账号未登录或已失效',
-        })
-      } else {
-        res.status(status).json({
-          message,
-          errors,
-        })
-      }
+      res.set(header).status(status).json({
+        message,
+        errors,
+      })
     } else {
       res.status(500).json({
         message: 'Server Error',
       })
     }
-    next()
-  })
-
-  app.use((req: Request) => {
-    try {
-      req.log.request_times = Date.now() - req.log.request_start_at
-      req.log.request_status = req?.data?.status
-      // 过滤掉敏感信息
-      // 敏感字段在 config 文件夹下的配置文件中配置
-      req.log.request_body = filter.body(req.body)
-      logService.create(req.log as LogDocument)
-    } catch (e) {
-      console.log('服务器出错')
-    }
+    logService.save(req, {
+      status: status || 500,
+      error_message: message,
+    })
   })
 
   return app

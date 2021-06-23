@@ -1,11 +1,11 @@
 import { Router, Request, Response, NextFunction } from 'express'
-import { validObjectId } from '../../middleware/validator'
 import { validator } from './validator'
 import { operator } from '../../middleware/operator'
+import allMethods from '../../middleware/allMethods'
 import { UserDocument } from './typings'
 import Service from './service'
 import Excel from '../../util/Excel'
-import Email from '../../modules/email'
+import Email from '../../util/service/Email'
 import client from '../../util/redis'
 
 const router: Router = Router()
@@ -78,70 +78,68 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
 })
 
 // 获取所有
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
-  service
-    .query(req.query)
-    .then(([users, total]) => {
-      req.setData(200, { users, total })
-      next()
-    })
-    .catch(next)
-})
+router
+  .route('/')
+  .all(allMethods(['GET', 'POST']))
+  .get((req: Request, res: Response, next: NextFunction) => {
+    service
+      .query(req.query)
+      .then(([users, total]) => {
+        req.setData(200, { users, total })
+        next()
+      })
+      .catch(next)
+  })
+  .post(validator, operator, (req: Request, res: Response, next: NextFunction) => {
+    const body = req.body as UserDocument
+    service
+      .getByPhone(body.phone)
+      .then((user) => {
+        if (!user) {
+          return service.create(body)
+        } else {
+          return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
+        }
+      })
+      .then((user) => {
+        req.setData(201, user)
+        const email = new Email()
+        // FIXME: 可以使用 UUID
+        const emailCode = (Math.random() * 1000000) | 0
+        client.set(String(user._id) + '_email_code', String(emailCode)).catch(next)
+        email.send({
+          from: '"Test" <604389771@qq.com>',
+          to: user.email,
+          subject: '[后台管理] 请验证您的邮箱地址.',
+          html: `<p>系统已将该验证码发送到您的电子邮箱: ${emailCode}</p>`,
+        })
+
+        next()
+      })
+      .catch(next)
+  })
 
 // 根据 _id 获取单个
-router.get('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
-  const { params, query } = req
-  const id = params.id
-  const project = query.project as string
-  service
-    .getOneById(id, project)
-    .then((user: UserDocument | null) => {
-      if (user) {
-        req.setData(200, user.toJSON({ useProjection: true }))
-      } else {
-        req.setData(404, { message: `没有 ID 为${id}的用户` })
-      }
-      next()
-    })
-    .catch(next)
-})
-
-// 新增
-router.post('/', validator, operator, (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body as UserDocument
-  service
-    .getByPhone(body.phone)
-    .then((user) => {
-      if (!user) {
-        return service.create(body)
-      } else {
-        return Promise.reject({ status: 409, message: `手机号 ${body.phone} 已存在` })
-      }
-    })
-    .then((user) => {
-      req.setData(201, user)
-      const email = new Email()
-      // FIXME: 可以使用 UUID
-      const emailCode = (Math.random() * 1000000) | 0
-      client.set(String(user._id) + '_email_code', String(emailCode)).catch(next)
-      email.send({
-        from: '"Test" <604389771@qq.com>',
-        to: user.email,
-        subject: '[后台管理] 请验证您的邮箱地址.',
-        html: `<p>系统已将该验证码发送到您的电子邮箱: ${emailCode}</p>`,
+router
+  .route('/:id')
+  .all(allMethods(['GET', 'PATCH', 'DELETE']))
+  .get(validator, (req: Request, res: Response, next: NextFunction) => {
+    const { params, query } = req
+    const id = params.id
+    const project = query.project as string
+    service
+      .getOneById(id, project)
+      .then((user: UserDocument | null) => {
+        if (user) {
+          req.setData(200, user.toJSON({ useProjection: true }))
+        } else {
+          req.setData(404, { message: `没有 ID 为${id}的用户` })
+        }
+        next()
       })
-
-      next()
-    })
-    .catch(next)
-})
-
-// update
-router.patch(
-  '/:id',
-  [validObjectId, validator],
-  operator,
-  (req: Request, res: Response, next: NextFunction) => {
+      .catch(next)
+  })
+  .patch(validator, operator, (req: Request, res: Response, next: NextFunction) => {
     const id = req.params.id
     const body = req.body as UserDocument
     service
@@ -155,23 +153,20 @@ router.patch(
         next()
       })
       .catch(next)
-  },
-)
-
-// 删除指定 id 的用户
-router.delete('/:id', validObjectId, (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id
-  service
-    .deleteOneById(id)
-    .then((result: UserDocument | null) => {
-      if (result) {
-        req.setData(204)
-      } else {
-        req.setData(404, { message: `没有 ID 为${id}的用户` })
-      }
-      next()
-    })
-    .catch(next)
-})
+  })
+  .delete(validator, (req: Request, res: Response, next: NextFunction) => {
+    const id = req.params.id
+    service
+      .deleteOneById(id)
+      .then((result: UserDocument | null) => {
+        if (result) {
+          req.setData(204)
+        } else {
+          req.setData(404, { message: `没有 ID 为${id}的用户` })
+        }
+        next()
+      })
+      .catch(next)
+  })
 
 export { router as user }

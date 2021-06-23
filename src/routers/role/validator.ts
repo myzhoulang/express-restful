@@ -4,10 +4,11 @@
 
 import { Request, Response, NextFunction } from 'express'
 import { Schema } from 'express-validator'
-import { isOptional, optional, checkSchemaValidator } from '../../validator'
+import { isOptional, optional } from '../../validator'
+import { checkSchema } from '../../validator/checkSchema'
 
 // 校验规则
-export const validRules = (method: HttpMethods = 'POST') => {
+export const createRules = (method: HttpMethods = 'POST') => {
   // patch 可选
   const optionalOrNotEmpty = isOptional(method)
 
@@ -78,6 +79,6 @@ export const validRules = (method: HttpMethods = 'POST') => {
 
 // 参数校验
 export const validator = (req: Request, res: Response, next: NextFunction) => {
-  const rules = validRules(req.method as HttpMethods)
-  return checkSchemaValidator(rules)(req, res, next)
+  const method = req.method as HttpMethods
+  return checkSchema(createRules, method)(req, res, next)
 }

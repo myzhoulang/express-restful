@@ -32,11 +32,7 @@ export default class BaseRestFulService<T> {
     return this.model.findOne(query).select(`${project ?? ''}`)
   }
 
-  // 查单个
-  // async findNoExistIds(query: FilterQuery<T>) {
-  //   return this.model.find(query)
-  // }
-
+  // 查找指定的一组id是否在数据库中存在，并返回不存的id
   async findNoExistIds(query: FilterQuery<T>): Promise<Array<ObjectId>> {
     return this.model.find(query).then((data) => {
       const noExistIds: Array<ObjectId> = []

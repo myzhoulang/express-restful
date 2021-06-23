@@ -1,6 +1,6 @@
 const optional = {
   options: {
-    // false 为不能传 falsely
+    // false 为不能传 falsely(0,"",false)
     checkFalsy: true,
     // false 为不能传null
     nullable: false,

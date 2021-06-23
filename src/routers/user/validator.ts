@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
 import { Schema } from 'express-validator'
-import { checkSchemaValidator, isOptional, optional } from '../../validator'
+import { isOptional, optional } from '../../validator'
+import { checkSchema } from '../../validator/checkSchema'
 
 // 校验规则
-export const validRules = (method: HttpMethods = 'POST') => {
+export const createRules = (method: HttpMethods = 'POST') => {
   // 可选或必填
   // 在请求方法 patch 下是可选
   // 在请求方法 POST 或 PUT 下必填
@@ -188,6 +189,6 @@ export const validRules = (method: HttpMethods = 'POST') => {
 
 // 参数校验
 export const validator = (req: Request, res: Response, next: NextFunction) => {
-  const rules = validRules(req.method as HttpMethods)
-  return checkSchemaValidator(rules)(req, res, next)
+  const method = req.method as HttpMethods
+  return checkSchema(createRules, method)(req, res, next)
 }

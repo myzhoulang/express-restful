@@ -37,7 +37,7 @@ export const LogSchema = new Schema(
     request_times: {
       type: Schema.Types.Number,
     },
-    request_status: {
+    status: {
       type: Schema.Types.Number,
     },
     error_message: {

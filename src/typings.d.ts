@@ -1,6 +1,7 @@
 export {}
 
 export interface IObjectAny {
+  header?: any
   [key: string]: any
 }
 declare global {
