@@ -2,9 +2,8 @@ node_modules
 npm-debug.log
 Dockerfile
 .dockerignore
-.git
+# .git
 .vscode
 /log
 .eslintrc.json
-.dockerignore
 .gitignore

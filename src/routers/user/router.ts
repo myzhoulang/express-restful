@@ -95,6 +95,7 @@ router
     service
       .getByPhone(body.phone)
       .then((user) => {
+        console.log('user', user)
         if (!user) {
           return service.create(body)
         } else {

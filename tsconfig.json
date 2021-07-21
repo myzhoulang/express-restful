@@ -7,13 +7,13 @@
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "strict": true,
     "outDir": "build",
     "baseUrl": "src",
     "typeRoots": ["node_modules/@types", "src/typings"],
-    "lib": ["DOM", "es6", "scripthost", "es2017"],
+    "lib": ["es6", "scripthost", "es2017", "ESNext"],
     "paths": {
       "*": ["node_modules/*"],
       "src/*": ["./*"]

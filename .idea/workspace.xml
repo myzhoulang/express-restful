@@ -2,13 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/user/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/user/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/user/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/user/type.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modules/user/user.http" beforeDir="false" afterPath="$PROJECT_DIR$/src/modules/user/user.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,18 +41,13 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\github\express-restful\node_modules\prettier" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
     <configuration name="user 中的所有内容" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/modules/user/user.http">
       <method v="2" />
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="HTTP 请求.user 中的所有内容" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -72,6 +64,7 @@
       <workItem from="1605972487186" duration="1166000" />
       <workItem from="1606140040194" duration="48000" />
       <workItem from="1609295503953" duration="2342000" />
+      <workItem from="1626870902449" duration="172000" />
     </task>
     <servers />
   </component>
@@ -88,6 +81,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,4 +1,4 @@
-import { Model, UpdateQuery, DocumentDefinition, FilterQuery, ObjectId } from 'mongoose'
+import { Model, UpdateQuery, DocumentDefinition, FilterQuery, ObjectId, Document } from 'mongoose'
 
 interface FilterQueryList {
   page?: number
@@ -8,7 +8,7 @@ interface FilterQueryList {
   direction?: 'DESC' | ' ASC'
 }
 
-export default class BaseRestFulService<T> {
+export default class BaseRestFulService<T extends Document> {
   model: Model<T>
   constructor(model: Model<T>) {
     this.model = model
@@ -36,11 +36,11 @@ export default class BaseRestFulService<T> {
   async findNoExistIds(query: FilterQuery<T>): Promise<Array<ObjectId>> {
     return this.model.find(query).then((data) => {
       const noExistIds: Array<ObjectId> = []
-      const ids = query.id ?? []
-      ids.forEach((id: ObjectId) => {
-        const authority = data.find((auth) => auth._id === id)
-        if (!authority) noExistIds.push(id)
-      })
+      //const ids = query.id ?? []
+      // ids.forEach((id: ObjectId) => {
+      //   const authority = data.find((auth) => auth._id === id)
+      //   if (!authority) noExistIds.push(id)
+      // })
       return noExistIds
     })
   }
@@ -62,6 +62,6 @@ export default class BaseRestFulService<T> {
 
   // 创建
   async create(body: DocumentDefinition<T>): Promise<T> {
-    return (await this.model.create(body)).toJSON<T>()
+    return await this.model.create(body)
   }
 }

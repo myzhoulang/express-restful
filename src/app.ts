@@ -46,6 +46,7 @@ export const getApp = (): Application => {
 
   // // 错误处理
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+    console.log(error)
     const { message, errors, status, header } = error
     if (status) {
       res.set(header).status(status).json({

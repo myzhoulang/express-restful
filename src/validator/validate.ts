@@ -16,8 +16,9 @@ const validate = (validations: Array<ContextRunner>) => {
 const checkSchemaValidator = (schema: Schema) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      await checkSchema(schema).run(req)
+      await Promise.all(checkSchema(schema).map((validation) => validation.run(req)))
       const errors = validationResult(req).array({ onlyFirstError: true })
+      console.log(errors)
       if (errors.length <= 0) {
         return next()
       }
