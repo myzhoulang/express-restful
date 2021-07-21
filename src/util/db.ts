@@ -20,6 +20,7 @@ export function connect(opts?: ConnectOptions) {
     .connect(mongodbUrl, mongodbOptions)
     .then(() => console.log('mongodb ok'))
     .catch((e) => {
+      console.log('mongodb error')
       throw new Error(e)
     })
 

@@ -6,9 +6,11 @@ import { UserDocument } from '../user/typings'
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, password } = req.body
-    const user: UserDocument | null = await User.findOne({ name }, '_id password')
+    const { email, password } = req.body
+    const user: UserDocument | null = await User.findOne({ email }, '_id password')
 
+    // 如果当前用户找不到 也返回账号或密码出错，防止用户泄露
+    console.log('user', user)
     if (!user) {
       return next({ message: '账号或密码错误', status: 401 })
     }

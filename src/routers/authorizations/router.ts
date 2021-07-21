@@ -13,6 +13,8 @@ const roleService = new RoleService()
 const userService = new UserService()
 
 // 登录
+// 测试账号：604389771@qq.com
+// 密码： 123456
 router.post(
   '/login',
   allMethods(['POST']),

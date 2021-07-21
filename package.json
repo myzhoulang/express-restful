@@ -4,8 +4,9 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); tsc)",
+    "build": "(export SENTRY_RELEASE=$(git rev-parse --short HEAD); npx tsc)",
     "build:start": "npm run build && npm run sourcemap && npm run start",
+    "build:local:start": "npm run build && npm run start",
     "sourcemap": "sentry-cli releases files $(git rev-parse --short HEAD) upload-sourcemaps  --rewrite build",
     "start": "node ./build/index",
     "start:dev": "npx ts-node-dev ./src/index.ts",
@@ -82,7 +83,7 @@
     "ts-node": "^8.10.1",
     "ts-node-dev": "^1.0.0-pre.44",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^3.9.2",
+    "typescript": "^3.9.10",
     "typescriptnpm": "^1.0.1"
   }
 }

@@ -8,7 +8,7 @@ export function redisInit() {
 
   client = redis.createClient({
     host: REDIS_HOST,
-    port: REDIS_PORT,
+    port: Number(REDIS_PORT),
     db: REDIS_DB,
     password: REDIS_PASSWORD,
   })

@@ -20,8 +20,8 @@ declare global {
       DB_PASSWORD: string
       PORT: string
       REDIS_HOST: string
-      REDIS_PORT: number
-      REDIS_DB: number
+      REDIS_PORT: string
+      REDIS_DB: string
       REDIS_PASSWORD: string
       OSS_BUCKET: string
       OSS_USER: string

@@ -43,6 +43,7 @@ release:
     - docker info
 
 deploy project:
+  # 登录部署机后直接拉镜像执行 docker-compose.yml
   image: ubuntu:latest
   # 生成 .env 文件
   before_script:

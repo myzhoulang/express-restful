@@ -1,5 +1,5 @@
 [defaults]
-url = ip
+url = http://47.100.111.243/
 org = sentry
 project = express-kf
 

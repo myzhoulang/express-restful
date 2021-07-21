@@ -1,34 +1,38 @@
-version: '1.0'
-
 services:
   database:
+    container_name: mongo
     image: mongo
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - ~/data/mongo: /data/mongo
-    networks:
-      - webapp-networks
+      - ~/data/mongo:/data/mongo
+    # networks:
+    #   - webapp-networks
 
   redis:
+    container_name: redis
     image: redis
     restart: always
     ports:
       - 6379:6379
     volumes:
-      - ~/data/redis: /data
+      - ~/data/redis:/data
 
   api:
-    image: myzhoulang/website_api
+    container_name: api
+    build: .
+    # image: myzhoulang/website_api
     depends_on:
       - database
       - redis
     ports:
       - 3000:3000
-    networks:
-      - webapp-network
-
-networks:
-  webapp-network:
-    driver: bridge
+    environment: # 设置环境变量
+      - NODE_ENV=production
+    # networks:
+    #   - webapp-network
+    command: node ./index.js
+# networks:
+#   webapp-network:
+#     driver: bridge

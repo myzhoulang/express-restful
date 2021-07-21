@@ -1,5 +1,5 @@
 import { Application } from 'express'
-import bodyParser from 'body-parser'
+import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import auth from './middleware/auth'
@@ -12,8 +12,8 @@ const middleware = (app: Application) => {
   const { JWT_SECRET } = process.env
   app.use(cors(config.cors))
   app.use(helmet())
-  app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
+  app.use(express.urlencoded({ extended: false }))
+  app.use(express.json())
   app.use(setSuccessData)
   app.use(log)
   app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
