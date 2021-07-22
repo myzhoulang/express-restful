@@ -1,9 +1,9 @@
 import * as http from 'http'
 import mongoose, { ConnectOptions } from 'mongoose'
 export function connect(opts?: ConnectOptions) {
-  const { DB_URL, DB_DATABASE, DB_USER, DB_PASSWORD, DB_PORT } = process.env
+  const { DB_DATABASE, DB_USER, DB_PASSWORD, DB_PORT, DB_AUTHSOURCE } = process.env
 
-  const mongodbUrl = `mongodb://${DB_URL}:${DB_PORT}`
+  const mongodbUrl = `mongodb://mongo:${DB_PORT}`
 
   const defaultMongodbOpt: ConnectOptions = {
     useCreateIndex: true,
@@ -12,7 +12,7 @@ export function connect(opts?: ConnectOptions) {
     user: DB_USER,
     pass: DB_PASSWORD,
     dbName: DB_DATABASE,
-    authSource: 'admin',
+    authSource: DB_AUTHSOURCE,
   }
 
   const mongodbOptions: ConnectOptions = Object.assign(defaultMongodbOpt, opts)
@@ -20,7 +20,7 @@ export function connect(opts?: ConnectOptions) {
     .connect(mongodbUrl, mongodbOptions)
     .then(() => console.log('mongodb ok'))
     .catch((e) => {
-      console.log('mongodb error')
+      console.log('mongodb error', e)
       throw new Error(e)
     })
 

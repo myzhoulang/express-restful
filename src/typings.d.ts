@@ -18,6 +18,7 @@ declare global {
       DB_DATABASE: string
       DB_USER: string
       DB_PASSWORD: string
+      DB_AUTHSOURCE: string
       PORT: string
       REDIS_HOST: string
       REDIS_PORT: string
@@ -28,6 +29,7 @@ declare global {
       OSS_PASSWORD: string
       EMAIL_USER: string
       EMAIL_PASS: string
+      COMMIT_SHA: string
     }
   }
   export interface IJWTPlayLoad {
