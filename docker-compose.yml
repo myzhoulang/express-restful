@@ -1,15 +1,15 @@
 services:
-  database:
+  mongo:
     container_name: mongo
     image: mongo
     restart: always
     ports:
       - 27017:27017
     volumes:
-      - ~/data/mongo:/data/mongo
-    # networks:
-    #   - webapp-networks
-
+      - ~/data/mongo/db:/data/db
+      - ~/data/mongo/log:/data/log
+      - ~/data/mongo/conf/mongod.conf:/etc/mongod.conf
+    command: mongod --config /etc/mongod.conf
   redis:
     container_name: redis
     image: redis
@@ -18,21 +18,15 @@ services:
       - 6379:6379
     volumes:
       - ~/data/redis:/data
-
+      - ~/data/redis/redis.conf:/usr/local/etc/redis/redis.conf
   api:
     container_name: api
     build: .
-    # image: myzhoulang/website_api
     depends_on:
-      - database
+      - mongo
       - redis
     ports:
       - 3000:3000
-    environment: # 设置环境变量
-      - NODE_ENV=production
-    # networks:
-    #   - webapp-network
+    env_file: .env
     command: node ./build/index.js
-# networks:
-#   webapp-network:
-#     driver: bridge
+    # command: pm2 ./build/index.js

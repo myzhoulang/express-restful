@@ -1,7 +1,7 @@
 [defaults]
-url = http://47.100.111.243/
+url = http://017d6ac380cf4bb6a0347c37e8cf89d4@sentry.beicaizs.com:9000/4
 org = sentry
-project = express-kf
+project = api
 
 [auth]
-token = token
+token = fbd5d87d1bd44aa79322e3cc51b7fb4760ca80cd6eae4f209cfe57113865a205

@@ -1,6 +1,8 @@
 import * as express from 'express'
 import * as Sentry from '@sentry/node'
 import * as Integrations from '@sentry/integrations'
+import * as Tracing from '@sentry/tracing'
+import git from 'git-rev-sync'
 
 global.__rootdir__ = __dirname || process.cwd()
 
@@ -17,8 +19,12 @@ const request = (app: express.Application) => {
     Sentry.init({
       dsn: SENTRY_DSN,
       environment: NODE_ENV,
-      release: SENTRY_RELEASE,
+      release: SENTRY_RELEASE ?? git.short(),
       integrations: [
+        // enable HTTP calls tracing
+        new Sentry.Integrations.Http({ tracing: true }),
+        // enable Express.js middleware tracing
+        new Tracing.Integrations.Express({ app }),
         new Integrations.RewriteFrames({
           root: global.__rootdir__,
         }),

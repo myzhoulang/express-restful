@@ -9,6 +9,7 @@ import LogService from './routers/log/service'
 
 const logService = new LogService()
 export const getApp = (): Application => {
+  console.log(process.env)
   const app: Application = express()
 
   // 链接数据库

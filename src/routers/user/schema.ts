@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose'
 import xss from 'xss'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import { timestamps } from '../../util/db'
 import config from '../../config/'
 import { UserDocument, UserModel } from './typings'

@@ -36,11 +36,11 @@ export default class BaseRestFulService<T extends Document> {
   async findNoExistIds(query: FilterQuery<T>): Promise<Array<ObjectId>> {
     return this.model.find(query).then((data) => {
       const noExistIds: Array<ObjectId> = []
-      //const ids = query.id ?? []
-      // ids.forEach((id: ObjectId) => {
-      //   const authority = data.find((auth) => auth._id === id)
-      //   if (!authority) noExistIds.push(id)
-      // })
+      const ids = query.id ?? []
+      ids.forEach((id: ObjectId) => {
+        const authority = data.find((auth) => auth._id === id)
+        if (!authority) noExistIds.push(id)
+      })
       return noExistIds
     })
   }
