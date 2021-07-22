@@ -13,12 +13,12 @@
   "editor.formatOnSave": true,
   "editor.fontSize": 20,
   "editor.lineHeight": 25,
-  "editor.letterSpacing": 0.5,
+  "editor.letterSpacing": 0,
   "files.trimTrailingWhitespace": true,
   "editor.fontWeight": "400",
   "editor.cursorStyle": "line",
   "editor.cursorWidth": 5,
   "editor.cursorBlinking": "solid",
-  "editor.fontFamily": "Consolas, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "MonoLisa",
   "workbench.fontAliasing": "antialiased"
 }
