@@ -15,35 +15,42 @@ const service = new Service()
 router.get('/export', (req: Request, res: Response, next: NextFunction) => {
   const excel = new Excel()
   const name = '用户信息'
-  excel.addSheet(name)
+  excel.addSheet(name, {
+    properties: { defaultRowHeight: 30, tabColor: { argb: 'FF00FF00' } },
+    views: [],
+  })
 
   const header = excel.getHeader(name, 1)
+
   if (header) {
-    excel.setHeaderStyle(header, {
-      height: 20,
-    })
+    header.height = 30
   }
 
   excel.setColumns(name, [
     {
       header: '姓名',
       key: 'name',
+      width: 30,
     },
     {
       header: '手机号码',
       key: 'phone',
+      width: 30,
     },
     {
       header: 'Email',
       key: 'email',
+      width: 30,
     },
     {
       header: '性别',
       key: 'gender',
+      width: 10,
     },
     {
       header: '创建时间',
       key: 'created_at',
+      width: 30,
       alignment: {
         vertical: 'middle',
         horizontal: 'right',
@@ -55,6 +62,7 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
       width: 30,
     },
   ])
+
   service
     .query(req.query)
     .then(([list]) => {
@@ -68,13 +76,25 @@ router.get('/export', (req: Request, res: Response, next: NextFunction) => {
             ...props,
           }
         }),
+        'i',
       )
+      if (header) {
+        excel.setHeaderStyle(header, {})
+      }
+
       return excel.writeFile(res, 'excel').then(() => {
         res.end()
-        console.log('export success')
       })
     })
     .catch(next)
+
+  // const row = excel.sheets[0].getRow(2)
+  // row.fill = {
+  //   type: 'pattern',
+  //   pattern: 'solid',
+  //   fgColor: { argb: `FFFFFFFF` },
+  //   bgColor: { argb: `FFFFFFFF` },
+  // }
 })
 
 // 获取所有
@@ -132,7 +152,7 @@ router
       .getOneById(id, project)
       .then((user: UserDocument | null) => {
         if (user) {
-          req.setData(200, user.toJSON({ useProjection: true }))
+          req.setData(200, user)
         } else {
           req.setData(404, { message: `没有 ID 为${id}的用户` })
         }
@@ -147,7 +167,7 @@ router
       .updateOneById(id, body)
       .then((user) => {
         if (user) {
-          req.setData(200, user.toJSON({ useProjection: true }))
+          req.setData(200, user)
         } else {
           req.setData(404, { message: `没有 ID 为${id}的用户` })
         }

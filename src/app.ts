@@ -9,7 +9,6 @@ import LogService from './routers/log/service'
 
 const logService = new LogService()
 export const getApp = (): Application => {
-  console.log(process.env)
   const app: Application = express()
 
   // 链接数据库
@@ -29,6 +28,7 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
+    console.log(',', req.data)
     const { status, data } = req.data || {}
     if (status >= 200 && status <= 299) {
       logService.save(req, { status })
@@ -40,14 +40,15 @@ export const getApp = (): Application => {
 
   // 处理404
   app.use(function (req: Request, res: Response) {
+    console.log(111)
     const { data } = req.data || {}
     logService.save(req, { status: 404 })
     res.status(404).json({ message: data?.message || '请求接口不存在' })
   })
 
-  // // 错误处理
+  // 错误处理
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(error)
     const { message, errors, status, header } = error
     if (status) {
       res.set(header).status(status).json({

@@ -22,7 +22,7 @@ export default class BaseRestFulService<T extends Document> {
         .skip((page - 1) * maxSize)
         .limit(maxSize)
         .sort({ [sort || 'updated_at']: direction || 'DESC' })
-        .select(`${project ?? ''}`),
+        .select(`${project ?? ''} -password`),
       this.model.find(query).count(),
     ])
   }
@@ -37,10 +37,13 @@ export default class BaseRestFulService<T extends Document> {
     return this.model.find(query).then((data) => {
       const noExistIds: Array<ObjectId> = []
       const ids = query.id ?? []
-      ids.forEach((id: ObjectId) => {
-        const authority = data.find((auth) => auth._id === id)
-        if (!authority) noExistIds.push(id)
-      })
+      if (Array.isArray(ids)) {
+        ids.forEach((id: ObjectId) => {
+          const authority = data.find((auth) => auth._id === id)
+          if (!authority) noExistIds.push(id)
+        })
+      }
+
       return noExistIds
     })
   }

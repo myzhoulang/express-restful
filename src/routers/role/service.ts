@@ -17,6 +17,7 @@ export default class extends BaseService<RoleDocument> {
     return this.queryOne({ title }, project)
   }
 
+  // 根据 角色id 获取权限集合
   getAuthorityByRoleIds(ids: Array<ObjectId>) {
     return this.model.aggregate([
       {
@@ -71,3 +72,8 @@ export default class extends BaseService<RoleDocument> {
     ])
   }
 }
+
+// {
+//   codes: [1,2,],
+//   titles: ['query', 'save']
+// }

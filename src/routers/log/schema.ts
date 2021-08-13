@@ -52,17 +52,4 @@ export const LogSchema = new Schema(
   },
 )
 
-LogSchema.statics.getByTime = function (this: Model<LogDocument>, time: number) {
-  const sTime = String(time)
-  let oper
-  if (sTime.startsWith('-')) {
-    oper = { $lt: time }
-  } else if (sTime.startsWith('+')) {
-    oper = { $gt: time }
-  } else {
-    oper = time
-  }
-  return this.find({ time: oper })
-}
-
 export default model<LogDocument, LogModel>('Log', LogSchema)

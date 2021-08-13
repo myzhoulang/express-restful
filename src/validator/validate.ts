@@ -18,7 +18,6 @@ const checkSchemaValidator = (schema: Schema) => {
     try {
       await Promise.all(checkSchema(schema).map((validation) => validation.run(req)))
       const errors = validationResult(req).array({ onlyFirstError: true })
-      console.log(errors)
       if (errors.length <= 0) {
         return next()
       }

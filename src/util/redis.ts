@@ -7,7 +7,10 @@ export function redisInit() {
   const { REDIS_DB, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } = process.env
 
   client = redis.createClient({
-    host: 'redis',
+    // docker-componse
+    // host: 'redis',
+
+    host: REDIS_HOST,
     port: Number(REDIS_PORT),
     db: REDIS_DB,
     password: REDIS_PASSWORD,
@@ -17,7 +20,7 @@ export function redisInit() {
     console.log(`redis ok`)
   })
   client.on('error', function (err) {
-    console.log(err)
+    console.log('redis', err)
   })
   return client
 }

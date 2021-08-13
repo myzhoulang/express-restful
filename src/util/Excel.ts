@@ -6,7 +6,6 @@ import exceljs, {
   AddWorksheetOptions,
   Worksheet,
   Row,
-  Column,
   Style,
   Border,
 } from 'exceljs'
@@ -112,7 +111,6 @@ export default class Excel {
     const merageStryle = Object.assign(
       {},
       {
-        height: 20,
         fill: {
           type: 'pattern',
           pattern: 'solid',
@@ -127,7 +125,7 @@ export default class Excel {
 
   // FIXME:
   // 1. columns typescript check error https://github.com/exceljs/exceljs/issues/1543
-  setColumns(name: string, columns: Array<any>): Worksheet | null {
+  setColumns(name: string, columns: Worksheet['columns']): Worksheet | null {
     const sheet = this.findSheetByName(name)
     if (sheet) {
       const defaultColumnStyle = this.defaultColumnStyle
@@ -148,7 +146,7 @@ export default class Excel {
   }
 
   // 添加数据到 sheet
-  addDatas<T>(name: string, datas: Array<T>, style?: string): Worksheet | null {
+  addDatas<T>(name: string, datas: Array<T>, style?: 'i' | 'n'): Worksheet | null {
     const sheet = this.findSheetByName(name)
     if (sheet) {
       sheet.addRows(datas, style)

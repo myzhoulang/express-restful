@@ -20,7 +20,7 @@ const startServer = () => {
       console.log(`server started at http://localhost:${PORT}`)
     })
   } catch (error) {
-    console.error(error)
+    console.error('error', error)
   }
 }
 startServer()

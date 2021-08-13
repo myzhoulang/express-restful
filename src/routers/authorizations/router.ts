@@ -23,9 +23,12 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
+      // res.status(400).json({ errors: errors.array() })
       next({ status: 400, errors: errors.array() })
+      return
+    } else {
+      next()
     }
-    next()
   },
   auth,
 )
@@ -42,7 +45,7 @@ router
           status: 401,
         })
       }
-      const current = await userService.getOneById(user.id).then((data) => data?.toJSON())
+      const current = await userService.getOneById(user.id)
       if (current && Array.isArray(current.roles)) {
         // 获取当前用户的的权限
         const [auth] = await roleService.getAuthorityByRoleIds(current.roles)

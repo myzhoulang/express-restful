@@ -1,9 +1,13 @@
 import * as http from 'http'
 import mongoose, { ConnectOptions } from 'mongoose'
-export function connect(opts?: ConnectOptions) {
-  const { DB_DATABASE, DB_USER, DB_PASSWORD, DB_PORT, DB_AUTHSOURCE } = process.env
 
-  const mongodbUrl = `mongodb://mongo:${DB_PORT}`
+export function connect(opts?: ConnectOptions) {
+  const { DB_DATABASE, DB_USER, DB_PASSWORD, DB_PORT, DB_AUTHSOURCE, DB_URL } = process.env
+
+  // docker-componse
+  // const mongodbUrl = `mongodb://mongo:${DB_PORT}`
+
+  const mongodbUrl = `mongodb://${DB_URL}:${DB_PORT}`
 
   const defaultMongodbOpt: ConnectOptions = {
     useCreateIndex: true,
@@ -43,6 +47,6 @@ export function gracefulShutdown(app: http.Server) {
   })
 }
 
-mongoose.set('toJSON', { useProjection: true })
+// mongoose.set('toJSON', { useProjection: true })
 
 export const timestamps = { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }

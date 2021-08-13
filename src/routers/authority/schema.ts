@@ -69,12 +69,4 @@ export const AuthoritySchema = new Schema(
   timestamps,
 )
 
-AuthoritySchema.statics.getOneByPathAndMethod = function (
-  this: Model<AuthorityDocument>,
-  query: IPathAndMethod,
-  project?: string,
-) {
-  return this.findOne(query).select(project)
-}
-
 export default model<AuthorityDocument, AuthorityModel>('Authority', AuthoritySchema)
