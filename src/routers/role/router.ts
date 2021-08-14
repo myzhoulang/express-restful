@@ -30,7 +30,7 @@ router
 
     // 判断添加角色时候 传入的 权限ID 是否存在
     const auth = new AuthorityService()
-    const result = await auth.findNoExistIds({ id: authority_ids })
+    const result = await auth.findNoExistIds({ id: { $in: authority_ids } })
     if (result.length > 0) {
       return next({
         status: 400,

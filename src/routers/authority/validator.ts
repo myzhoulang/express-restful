@@ -54,16 +54,19 @@ export const createRules = (method: HttpMethods = 'POST') => {
     },
     parent_id: {
       in: ['body'],
-      ...optionalOrNotEmpty,
+      optional,
       isMongoId: {
         errorMessage: '值是非法的ID',
+      },
+      default: {
+        options: null,
       },
     },
     status: {
       in: ['body'],
       optional,
       isIn: {
-        options: [0, 1],
+        options: [[0, 1]],
         errorMessage: '值只能是 0, 1',
       },
       default: {
@@ -82,7 +85,7 @@ export const createRules = (method: HttpMethods = 'POST') => {
       in: ['body'],
       optional,
       isIn: {
-        options: [1, 2, 3],
+        options: [[1, 2, 3]],
         errorMessage: '值只能是 1, 2, 3 ',
       },
       default: {

@@ -10,7 +10,6 @@ export const AuthoritySchema = new Schema(
       minlength: 2,
       maxlength: 30,
       required: true,
-      unique: true,
       trim: true,
       set(value: string) {
         return xss(value)
@@ -57,6 +56,7 @@ export const AuthoritySchema = new Schema(
     },
     path: {
       type: Schema.Types.String,
+      require: true,
     },
     method: {
       type: Schema.Types.String,

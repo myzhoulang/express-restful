@@ -25,6 +25,7 @@ export default async function permissions(req: Request, res: Response, next: Nex
     const user = req.user
     // 首先权限表中查找，当前的 path 是否需要权限
     const auth = await authorityService.getOneByPathAndMethod({ path, method, type: 3 })
+    console.log('auth', auth)
     if (auth) {
       const codes = await getUserAuthCodes(user?.id as string)
       // 有权限进入

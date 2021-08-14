@@ -40,7 +40,6 @@ export const getApp = (): Application => {
 
   // 处理404
   app.use(function (req: Request, res: Response) {
-    console.log(111)
     const { data } = req.data || {}
     logService.save(req, { status: 404 })
     res.status(404).json({ message: data?.message || '请求接口不存在' })
@@ -50,6 +49,7 @@ export const getApp = (): Application => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, header } = error
+    console.log(error)
     if (status) {
       res.set(header).status(status).json({
         message,

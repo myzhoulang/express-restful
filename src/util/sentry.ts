@@ -6,7 +6,7 @@ import git from 'git-rev-sync'
 
 global.__rootdir__ = __dirname || process.cwd()
 
-const request = (app: express.Application) => {
+const request: (app: express.Application) => void = (app: express.Application) => {
   // 只有在非开发环境下才启用 sentry
   const { SENTRY_DSN, NODE_ENV, SENTRY_RELEASE } = process.env
 
@@ -34,7 +34,7 @@ const request = (app: express.Application) => {
   }
 }
 
-const error = (app: express.Application) => {
+const error: (app: express.Application) => void = (app: express.Application) => {
   if (process.env.NODE_ENV !== 'development') {
     app.use(Sentry.Handlers.errorHandler() as express.ErrorRequestHandler)
   }

@@ -50,10 +50,10 @@ router
         // 获取当前用户的的权限
         const [auth] = await roleService.getAuthorityByRoleIds(current.roles)
         const user = {
-          ...current,
+          ...current.toJSON(),
           auth,
         }
-        client.set(String(user._id), JSON.stringify(user)).then((status) => console.log(status))
+        client.set(String(user._id), JSON.stringify(user))
         req.setData(200, user)
       }
 
