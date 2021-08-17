@@ -1,7 +1,7 @@
-import { Schema, Model, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import xss from 'xss'
 import { timestamps } from '../../util/db'
-import { AuthorityDocument, AuthorityModel, IPathAndMethod } from './typings'
+import { AuthorityDocument, AuthorityModel } from './typings'
 
 export const AuthoritySchema = new Schema(
   {

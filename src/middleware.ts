@@ -8,16 +8,17 @@ import config from './config'
 import log from './middleware/log'
 import permissions from './middleware/permissions'
 
-const middleware = (app: Application) => {
+const middleware = (app: Application): Application => {
   const { JWT_SECRET } = process.env
   app.use(cors(config.cors))
   app.use(helmet())
   app.use(express.urlencoded({ extended: false }))
   app.use(express.json())
   app.use(setSuccessData)
-  app.use(log)
   app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
+  app.use(log)
   app.use(permissions)
+  return app
 }
 
 export default middleware

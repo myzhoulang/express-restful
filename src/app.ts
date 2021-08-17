@@ -28,7 +28,6 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
-    console.log(',', req.data)
     const { status, data } = req.data || {}
     if (status >= 200 && status <= 299) {
       logService.save(req, { status })
@@ -49,7 +48,7 @@ export const getApp = (): Application => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, header } = error
-    console.log(error)
+    console.error(error)
     if (status) {
       res.set(header).status(status).json({
         message,

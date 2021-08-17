@@ -1,4 +1,4 @@
-import mongoose, { ObjectId } from 'mongoose'
+import mongoose, { Mongoose, ObjectId } from 'mongoose'
 import Role from './schema'
 import { RoleDocument } from './typings'
 import BaseService from '../../util/service/BaseRestFulService'
@@ -18,7 +18,7 @@ export default class extends BaseService<RoleDocument> {
   }
 
   // 根据 角色id 获取权限集合
-  getAuthorityByRoleIds(ids: Array<ObjectId>) {
+  getAuthorityByRoleIds(ids: Array<ObjectId>): mongoose.Aggregate<Array<any>> {
     return this.model.aggregate([
       {
         $lookup: {

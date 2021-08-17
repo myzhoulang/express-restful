@@ -4,7 +4,7 @@ import { isOptional, optional } from '../../validator'
 import { checkSchema } from '../../validator/checkSchema'
 
 // 校验规则
-export const createRules = (method: HttpMethods = 'POST') => {
+export const createRules = (method: HttpMethods = 'POST'): Schema => {
   // 可选或必填
   // 在请求方法 patch 下是可选
   // 在请求方法 POST 或 PUT 下必填

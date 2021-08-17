@@ -1,7 +1,15 @@
 import { Schema } from 'express-validator'
-import { checkSchemaValidator } from './index'
+import { checkSchemaValidator, CheckSchemaValidator } from './index'
 
-export const checkSchema = (createRules: (method: HttpMethods) => Schema, method: HttpMethods) => {
+type CheckSchema = (
+  createRules: (method: HttpMethods) => Schema,
+  method: HttpMethods,
+) => CheckSchemaValidator
+
+export const checkSchema: CheckSchema = (
+  createRules: (method: HttpMethods) => Schema,
+  method: HttpMethods,
+) => {
   const id: Schema = {
     id: {
       in: ['params'],

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 
-export function operator(req: Request, res: Response, next: NextFunction) {
+export function operator(req: Request, res: Response, next: NextFunction): void {
   try {
     const user = req.user as IJWTPlayLoad
     const body = req.body
