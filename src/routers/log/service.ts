@@ -9,7 +9,7 @@ export default class extends BaseService<LogDocument> {
     super(Log)
   }
 
-  save(req: Request, body: LogDocument): void {
+  save(req: Request, body: Partial<LogDocument>): void {
     req.log.request_times = Date.now() - req.log.request_start_at
     req.log.request_status = req?.data?.status
     // 过滤掉敏感信息

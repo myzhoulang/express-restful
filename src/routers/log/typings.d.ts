@@ -10,6 +10,8 @@ export interface ILog {
   request_times: number
   request_status: HttpStatusCode
   system?: string
+  status?: number
+  error_message: string
 }
 
 export interface LogDocument extends ILog, Document {}
