@@ -52,8 +52,6 @@ db.auth(用户名,密码)
 
 > 开启访问控制前，需要在`admin`数据库中有一个具有`userAdmin`或`userAdminAnyDatabase`角色的用户，这个用户用来管理用户和角色，例如：创建用户、授予或者撤销用户的角色、创建或者修改角色。
 
-- 创建超级用户
-
 ```js
 db.createUser({
   user: 'root',

@@ -48,10 +48,20 @@ export const RoleSchema = new Schema(
       type: Schema.Types.ObjectId,
       // required: true,
     },
-    authority_ids: {
-      type: [Schema.Types.ObjectId],
-    },
+    authority_ids: [
+      {
+        type: Schema.Types.ObjectId,
+      },
+    ],
   },
-  timestamps,
+  { ...timestamps, toJSON: { virtuals: true } },
 )
+
+RoleSchema.virtual('auth', {
+  ref: 'Authority', // model
+  localField: 'authority_ids', // RoleSchema 中的字段
+  foreignField: '_id', // 关联表中的字段
+  justOne: false,
+})
+
 export default model<RoleDocument, RoleModel>('Role', RoleSchema)

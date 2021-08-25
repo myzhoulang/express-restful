@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/express-restful.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/express-restful.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLinters/eslint.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mong.md" beforeDir="false" afterPath="$PROJECT_DIR$/mong.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/authorizations/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authorizations/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/role/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/role/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/db.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,14 +50,19 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="D:\github\express-restful\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
-    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
     <configuration name="user 中的所有内容" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/modules/user/user.http">
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="HTTP Request.user 中的所有内容" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -69,6 +80,11 @@
       <workItem from="1606140040194" duration="48000" />
       <workItem from="1609295503953" duration="2342000" />
       <workItem from="1626870902449" duration="2229000" />
+      <workItem from="1629856122657" duration="153000" />
+      <workItem from="1629856385041" duration="688000" />
+      <workItem from="1629857133534" duration="83000" />
+      <workItem from="1629857276263" duration="1293000" />
+      <workItem from="1629868805258" duration="725000" />
     </task>
     <servers />
   </component>

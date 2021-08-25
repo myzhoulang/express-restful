@@ -48,10 +48,10 @@ router
       const current = await userService.getOneById(user.id)
       if (current && Array.isArray(current.roles)) {
         // 获取当前用户的的权限
-        const [auth] = await roleService.getAuthorityByRoleIds(current.roles)
+        const auth = await roleService.getAuthorityByRoleIds(current.roles)
         const user = {
           ...current.toJSON(),
-          auth,
+          auth: auth?.flat(1),
         }
         client.set(String(user._id), JSON.stringify(user))
         req.setData(200, user)

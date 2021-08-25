@@ -17,7 +17,7 @@ const middleware = (app: Application): Application => {
   app.use(setSuccessData)
   app.use(auth({ secret: JWT_SECRET as string, path: config.white?.path || [] }))
   app.use(log)
-  app.use(permissions)
+  // app.use(permissions)
   return app
 }
 

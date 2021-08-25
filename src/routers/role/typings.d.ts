@@ -17,6 +17,7 @@ export interface IRole {
   updated_at: Date
   system: string
   authority_ids: Array<ObjectId>
+  auth: Array<IRole>
 }
 
 export interface RoleDocument extends Document, IRole {}

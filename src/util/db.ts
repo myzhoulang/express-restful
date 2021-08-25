@@ -39,7 +39,7 @@ export function connect(opts?: ConnectOptions) {
   })
 }
 
-export function gracefulShutdown(app: http.Server) {
+export function gracefulShutdown(app: http.Server): void {
   mongoose.connection.close(false, () => {
     app.close(() => {
       process.exit()

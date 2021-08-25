@@ -50,7 +50,13 @@ export default class BaseRestFulService<T extends Document> {
 
   // 根据 ID 查询单个
   async getOneById(id: unknown, project?: string): Promise<T | null> {
-    return this.model.findById(id).select(`${project ?? ''}`)
+    return this.model
+      .findById(id)
+      .populate('authority_ids', '_id title')
+      .then((data) => {
+        return data
+      })
+    //.select(`${project ?? ''}`)
   }
 
   // 根据 ID 删除
@@ -60,7 +66,7 @@ export default class BaseRestFulService<T extends Document> {
 
   // 根据 ID 更新用户
   async updateOneById(id: string, body: UpdateQuery<T>): Promise<T | null> {
-    return this.model.findByIdAndUpdate(id, body, { new: true })
+    return this.model.findByIdAndUpdate(id, body, { new: true, lean: true })
   }
 
   // 创建
