@@ -10,9 +10,11 @@ interface FilterQueryList {
 
 export default class BaseRestFulService<T extends Document> {
   model: Model<T>
+
   constructor(model: Model<T>) {
     this.model = model
   }
+
   async query(queries: FilterQueryList): Promise<[Array<T>, number]> {
     const { project, sort, direction, page = 1, size = 20, ...query } = queries
     const maxSize = Math.min(size, 20)
@@ -50,13 +52,7 @@ export default class BaseRestFulService<T extends Document> {
 
   // 根据 ID 查询单个
   async getOneById(id: unknown, project?: string): Promise<T | null> {
-    return this.model
-      .findById(id)
-      .populate('authority_ids', '_id title')
-      .then((data) => {
-        return data
-      })
-    //.select(`${project ?? ''}`)
+    return this.model.findById(id).select(`${project ?? ''}`)
   }
 
   // 根据 ID 删除

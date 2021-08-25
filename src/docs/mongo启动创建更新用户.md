@@ -14,6 +14,12 @@
 ### 使用 Docker 启动 Mongodb
 
 ```shell
+# 拉取镜像
+docker pull mongo
+# -d 后台运行容器
+# --name 指定容器名称
+# -v 挂载数据目录
+# -p 指定启动 mongo 服务端口
 docker run -d --name mongodb -p 27017:27017 \
  -v /Users/apple/data/mongo/conf/mongod.conf:/etc/mongod.conf \
  -v /Users/apple/data/mongo/logs:/data/log \

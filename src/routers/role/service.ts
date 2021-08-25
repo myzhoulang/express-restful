@@ -16,7 +16,7 @@ export default class extends BaseService<RoleDocument> {
     return this.queryOne({ title }, project)
   }
 
-  // 根据 角色id 获取权限集合
+  // 根据一组角色id获取权限集合
   getAuthorityByRoleIds(ids: Array<ObjectId>): Promise<IRole[][] | null> {
     return this.model
       .find({ _id: { $in: ids } })
@@ -24,7 +24,7 @@ export default class extends BaseService<RoleDocument> {
         path: 'auth',
         select: 'title _id code type',
       })
-      .then((data) => {
+      .then((data = []) => {
         return data.map((item) => {
           return item.auth
         })
