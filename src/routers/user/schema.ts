@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema, model } from 'mongoose'
 import xss from 'xss'
 import bcrypt from 'bcryptjs'
 import { timestamps } from '../../util/db'
@@ -6,34 +6,35 @@ import config from '../../config/'
 import { UserDocument, UserModel } from './typings'
 
 const { Types } = Schema
+const { String, Boolean, ObjectId, Number } = Types
 
 export const userSchema = new Schema(
   {
     name: {
-      type: Types.String,
+      type: String,
       minlength: 2,
       maxlength: 10,
       required: true,
       trim: true,
     },
     phone: {
-      type: Types.String,
+      type: String,
       required: true,
       unique: true,
       trim: true,
     },
     email: {
-      type: Types.String,
+      type: String,
       required: true,
       trim: true,
       unique: true,
     },
     email_verified: {
-      type: Types.Boolean,
+      type: Boolean,
       default: false,
     },
     password: {
-      type: Types.String,
+      type: String,
       required: true,
       trim: true,
       select: false,
@@ -46,46 +47,46 @@ export const userSchema = new Schema(
       default: null,
     },
     login_count: {
-      type: Types.Number,
+      type: Number,
       default: 0,
     },
     nick_name: {
-      type: Types.String,
+      type: String,
       maxlength: 10,
     },
     job: {
-      type: Types.String,
+      type: String,
       maxlength: 10,
     },
     department: {
-      type: Types.String,
+      type: String,
     },
     avatar: {
-      type: Types.String,
+      type: String,
       default: '',
     },
     motto: {
-      type: Types.String,
+      type: String,
       maxlength: 20,
       default: '',
     },
     gender: {
-      type: Types.Number,
+      type: Number,
       enum: [0, 1],
       default: 1,
     },
     age: {
-      type: Types.Number,
+      type: Number,
       max: 200,
       min: 1,
     },
     status: {
-      type: Types.Number,
+      type: Number,
       enum: [0, 1],
       default: 1,
     },
     desc: {
-      type: Types.String,
+      type: String,
       maxlength: 40,
       trim: true,
       default: '',
@@ -94,30 +95,30 @@ export const userSchema = new Schema(
       },
     },
     tags: {
-      type: [Types.String],
+      type: [String],
       default: [],
     },
     temas: {
-      type: [Types.ObjectId],
+      type: [ObjectId],
       default: [],
     },
     created_by: {
-      type: Types.ObjectId,
+      type: ObjectId,
     },
     created_by_name: {
-      type: Types.String,
+      type: String,
     },
     updated_by: {
-      type: Types.ObjectId,
+      type: ObjectId,
     },
     updated_by_name: {
-      type: Types.String,
+      type: String,
     },
     system: {
-      type: Types.ObjectId,
+      type: ObjectId,
     },
     roles: {
-      type: [Types.ObjectId],
+      type: [ObjectId],
       default: [],
     },
     _v: {
@@ -127,7 +128,8 @@ export const userSchema = new Schema(
   timestamps,
 )
 
-userSchema.statics.setLoginCountAndAt = async function (id: unknown) {
+// 设置最后登录时间和统计登录次数
+userSchema.statics.setLoginCountAndAt = async function (id: mongoose.ObjectId) {
   return await this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),

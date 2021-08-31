@@ -6,8 +6,9 @@ export enum status {
 }
 
 export interface IRole {
+  code: string
   title: string
-  desc?: string
+  desc: string
   status: status
   created_by: ObjectId
   created_by_name: string
@@ -18,6 +19,7 @@ export interface IRole {
   system: string
   authority_ids: Array<ObjectId>
   auth: Array<IRole>
+  is_built_in: boolean
 }
 
 export interface RoleDocument extends Document, IRole {}

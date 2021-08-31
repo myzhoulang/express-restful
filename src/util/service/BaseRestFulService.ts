@@ -25,7 +25,7 @@ export default class BaseRestFulService<T extends Document> {
         .limit(maxSize)
         .sort({ [sort || 'updated_at']: direction || 'DESC' })
         .select(`${project ?? ''} -password`),
-      this.model.find(query).count(),
+      this.model.find(query).countDocuments(),
     ])
   }
 

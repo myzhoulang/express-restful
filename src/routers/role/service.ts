@@ -17,7 +17,7 @@ export default class extends BaseService<RoleDocument> {
   }
 
   // 根据一组角色id获取权限集合
-  getAuthorityByRoleIds(ids: Array<ObjectId>): Promise<IRole[][] | null> {
+  getAuthorityByRoleIds(ids: Array<ObjectId>): Promise<IRole[][]> {
     return this.model
       .find({ _id: { $in: ids } })
       .populate({

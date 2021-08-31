@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mong.md" beforeDir="false" afterPath="$PROJECT_DIR$/mong.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/authorizations/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authorizations/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/role/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mong.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mongo 认证授权.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/role/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/db.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/db.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +78,7 @@
       <workItem from="1629857133534" duration="83000" />
       <workItem from="1629857276263" duration="1293000" />
       <workItem from="1629868805258" duration="725000" />
+      <workItem from="1629880456278" duration="598000" />
     </task>
     <servers />
   </component>

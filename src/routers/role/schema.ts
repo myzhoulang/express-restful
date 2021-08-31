@@ -53,10 +53,16 @@ export const RoleSchema = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    is_built_in: {
+      type: Schema.Types.Boolean,
+      require: true,
+      default: false,
+    },
   },
   { ...timestamps, toJSON: { virtuals: true } },
 )
 
+// 资源权限详情虚拟字段
 RoleSchema.virtual('auth', {
   ref: 'Authority', // model
   localField: 'authority_ids', // RoleSchema 中的字段

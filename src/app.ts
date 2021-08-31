@@ -48,7 +48,7 @@ export const getApp = (): Application => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     const { message, errors, status, header } = error
-    console.error(error)
+    console.error('error', error)
     if (status) {
       res.set(header).status(status).json({
         message,
