@@ -21,12 +21,12 @@ export default class extends BaseService<RoleDocument> {
     return this.model
       .find({ _id: { $in: ids } })
       .populate({
-        path: 'auth',
+        path: 'auths',
         select: 'title _id code type',
       })
       .then((data = []) => {
         return data.map((item) => {
-          return item.auth
+          return item.auths
         })
       })
   }

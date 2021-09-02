@@ -30,7 +30,6 @@ export const getApp = (): Application => {
   app.use((req: Request, res: Response, next: NextFunction) => {
     const { status, data } = req.data || {}
     if (status >= 200 && status <= 299) {
-      logService.save(req, { status })
       res.status(status).json(data)
     } else {
       next()

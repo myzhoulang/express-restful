@@ -1,4 +1,6 @@
 import { ObjectId, Schema, Document, Model } from 'mongoose'
+import { IRole } from '../role/typings'
+import { IAuthority } from '../authority/typings'
 
 export enum Status {
   '已冻结' = 0,
@@ -11,6 +13,7 @@ export enum Gender {
 }
 
 export interface IUser {
+  _id: string
   name: string
   phone: string
   email: string
@@ -23,19 +26,20 @@ export interface IUser {
   updated_by: ObjectId
   updated_by_name: string
   updated_at: Date
-  last_login_time?: Date
-  login_count?: number
-  nick_name?: string
-  job?: string
-  department?: string
-  avatar?: string
-  motto?: string
-  age?: number
-  tags?: Array<string>
-  teams?: Array<string>
-  system?: Schema.Types.ObjectId
-  roles?: Array<ObjectId>
-  auths?: Array<string>
+  last_login_time: Date
+  login_count: number
+  nick_name: string
+  job: string
+  department: string
+  avatar: string
+  motto: string
+  age: number
+  tags: Array<string>
+  teams: Array<string>
+  system: Schema.Types.ObjectId
+  role_ids: Array<ObjectId>
+  auths: Array<IAuthority>
+  roles: Array<IRole>
 }
 
 // export interface UserDocument extends Document, IUser {}

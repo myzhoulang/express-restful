@@ -14,7 +14,7 @@ export type Methods = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
 
 export interface IAuthority {
   title: string
-  desc?: string
+  desc: string
   code: string
   parent_id: ObjectId
   status: number
@@ -24,10 +24,10 @@ export interface IAuthority {
   updated_by: ObjectId
   updated_by_name: string
   updated_at: Date
-  icon?: string
+  icon: string
   type: number
-  path?: string
-  method?: Methods
+  path: string
+  method: Methods
   system: string
 }
 

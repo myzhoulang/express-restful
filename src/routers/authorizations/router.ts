@@ -23,7 +23,6 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // res.status(400).json({ errors: errors.array() })
       next({ status: 400, errors: errors.array() })
       return
     } else {
@@ -45,21 +44,25 @@ router
           status: 401,
         })
       }
-      const current = await userService.getOneById(user.id)
-      if (current && Array.isArray(current.roles)) {
+
+      const current = await userService.getUserPopulateRole(user.id)
+      if (current && Array.isArray(current.role_ids)) {
         // 获取当前用户的的权限
-        const auth = await roleService.getAuthorityByRoleIds(current.roles)
+        const auth = await roleService.getAuthorityByRoleIds(current.role_ids)
         const user = {
-          ...current.toJSON(),
+          ...current.toJSON({
+            transform: function (doc, ret) {
+              delete ret.id
+            },
+          }),
           auth: auth?.flat(1),
         }
         client.set(String(user._id), JSON.stringify(user))
         req.setData(200, user)
       }
-
       next()
     } catch (e) {
-      next({ status: 500, message: 'Server Error' })
+      next({ status: 500, message: e.message })
     }
   })
 

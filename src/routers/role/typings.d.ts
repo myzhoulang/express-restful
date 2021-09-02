@@ -18,7 +18,7 @@ export interface IRole {
   updated_at: Date
   system: string
   authority_ids: Array<ObjectId>
-  auth: Array<IRole>
+  auths: Array<IRole>
   is_built_in: boolean
 }
 

@@ -48,11 +48,9 @@ export const RoleSchema = new Schema(
       type: Schema.Types.ObjectId,
       // required: true,
     },
-    authority_ids: [
-      {
-        type: Schema.Types.ObjectId,
-      },
-    ],
+    authority_ids: {
+      type: Schema.Types.ObjectId,
+    },
     is_built_in: {
       type: Schema.Types.Boolean,
       require: true,
@@ -63,7 +61,7 @@ export const RoleSchema = new Schema(
 )
 
 // 资源权限详情虚拟字段
-RoleSchema.virtual('auth', {
+RoleSchema.virtual('auths', {
   ref: 'Authority', // model
   localField: 'authority_ids', // RoleSchema 中的字段
   foreignField: '_id', // 关联表中的字段

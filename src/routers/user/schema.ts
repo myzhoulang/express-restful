@@ -8,7 +8,7 @@ import { UserDocument, UserModel } from './typings'
 const { Types } = Schema
 const { String, Boolean, ObjectId, Number } = Types
 
-export const userSchema = new Schema(
+export const UserSchema = new Schema(
   {
     name: {
       type: String,
@@ -117,23 +117,27 @@ export const userSchema = new Schema(
     system: {
       type: ObjectId,
     },
-    roles: {
-      type: [ObjectId],
-      default: [],
-    },
-    _v: {
-      select: false,
+    role_ids: {
+      type: [Schema.Types.ObjectId],
     },
   },
-  timestamps,
+  { ...timestamps, toJSON: { virtuals: true } },
 )
 
+// 用户 role_ids 对应的角色信息
+UserSchema.virtual('roles', {
+  ref: 'Role', // model
+  localField: 'role_ids', // RoleSchema 中的字段
+  foreignField: '_id', // 关联表中的字段
+  justOne: false,
+})
+
 // 设置最后登录时间和统计登录次数
-userSchema.statics.setLoginCountAndAt = async function (id: mongoose.ObjectId) {
+UserSchema.statics.setLoginCountAndAt = async function (id: mongoose.ObjectId) {
   return await this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
   })
 }
 
-export default model<UserDocument, UserModel>('User', userSchema)
+export default model<UserDocument, UserModel>('User', UserSchema)

@@ -10,10 +10,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const user: UserDocument | null = await User.findOne({ email }, '_id password name')
 
     // 如果当前用户找不到 也返回账号或密码出错，防止用户泄露
-
     if (!user) {
       return next({ message: '账号或密码错误', status: 401 })
     }
+
     // compareSync
     // 第一个参数为 客户端传入的参数 明文的密码
     // 第二参数为 数据库存贮的加密后的密码
