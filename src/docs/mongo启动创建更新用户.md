@@ -22,9 +22,15 @@ docker pull mongo
 # -p 指定启动 mongo 服务端口
 docker run -d --name mongodb -p 27017:27017 \
  -v /Users/apple/data/mongo/conf/mongod.conf:/etc/mongod.conf \
- -v /Users/apple/data/mongo/logs:/data/log \
- -v /Users/apple/data/mongo/data:/data/db mongo --config /etc/mongod.conf
+ -v /Users/apple/data/mongo/log:/data/log \
+ -v /Users/apple/data/mongo/db:/data/db mongo --config /etc/mongod.conf
 ```
+
+> 启动`mongo`数据库出现`{"error":{"code":38,"codeName":"FileNotOpen","errmsg":"Can't initialize rotatable log file :: caused by :: Failed to open /data/log/mongod.log"}}`需要修改`mogod.log`日志文件的权限。
+>
+> ```bash
+> chmod 777 /Users/apple/data/mongo/log/mongod.log
+> ```
 
 ### 使用`mongod`名利启动数据库
 

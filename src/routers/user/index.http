@@ -1,0 +1,36 @@
+@path= users
+
+# 获取用户列表
+GET {{host}}/{{path}} HTTP/1.1
+
+###
+# 添加用户
+POST {{host}}/{{path}} HTTP/1.1
+
+{
+  "name": "张三",
+  "phone": "15088765432",
+  "password": "123456",
+  "email": "604389771@qq.com"
+}
+
+###
+#获取指定用户信息
+
+GET {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+###
+# 修改用户
+PATCH {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+{
+  "name": "李四"
+}
+
+###
+# 删除指定用户
+
+DELETE {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+###
+# 导出用户信息

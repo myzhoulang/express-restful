@@ -5,7 +5,7 @@
       "name": "Launch via nodemon",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/node_modules/.bin/ts-node-dev",
+      "program": "${workspaceRoot}/node_modules/ts-node-dev/lib/bin",
       "args": ["${workspaceRoot}/src/index.ts"],
       "restart": true,
       "cwd": "${workspaceRoot}",

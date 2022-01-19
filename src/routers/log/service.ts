@@ -10,7 +10,7 @@ export default class extends BaseService<LogDocument> {
   }
 
   save(req: Request, body: Partial<LogDocument>): void {
-    req.log.request_times = Date.now() - req.log.request_start_at
+    req.log.request_times = Date.now() - req?.log?.request_start_at
     req.log.request_status = req?.data?.status
     // 过滤掉敏感信息
     // 敏感字段在 config 文件夹下的配置文件中配置

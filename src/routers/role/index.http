@@ -1,0 +1,30 @@
+@path= roles
+
+# 获取角色列表
+GET {{host}}/{{path}} HTTP/1.1
+
+###
+# 添加角色
+POST {{host}}/{{path}} HTTP/1.1
+
+{
+
+}
+
+###
+#获取指定角色信息
+
+GET {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+###
+# 修改用户
+PATCH {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+{
+
+}
+
+###
+# 删除指定用户
+
+DELETE {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1

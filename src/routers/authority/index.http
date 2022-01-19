@@ -1,0 +1,20 @@
+@hostname = localhost
+@port = 8080
+@host = {{hostname}}:{{port}}
+
+# 登陆
+# 下面定义名称 保存接口返回的数据， 以便在别的接口使用
+# @name loginAdmin
+POST http://{{host}}/login HTTP/1.1
+
+{
+  "email": "604389771@qq.com",
+  "password": "123456"
+}
+
+###
+# 获取登陆用户信息
+# 还不支持下面修改共享变量的功能
+# $shared.token = {{loginAdmin.response.body.$.token}}
+
+GET http://{{host}}/user HTTP/1.1

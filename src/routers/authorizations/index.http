@@ -1,0 +1,30 @@
+@path= authorities
+
+# 获取权限资源列表
+GET {{host}}/{{path}} HTTP/1.1
+
+###
+# 添加权限资源
+POST {{host}}/{{path}} HTTP/1.1
+
+{
+
+}
+
+###
+#获取指定权限资源信息
+
+GET {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+###
+# 修改权限资源
+PATCH {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
+
+{
+
+}
+
+###
+# 删除指定权限资源
+
+DELETE {{host}}/{{path}}/61e7aea22bfaf37e8ca1e18d HTTP/1.1
