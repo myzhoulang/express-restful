@@ -1,7 +1,3 @@
-/**
- * TODO: 对下面的校验规则需要整理
- */
-
 import { Request, Response, NextFunction } from 'express'
 import { Schema } from 'express-validator'
 import { isOptional, optional } from '../../validator'

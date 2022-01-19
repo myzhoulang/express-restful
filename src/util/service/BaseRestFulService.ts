@@ -50,22 +50,40 @@ export default class BaseRestFulService<T extends Document> {
     })
   }
 
-  // 根据 ID 查询单个
-  async getOneById(id: unknown, project?: string): Promise<T | null> {
+  /**
+   * @description 根据 ID 查询单条数据
+   * @param id      [string]  mongodb ObjectId 字符串
+   * @param project [string]  指定返回数据中哪些字段需要过滤或需要返回
+   * @returns 查找到的指定的一条数据资源, 如果没有返回null
+   */
+  async getOneById(id: string, project?: string): Promise<T | null> {
     return this.model.findById(id).select(`${project ?? ''}`)
   }
 
-  // 根据 ID 删除
+  /**
+   * @description 根据 ID 删除单条数据
+   * @param id      [string]  mongodb ObjectId 字符串
+   * @returns 要删除的指定的一条数据资源, 如果没有返回null
+   */
   async deleteOneById(id: string): Promise<T | null> {
     return this.model.findByIdAndDelete(id)
   }
 
-  // 根据 ID 更新用户
+  /**
+   * @description 根据 ID 更新单条数据
+   * @param id      [string]  mongodb ObjectId 字符串
+   * @param body    [<T>]     需要更新的字段对象
+   * @returns 需要更新的一条数据, 如果没有返回null
+   */
   async updateOneById(id: string, body: UpdateQuery<T>): Promise<T | null> {
     return this.model.findByIdAndUpdate(id, body, { new: true, lean: true })
   }
 
-  // 创建
+  /**
+   * @description 新增一条数据
+   * @param body    [<T>]     需要创建数据的内容对象
+   * @returns 新添加的的数据
+   */
   async create(body: DocumentDefinition<T>): Promise<T> {
     return await this.model.create(body)
   }

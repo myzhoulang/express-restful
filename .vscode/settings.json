@@ -36,6 +36,6 @@
   },
   "rest-client.defaultHeaders": {
     "Content-Type": "application/json",
-    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTdhZWEyMmJmYWYzN2U4Y2ExZTE4ZCIsIm5hbWUiOiLlvKDkuIkiLCJpYXQiOjE2NDI1Nzc0NzQsImV4cCI6MTY0MjkzNzQ3NH0.axIVemnAvIXnleVumFrc0KXNd-woPB_ztZxMOgYPV5Y"
+    "Authorization": ""
   }
 }
