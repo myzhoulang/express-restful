@@ -6,11 +6,15 @@ import auth from './middleware/auth'
 import setSuccessData from './middleware/setData'
 import config from './config'
 import log from './middleware/log'
+import { successLogger, failLogger } from './middleware/logger'
 import permissions from './middleware/permissions'
 
 const middleware = (app: Application): Application => {
   console.log(app)
   const { JWT_SECRET } = process.env
+
+  app.use(successLogger)
+  app.use(failLogger)
   app.use(log)
   app.use(cors(config.cors))
   app.use(helmet())

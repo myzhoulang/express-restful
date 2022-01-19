@@ -1,7 +1,7 @@
 import { Schema } from 'express-validator'
 import { checkSchemaValidator, CheckSchemaValidator } from './index'
 
-type CheckSchema = (
+export type CheckSchema = (
   createRules: (method: HttpMethods) => Schema,
   method: HttpMethods,
 ) => CheckSchemaValidator

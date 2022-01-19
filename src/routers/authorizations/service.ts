@@ -4,14 +4,15 @@ import jwt from 'jsonwebtoken'
 import User from '../user/schema'
 import { UserDocument } from '../user/typings'
 
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { email, password } = req.body
     const user: UserDocument | null = await User.findOne({ email }, '_id password name')
 
     // 如果当前用户找不到 也返回账号或密码出错，防止用户泄露
     if (!user) {
-      return next({ message: '账号或密码错误', status: 401 })
+      next({ message: '账号或密码错误', status: 401 })
+      return
     }
 
     // compareSync
@@ -20,8 +21,10 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
     const result: boolean = bcrypt.compareSync(password, user?.password)
 
     if (!result) {
-      return next({ message: '账号或密码错误', status: 401 })
+      next({ message: '账号或密码错误', status: 401 })
+      return
     }
+
     const { JWT_SECRET } = process.env
     const token = jwt.sign(
       {

@@ -8,7 +8,7 @@ import { isOptional, optional } from '../../validator'
 import { checkSchema } from '../../validator/checkSchema'
 
 // 校验规则
-export const createRules = (method: HttpMethods = 'POST') => {
+export const createRules = (method: HttpMethods = 'POST'): Schema => {
   // patch 可选
   const optionalOrNotEmpty = isOptional(method)
   const rules: Schema = {
@@ -105,7 +105,7 @@ export const createRules = (method: HttpMethods = 'POST') => {
 }
 
 // 参数校验
-export const validator = (req: Request, res: Response, next: NextFunction) => {
+export const validator = (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const method = req.method as HttpMethods
   return checkSchema(createRules, method)(req, res, next)
 }
