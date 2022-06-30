@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/mong.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mongo 认证授权.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/role/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" afterDir="false" />
+    <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="💩: 使用泛型方式添加 Schema">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/authority/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authority/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/authority/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authority/typings.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/log/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/log/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/log/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/log/typings.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/role/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/role/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/typings.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/role/validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/validator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/user/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/user/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/user/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/typings.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/typings.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/filter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/filter.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +27,9 @@
   </component>
   <component name="GitToolBoxStore">
     <option name="projectConfigVersion" value="2" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
@@ -38,7 +51,7 @@
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
+    <property name="node.js.selected.package.eslint" value="D:\Demo\express-restful\node_modules\eslint" />
     <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
@@ -47,13 +60,23 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="npm.start:dev">
     <configuration name="user 中的所有内容" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" path="$PROJECT_DIR$/src/modules/user/user.http">
+      <method v="2" />
+    </configuration>
+    <configuration name="start:dev" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start:dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="HTTP Request.user 中的所有内容" />
+        <item itemvalue="npm.start:dev" />
       </list>
     </recent_temporary>
   </component>
@@ -95,7 +118,10 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value=": 使用泛型方式添加 Schema" />
+    <option name="LAST_COMMIT_MESSAGE" value=": 使用泛型方式添加 Schema" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

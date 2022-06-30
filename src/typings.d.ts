@@ -1,9 +1,5 @@
 export {}
 
-export interface IObjectAny {
-  header?: any
-  [key: string]: any
-}
 declare global {
   export namespace upyun {}
   namespace NodeJS {
@@ -45,9 +41,14 @@ declare global {
   namespace Express {
     interface Request {
       user?: IJWTPlayLoad
-      data: IObjectAny
-      log: IObjectAny
-      setData(status: number, data?: IObjectAny | null): void
+
+      data: Record<string, any>
+      log: Record<string, any>
+      setData(status: number, data?: Record<string, any> | null): void
+    }
+
+    interface Response {
+      body: Record<string, any>
     }
   }
 

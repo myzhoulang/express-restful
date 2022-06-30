@@ -5,6 +5,7 @@ export interface ILog {
   user_name?: string
   request_url: string
   request_id: string
+  request_ip: string
   request_method: HttpMethods
   request_body: string
   request_times: number

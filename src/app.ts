@@ -38,7 +38,6 @@ export const getApp = (): Application => {
 
   // 处理404
   app.use(function (req: Request, res: Response) {
-    console.log(req.url)
     const { data } = req.data || {}
     logService.save(req, { status: 404 })
     res.status(404).json({ message: data?.message || '请求接口不存在' })

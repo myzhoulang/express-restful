@@ -16,7 +16,7 @@ export interface IAuthority {
   title: string
   desc: string
   code: string
-  parent_id: ObjectId
+  parent_id: ObjectId | null
   status: number
   created_by: ObjectId
   created_by_name: string
@@ -28,7 +28,7 @@ export interface IAuthority {
   type: number
   path: string
   method: Methods
-  system: string
+  system: ObjectId
 }
 
 export interface AuthorityDocument extends Document, IAuthority {}

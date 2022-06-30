@@ -36,7 +36,7 @@ export default class extends BaseService<UserDocument> {
    * @returns 用户对应的权限code
    */
   async getUserAuthCodes(userId: string): Promise<Array<string>> {
-    return this.getOneById({ _id: userId })
+    return this.getOneById( userId )
       .then((user) => {
         if (user && user.role_ids) {
           return roleService.getAuthorityByRoleIds(user?.role_ids)

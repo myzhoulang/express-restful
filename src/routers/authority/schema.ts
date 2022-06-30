@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 import xss from 'xss'
 import { timestamps } from '../../util/db'
-import { AuthorityDocument, AuthorityModel } from './typings'
+import { AuthorityDocument, AuthorityModel, IAuthority } from './typings'
 
-export const AuthoritySchema = new Schema(
+export const AuthoritySchema = new Schema<IAuthority, AuthorityModel>(
   {
     title: {
       type: Schema.Types.String,

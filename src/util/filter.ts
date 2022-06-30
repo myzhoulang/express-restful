@@ -1,15 +1,14 @@
-import { IObjectAny } from 'src/typings'
 import config from '../config/index'
 
-function body(body: IObjectAny) {
+const body = <T>(body: T):string => {
   if (body) {
-    config.black.body.forEach((field: string) => {
+    config.black.body.forEach((field) => {
       delete body[field]
     })
   }
 
   return JSON.stringify(body)
-}
+};
 
 export default {
   body,

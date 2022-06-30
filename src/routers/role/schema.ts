@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 import xss from 'xss'
 import { timestamps } from '../../util/db'
-import { RoleDocument, RoleModel } from './typings'
+import { RoleDocument, RoleModel, IRole } from './typings'
 
-export const RoleSchema = new Schema(
+export const RoleSchema = new Schema<IRole, RoleModel>(
   {
     title: {
       type: Schema.Types.String,
@@ -46,10 +46,9 @@ export const RoleSchema = new Schema(
     },
     system: {
       type: Schema.Types.ObjectId,
-      // required: true,
     },
     authority_ids: {
-      type: Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
     },
     is_built_in: {
       type: Schema.Types.Boolean,

@@ -19,6 +19,8 @@ export interface IUser {
   email: string
   password: string
   gender: Gender
+  desc: string
+  email_verified: boolean
   status: Status
   created_by: ObjectId
   created_by_name: string
@@ -26,7 +28,7 @@ export interface IUser {
   updated_by: ObjectId
   updated_by_name: string
   updated_at: Date
-  last_login_time: Date
+  last_login_time: Date | null
   login_count: number
   nick_name: string
   job: string
@@ -35,7 +37,7 @@ export interface IUser {
   motto: string
   age: number
   tags: Array<string>
-  teams: Array<string>
+  temas: Array<ObjectId>
   system: Schema.Types.ObjectId
   role_ids: Array<ObjectId>
   auths: Array<IAuthority>

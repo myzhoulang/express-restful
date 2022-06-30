@@ -2,17 +2,17 @@
  * TODO: 对下面的校验规则需要整理
  */
 
-import { Request, Response, NextFunction } from 'express'
-import { Schema } from 'express-validator'
-import { isOptional, optional } from '../../validator'
-import { checkSchema } from '../../validator/checkSchema'
+import { NextFunction, Request, Response } from 'express';
+import { Schema } from 'express-validator';
+import { isOptional, optional } from '../../validator';
+import { checkSchema } from '../../validator/checkSchema';
 
 // 校验规则
 export const createRules = function (method: HttpMethods = 'POST'): Schema {
   // patch 可选
   const optionalOrNotEmpty = isOptional(method)
 
-  const rules: Schema = {
+  return {
     title: {
       in: ['body'],
       ...optionalOrNotEmpty,
@@ -74,7 +74,6 @@ export const createRules = function (method: HttpMethods = 'POST'): Schema {
       },
     },
   }
-  return rules
 }
 
 // 参数校验

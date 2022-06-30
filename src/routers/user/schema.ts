@@ -3,12 +3,12 @@ import xss from 'xss'
 import bcrypt from 'bcryptjs'
 import { timestamps } from '../../util/db'
 import config from '../../config/'
-import { UserDocument, UserModel } from './typings'
+import { UserDocument, UserModel, IUser } from './typings'
 
 const { Types } = Schema
 const { String, Boolean, ObjectId, Number } = Types
 
-export const UserSchema = new Schema(
+export const UserSchema = new Schema<IUser, UserModel>(
   {
     name: {
       type: String,
@@ -132,12 +132,11 @@ UserSchema.virtual('roles', {
   justOne: false,
 })
 
-// 设置最后登录时间和统计登录次数
-UserSchema.statics.setLoginCountAndAt = async function (id: mongoose.ObjectId) {
-  return await this.findByIdAndUpdate(id, {
+UserSchema.static('setLoginCountAndAt', async function (id: mongoose.ObjectId) {
+  return this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
-  })
-}
+  });
+})
 
 export default model<UserDocument, UserModel>('User', UserSchema)

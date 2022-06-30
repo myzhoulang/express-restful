@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose'
 import xss from 'xss'
 import { timestamps } from '../../util/db'
-import { LogDocument, LogModel } from './typings'
+import { LogDocument, LogModel, ILog } from './typings'
 
-export const LogSchema = new Schema(
+export const LogSchema = new Schema<ILog, LogModel>(
   {
     user_id: {
       type: Schema.Types.ObjectId,
