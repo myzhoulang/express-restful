@@ -2,12 +2,15 @@ import { Request, Response, NextFunction } from 'express'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../user/schema'
+import UserService from '../user/service'
 import { UserDocument } from '../user/typings'
+
+const userService = new UserService()
 
 export const auth = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const { email, password } = req.body
-    const user: UserDocument | null = await User.findOne({ email }, '_id password name')
+    const user = await userService.getAuthUser({ email })
 
     // 如果当前用户找不到 也返回账号或密码出错，防止用户泄露
     if (!user) {

@@ -4,18 +4,10 @@
     <list default="true" id="773b8f13-c05f-4eb8-9217-40468fad90e2" name="Default Changelist" comment="💩: 使用泛型方式添加 Schema">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/authority/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authority/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/authority/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authority/typings.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/log/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/log/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/log/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/log/typings.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/role/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/schema.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/role/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/typings.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/role/validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/role/validator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/user/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/authorizations/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/authorizations/service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routers/user/service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routers/user/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/user/typings.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/typings.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/typings.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/filter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/filter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/service/BaseRestFulService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +47,8 @@
     <property name="node.js.selected.package.standard" value="" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="prettierjs.PrettierConfiguration.Package" value="D:\github\express-restful\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="D:\Demo\express-restful\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -103,6 +95,14 @@
       <workItem from="1629868805258" duration="725000" />
       <workItem from="1629880456278" duration="598000" />
     </task>
+    <task id="LOCAL-00001" summary="💩: 使用泛型方式添加 Schema">
+      <created>1656579108605</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1656579108605</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,6 +1,6 @@
 import { Model, UpdateQuery, DocumentDefinition, FilterQuery, ObjectId, Document } from 'mongoose'
 
-interface FilterQueryList {
+export interface FilterQueryList {
   page?: number
   size?: number
   project?: string
@@ -24,14 +24,17 @@ export default class BaseRestFulService<T extends Document> {
         .skip((page - 1) * maxSize)
         .limit(maxSize)
         .sort({ [sort || 'updated_at']: direction || 'DESC' })
-        .select(`${project ?? ''} -password`),
+        .select(`${project ?? ''}`),
       this.model.find(query).countDocuments(),
     ])
   }
 
   // 查单个
   async queryOne(query: FilterQuery<T>, project?: string | undefined): Promise<T | null> {
-    return this.model.findOne(query).select(`${project ?? ''}`)
+    return this.model
+      .findOne(query)
+      .select(`${project ?? ''}`)
+      .select('-password')
   }
 
   // 查找指定的一组id是否在数据库中存在，并返回不存的id
@@ -57,7 +60,11 @@ export default class BaseRestFulService<T extends Document> {
    * @returns 查找到的指定的一条数据资源, 如果没有返回null
    */
   async getOneById(id: string, project?: string): Promise<T | null> {
-    return this.model.findById(id).select(`${project ?? ''}`)
+    console.log(project)
+    return this.model
+      .findById(id)
+      .select(`${project ?? ''}`)
+      .select('-password')
   }
 
   /**

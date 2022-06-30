@@ -4,20 +4,34 @@ import BaseService from '../../util/service/BaseRestFulService'
 import RoleService from '../role/service'
 import { IRole } from '../role/typings'
 
+import type { FilterQueryList } from 'src/util/service/BaseRestFulService'
+import { FilterQuery } from 'mongoose'
+
 const roleService = new RoleService()
 
 export default class extends BaseService<UserDocument> {
   constructor() {
     super(User)
   }
+
+  async query(queries: FilterQueryList): Promise<[Array<UserDocument>, number]> {
+    const { project, ...other } = queries
+    return super.query({
+      project: `${project ?? ''} -password`,
+      ...other,
+    })
+  }
+
   /**
-   * 根据用户邮箱查询一条用户数据
-   * @param email 用户邮箱
-   * @param project 投影字段映射
+   * 根据用户邮箱查询需要登录的用户
+   * @param queries 查询参数
+   *  1. email 用户邮箱
    * @returns mongo 文档 或者 null
    */
-  async getByEmail(email: string, project?: string): Promise<UserDocument | null> {
-    return this.queryOne({ email }, project)
+  async getAuthUser(
+    queries: FilterQuery<Pick<UserDocument, 'email'>>,
+  ): Promise<UserDocument | null> {
+    return this.model.findOne(queries, '_id password name')
   }
 
   /**
@@ -36,7 +50,7 @@ export default class extends BaseService<UserDocument> {
    * @returns 用户对应的权限code
    */
   async getUserAuthCodes(userId: string): Promise<Array<string>> {
-    return this.getOneById( userId )
+    return this.getOneById(userId)
       .then((user) => {
         if (user && user.role_ids) {
           return roleService.getAuthorityByRoleIds(user?.role_ids)

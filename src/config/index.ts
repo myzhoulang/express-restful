@@ -50,7 +50,7 @@ const config: Conf = {
   },
 
   black: {
-    body: ['password'],
+    body: ['password', 'phone'],
     path: [],
   },
   saltRounds: 10,
