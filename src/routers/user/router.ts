@@ -114,7 +114,7 @@ router
     const body = req.body as UserDocument
     service
       .getByPhone(body.phone)
-      .then((user) => {
+      .then<UserDocument>((user) => {
         if (!user) {
           return service.create(body)
         } else {
@@ -122,7 +122,7 @@ router
         }
       })
       .then((user) => {
-        req.setData(201, user)
+        req.setData(201, user.toJSON())
         const email = new Email()
         // FIXME: 可以使用 UUID
         const emailCode = (Math.random() * 1000000) | 0
@@ -149,9 +149,9 @@ router
     const project = query.project as string
     service
       .getOneById(id, project)
-      .then((user: UserDocument | null) => {
+      .then((user) => {
         if (user) {
-          req.setData(200, user)
+          req.setData(200, user.toJSON())
         } else {
           req.setData(404, { message: `没有 ID 为${id}的用户` })
         }

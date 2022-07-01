@@ -124,6 +124,7 @@ export const UserSchema = new Schema<IUser, UserModel>(
   { ...timestamps, toJSON: { virtuals: true } },
 )
 
+UserSchema.set('toJSON', { getters: true, virtuals: false })
 // 用户 role_ids 对应的角色信息
 UserSchema.virtual('roles', {
   ref: 'Role', // model
@@ -136,7 +137,7 @@ UserSchema.static('setLoginCountAndAt', async function (id: mongoose.ObjectId) {
   return this.findByIdAndUpdate(id, {
     $inc: { login_count: +1 },
     last_login_time: new Date(),
-  });
+  })
 })
 
 export default model<UserDocument, UserModel>('User', UserSchema)

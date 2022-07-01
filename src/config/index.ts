@@ -14,7 +14,6 @@ export interface Conf {
   prefix?: string
   white: List
   black: List
-  filterFields: string[]
   // bcrypt 加密等级
   saltRounds: number | string
 }
@@ -31,8 +30,6 @@ export interface Https extends Http {
 const prefix = ''
 
 const config: Conf = {
-  // 返回结果中要过滤的通用字段
-  filterFields: ['-__v', '-password'],
   // cors 配置
   cors: {
     credentials: true,

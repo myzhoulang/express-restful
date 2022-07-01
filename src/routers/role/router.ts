@@ -64,7 +64,7 @@ router
     const project = query.project as string
     service
       .getOneById(id, project)
-      .then((role: RoleDocument | null) => {
+      .then((role) => {
         if (role) {
           req.setData(200, role)
         } else {

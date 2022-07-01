@@ -31,10 +31,7 @@ export default class BaseRestFulService<T extends Document> {
 
   // 查单个
   async queryOne(query: FilterQuery<T>, project?: string | undefined): Promise<T | null> {
-    return this.model
-      .findOne(query)
-      .select(`${project ?? ''}`)
-      .select('-password')
+    return this.model.findOne(query).select(`${project ?? ''}`)
   }
 
   // 查找指定的一组id是否在数据库中存在，并返回不存的id
@@ -60,11 +57,7 @@ export default class BaseRestFulService<T extends Document> {
    * @returns 查找到的指定的一条数据资源, 如果没有返回null
    */
   async getOneById(id: string, project?: string): Promise<T | null> {
-    console.log(project)
-    return this.model
-      .findById(id)
-      .select(`${project ?? ''}`)
-      .select('-password')
+    return this.model.findById(id).select(`${project ?? ''}`)
   }
 
   /**

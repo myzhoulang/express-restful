@@ -1,15 +1,14 @@
 import config from '../config/index'
 
-const body = <T>(body: T):string => {
-  if (body) {
+type Body = (data: Record<string, any> | null) => Record<string, any> | null
+
+const filterBodyField: Body = (data) => {
+  if (data) {
     config.black.body.forEach((field) => {
-      delete body[field]
+      delete data[field]
     })
   }
-
-  return JSON.stringify(body)
-};
-
-export default {
-  body,
+  return data
 }
+
+export default { filterBodyField }

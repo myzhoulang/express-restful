@@ -14,7 +14,7 @@ export default class extends BaseService<LogDocument> {
     req.log.request_status = req?.data?.status
     // 过滤掉敏感信息
     // 敏感字段在 config 文件夹下的配置文件中配置
-    req.log.request_body = filter.body(req.body)
+    req.log.request_body = filter.filterBodyField(req.body)
     this.create(Object.assign(body, req.log) as LogDocument)
   }
 }

@@ -4,13 +4,13 @@ import { isOptional, optional } from '../../validator'
 import { checkSchema } from '../../validator/checkSchema'
 
 // 校验规则
-export const createRules = (method: HttpMethods = 'POST') => {
+export const createRules = (method: HttpMethods = 'POST'): Schema => {
   // 可选或必填
   // 在请求方法 patch 下是可选
   // 在请求方法 POST 或 PUT 下必填
   const optionalOrNotEmpty = isOptional(method)
 
-  const rules: Schema = {
+  return {
     name: {
       in: ['body'],
       ...optionalOrNotEmpty,
@@ -183,12 +183,10 @@ export const createRules = (method: HttpMethods = 'POST') => {
       },
     },
   }
-
-  return rules
 }
 
 // 参数校验
-export const validator = (req: Request, res: Response, next: NextFunction) => {
+export const validator = (req: Request, res: Response, next: NextFunction): Promise<void> => {
   const method = req.method as HttpMethods
   return checkSchema(createRules, method)(req, res, next)
 }

@@ -27,7 +27,7 @@ router
     const { code } = body
     service
       .getByCode(code)
-      .then((authority) => {
+      .then<AuthorityDocument>((authority) => {
         if (!authority) {
           return service.create(body)
         } else {
@@ -35,7 +35,7 @@ router
         }
       })
       .then((authority) => {
-        req.setData(201, authority)
+        req.setData(201, authority.toJSON())
         next()
       })
       .catch(next)
@@ -51,7 +51,7 @@ router
     const project = query.project as string
     service
       .getOneById(id, project)
-      .then((authority: IAuthority | null) => {
+      .then((authority) => {
         if (authority) {
           req.setData(200, authority)
         } else {
@@ -81,7 +81,7 @@ router
     const id = req.params.id
     service
       .deleteOneById(id)
-      .then((result: AuthorityDocument | null) => {
+      .then((result) => {
         if (result) {
           req.setData(204)
           next()

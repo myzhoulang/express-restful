@@ -10,7 +10,6 @@ import { successLogger, failLogger } from './middleware/logger'
 import permissions from './middleware/permissions'
 
 const middleware = (app: Application): Application => {
-  console.log(app)
   const { JWT_SECRET } = process.env
 
   app.use(successLogger)

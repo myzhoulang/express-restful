@@ -31,7 +31,7 @@ router
     const project = query.project as string
     service
       .getOneById(id, project)
-      .then((log: LogDocument | null) => {
+      .then((log) => {
         if (log) {
           req.setData(200, log)
         } else {

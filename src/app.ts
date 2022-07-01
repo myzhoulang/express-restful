@@ -6,6 +6,7 @@ import * as router from './router'
 import { redisInit } from './util/redis'
 import { Error } from './util/types'
 import LogService from './routers/log/service'
+import filter from './util/filter'
 
 const logService = new LogService()
 export const getApp = (): Application => {
@@ -28,9 +29,10 @@ export const getApp = (): Application => {
 
   // 处理成功
   app.use((req: Request, res: Response, next: NextFunction) => {
-    const { status, data } = req.data || {}
+    const { status, data = {} } = req.data || {}
     if (status >= 200 && status <= 299) {
-      res.status(status).json(data)
+      const result = filter.filterBodyField(data)
+      res.status(status).json(result)
     } else {
       next()
     }

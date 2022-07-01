@@ -42,7 +42,10 @@ declare global {
     interface Request {
       user?: IJWTPlayLoad
 
-      data: Record<string, any>
+      data: {
+        status: number
+        data?: Record<string, any> | null
+      }
       log: Record<string, any>
       setData(status: number, data?: Record<string, any> | null): void
     }
